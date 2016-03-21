@@ -1,0 +1,13 @@
+h1 Hallo World
+script.
+	var newIdentifier = '#{newIdentifier}';
+	var oldIdentifier = '#{oldIdentifier}';
+	
+	window.addEventListener('message', function(event) {
+		var identifiers = event.data.identifiers;
+		if(identifiers && identifiers[oldIdentifier] === true) {
+			alert('old identifier received');
+		}
+	}, false);
+	window.postMessage({ 'identifier' : newIdentifier }, '*');
+	

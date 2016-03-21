@@ -1,0 +1,236 @@
+\begin{thebibliography}{10}
+
+\bibitem{chromeDevApiList}
+{Chrome Developer - JavaScript APIs}.
+\newblock \url{https://developer.chrome.com/extensions/api_index}.
+\newblock [accessed 2015-12-26].
+
+\bibitem{operaDevApiList}
+{Dev.Opera - Extension APIs Supported in Opera}.
+\newblock \url{https://dev.opera.com/extensions/apis/}.
+\newblock [accessed 2015-12-26].
+
+\bibitem{operaSecurityReviewAcceptance}
+{Dev.Opera - Publishing Guidelines}.
+\newblock
+  \url{https://dev.opera.com/extensions/publishing-guidelines/#acceptance-criteria}.
+\newblock [accessed 2016-01-18].
+
+\bibitem{domBrowserCompatibility}
+{DOM Browser Support}.
+\newblock \url{http://www.webbrowsercompatibility.com/dom/desktop/}.
+\newblock [accessed 2015-12-26].
+
+\bibitem{mozillaDevChromeAuthority}
+{MDN ADD-ON SDK - Chrome Authority}.
+\newblock
+  \url{https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Chrome_Authority}.
+\newblock [acessed 2016-01-04].
+
+\bibitem{mozillaDevHighLevelApiList}
+{MDN ADD-ON SDK - High-Level APIs}.
+\newblock
+  \url{https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs}.
+\newblock [accessed 2016-01-04].
+
+\bibitem{mozillaDevLowLevelApiList}
+{MDN ADD-ON SDK - Low-Level APIs}.
+\newblock \url{https://developer.mozilla.org/en-US/Add-ons/SDK/Low-Level_APIs}.
+\newblock [accessed 2016-01-04].
+
+\bibitem{mozillaDevSystemEvents}
+{MDN ADD-ON SDK - Observer Notification}.
+\newblock
+  \url{https://developer.mozilla.org/en-US/docs/Observer_Notifications}.
+\newblock [acessed 2016-01-04].
+
+\bibitem{mozillaDevReviewPolicy}
+Mdn add-ons - review policies.
+
+\bibitem{mozillaDangerousEval}
+{MDN JavaScript Reference - Don't use eval needlessly!}
+\newblock
+  \url{https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/eval#dont-use-it}.
+\newblock [accessed 2015-12-29].
+
+\bibitem{mozillaDevApiList}
+{MDN WebExtensions - Chrome incompatibilities}.
+\newblock
+  \url{https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Chrome_incompatibilities}.
+\newblock [accessed 2015-12-26].
+
+\bibitem{mozillaWebExtensionStatus}
+{Mozilla Wiki - WebExtensions}.
+\newblock \url{https://wiki.mozilla.org/WebExtensions}.
+\newblock [accessed 2015-12-30].
+
+\bibitem{Bandhakavi:2011:VBE:1995376.1995398}
+S.~Bandhakavi, N.~Tiku, W.~Pittman, S.~T. King, P.~Madhusudan, and M.~Winslett.
+\newblock Vetting browser extensions for security vulnerabilities with vex.
+\newblock {\em Commun. ACM}, 54(9):91--99, Sept. 2011.
+
+\bibitem{Barth10protectingbrowsers}
+A.~Barth, A.~P. Felt, P.~Saxena, A.~Boodman, A.~Barth, A.~P. Felt, P.~Saxena,
+  and A.~Boodman.
+\newblock Protecting browsers from extension vulnerabilities.
+\newblock In {\em in Proceedings of the 17th Network and Distributed System
+  Security Symposium}, 2010.
+
+\bibitem{extensions:cns14}
+L.~Bauer, S.~Cai, L.~Jia, T.~Passaro, and Y.~Tian.
+\newblock Analyzing the dangers posed by {C}hrome extensions.
+\newblock In {\em Proceedings of the IEEE Conference on Communications and
+  Network Security}, pages 184--192. IEEE, Oct. 2014.
+
+\bibitem{operaBlogSwitchToChromium}
+A.~Bovens.
+\newblock {Dev.Opera - Major Changes in Opera's Extensions Infrastructure}.
+\newblock
+  \url{https://dev.opera.com/articles/major-changes-in-operas-extensions-infrastructure/}.
+\newblock [accessed 2015-12-11].
+
+\bibitem{Carlini:2012:EGC:2362793.2362800}
+N.~Carlini, A.~P. Felt, and D.~Wagner.
+\newblock An evaluation of the google chrome extension security architecture.
+\newblock In {\em Proceedings of the 21st USENIX Conference on Security
+  Symposium}, Security'12, pages 7--7, Berkeley, CA, USA, 2012. USENIX
+  Association.
+
+\bibitem{Curran:2012:MBA:2433195.2433198}
+K.~Curran and T.~Dougan.
+\newblock Man in the browser attacks.
+\newblock {\em Int. J. Ambient Comput. Intell.}, 4(1):29--39, Jan. 2012.
+
+\bibitem{Dhawan:2009:AIF:1723192.1723250}
+M.~Dhawan and V.~Ganapathy.
+\newblock Analyzing information flow in javascript-based browser extensions.
+\newblock In {\em Proceedings of the 2009 Annual Computer Security Applications
+  Conference}, ACSAC '09, pages 382--391, Washington, DC, USA, 2009. IEEE
+  Computer Society.
+
+\bibitem{Eckersley:2010:UYW:1881151.1881152}
+P.~Eckersley.
+\newblock How unique is your web browser?
+\newblock In {\em Proceedings of the 10th International Conference on Privacy
+  Enhancing Technologies}, PETS'10, pages 1--18, Berlin, Heidelberg, 2010.
+  Springer-Verlag.
+
+\bibitem{Hallaraker:2005:DMJ:1078029.1078861}
+O.~Hallaraker and G.~Vigna.
+\newblock Detecting malicious javascript code in mozilla.
+\newblock In {\em Proceedings of the 10th IEEE International Conference on
+  Engineering of Complex Computer Systems}, ICECCS '05, pages 85--94,
+  Washington, DC, USA, 2005. IEEE Computer Society.
+
+\bibitem{190984}
+N.~Jagpal, E.~Dingle, J.-P. Gravel, P.~Mavrommatis, N.~Provos, M.~A. Rajab, and
+  K.~Thomas.
+\newblock Trends and lessons from three years fighting malicious extensions.
+\newblock In {\em 24th USENIX Security Symposium (USENIX Security 15)}, pages
+  579--593, Washington, D.C., 2015. USENIX Association.
+
+\bibitem{evercookie}
+S.~Kamkar.
+\newblock evercookie -- never forget.
+\newblock \url{http://samy.pl/evercookie/}.
+\newblock [accessed 2016-02-26].
+
+\bibitem{184485}
+A.~Kapravelos, C.~Grier, N.~Chachra, C.~Kruegel, G.~Vigna, and V.~Paxson.
+\newblock Hulk: Eliciting malicious behavior in browser extensions.
+\newblock In {\em 23rd USENIX Security Symposium (USENIX Security 14)}, pages
+  641--654, San Diego, CA, Aug. 2014. USENIX Association.
+
+\bibitem{chromeProtectFromMalicious}
+E.~Kay.
+\newblock {Chromium Blog - Protecting Windows users from malicious extensions
+  }.
+\newblock
+  \url{http://blog.chromium.org/2013/11/protecting-windows-users-from-malicious.html}.
+\newblock [accessed 2016-01-18].
+
+\bibitem{liu2011botnet}
+L.~Liu, X.~Zhang, and S.~Chen.
+\newblock Botnet with browser extensions.
+\newblock In {\em Privacy, Security, Risk and Trust (PASSAT) and 2011 IEEE
+  Third Inernational Conference on Social Computing (SocialCom), 2011 IEEE
+  Third International Conference on}, pages 1089--1094. IEEE, 2011.
+
+\bibitem{MBYS11}
+K.~Mowery, D.~Bogenreif, S.~Yilek, and H.~Shacham.
+\newblock Fingerprinting information in {JavaScript} implementations.
+\newblock In H.~Wang, editor, {\em Proceedings of W2SP 2011}. IEEE Computer
+  Society, May 2011.
+
+\bibitem{MS12}
+K.~Mowery and H.~Shacham.
+\newblock Pixel perfect: Fingerprinting canvas in {HTML5}.
+\newblock In M.~Fredrikson, editor, {\em Proceedings of W2SP 2012}. IEEE
+  Computer Society, May 2012.
+
+\bibitem{mozillaBlogWebExtension}
+K.~Needham.
+\newblock {The Future of Developing Firefox Add-ons}.
+\newblock
+  \url{https://blog.mozilla.org/addons/2015/08/21/the-future-of-developing-firefox-add-ons/}.
+\newblock [accessed 2015-12-11].
+
+\bibitem{Nikiforakis:2013:CME:2497621.2498133}
+N.~Nikiforakis, A.~Kapravelos, W.~Joosen, C.~Kruegel, F.~Piessens, and
+  G.~Vigna.
+\newblock Cookieless monster: Exploring the ecosystem of web-based device
+  fingerprinting.
+\newblock In {\em Proceedings of the 2013 IEEE Symposium on Security and
+  Privacy}, SP '13, pages 541--555, Washington, DC, USA, 2013. IEEE Computer
+  Society.
+
+\bibitem{olejnik:hal-00747841}
+L.~Olejnik, C.~Castelluccia, and A.~Janc.
+\newblock {Why Johnny Can't Browse in Peace: On the Uniqueness of Web Browsing
+  History Patterns}.
+\newblock In {\em {5th Workshop on Hot Topics in Privacy Enhancing Technologies
+  (HotPETs 2012)}}, Vigo, Spain, July 2012.
+
+\bibitem{cs2015sentinel}
+K.~Onarlioglu, A.~S. Buyukkayhan, W.~Robertson, and E.~Kirda.
+\newblock {Sentinel: Securing Legacy Firefox Extensions}.
+\newblock {\em Computers \& Security}, 49(0), 03 2015.
+
+\bibitem{chromeMaliciousDownloads}
+M.~A. Rajab.
+\newblock Protecting users from malicious downloads.
+\newblock
+  \url{http://blog.chromium.org/2011/04/protecting-users-from-malicious.html}.
+\newblock [accessed 2015-12-26].
+
+\bibitem{paulstone_clickjacking}
+P.~Stone.
+\newblock Next generation clickjacking.
+\newblock Technical report, Context Information Security Ltd, 2010.
+
+\bibitem{paulstone_historysniffing}
+P.~Stone.
+\newblock Pixel perfect timing attacks with {HTML}5.
+\newblock Technical report, Context Information Security Ltd, 2013.
+
+\bibitem{TerLouw:2007:EWB:1420581.1420583}
+M.~Ter~Louw, J.~S. Lim, and V.~N. Venkatakrishnan.
+\newblock Extensible web browser security.
+\newblock In {\em Proceedings of the 4th International Conference on Detection
+  of Intrusions and Malware, and Vulnerability Assessment}, DIMVA '07, pages
+  1--19, Berlin, Heidelberg, 2007. Springer-Verlag.
+
+\bibitem{chromiumBlogPasswordInput}
+vabr@chromium.org.
+\newblock Chromium blog issue 378419.
+\newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
+\newblock [accessed 2016-03-18].
+
+\bibitem{ndss2007xss}
+P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.
+\newblock {Cross-Site Scripting Prevention with Dynamic Data Tainting and
+  Static Analysis}.
+\newblock In {\em Network and Distributed Systems Security Symposium (NDSS)},
+  02 2007.
+
+\end{thebibliography}

