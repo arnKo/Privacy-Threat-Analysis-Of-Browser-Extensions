@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+
+    "name": "DisplayExtensionWarnings",
+    "description": "Extension that the warnings for each installed extension",
+    "version": "1.0",
+	
+	"permissions" : [
+		"management",
+		"activeTab"
+	],
+	
+	"browser_action": {
+		"default_title": "Display all extension warnings",
+		"default_popup": "popup.html"        
+	}
+}

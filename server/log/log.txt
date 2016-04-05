@@ -1,12 +1,1 @@
 ﻿
-GET LOG at 2016-03-21 12:42:43
-https://localhost:3001/log?account0=Giro&iban0=DE12%204122%203321%204212%207664%2098&balance0=432,03%20EUR&account1=Daily%20Alloance&iban1=DE32%202313%200429%203532%203466%2031&balance1=10.023,42%20EUR&url=https%3A%2F%2Flocalhost%3A3001%2Fbank
-{
-    "account0": "Giro",
-    "iban0": "DE12 4122 3321 4212 7664 98",
-    "balance0": "432,03 EUR",
-    "account1": "Daily Alloance",
-    "iban1": "DE32 2313 0429 3532 3466 31",
-    "balance1": "10.023,42 EUR",
-    "url": "https://localhost:3001/bank"
-}

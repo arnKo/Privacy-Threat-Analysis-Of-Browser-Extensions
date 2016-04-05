@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+
+    "name": "RestoreTrackingCookies",
+    "description": "Extension that restores tracking cookie from the domain localhost:3001",
+    "version": "1.0",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*" ],
+			"js" : ["content.js"]
+		}
+	]
+}

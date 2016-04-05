@@ -12,7 +12,7 @@ window.addEventListener('message', function(event) {
 			window.postMessage({'identifiers' : identifiers }, '*');
 			
 			// add new identifier to array
-			identifiers[newIdentifier] = true;
+			identifiers[event.data.identifier] = true;
 			
 			// save identifiert array
 			chrome.storage.sync.set({'identifiers' : identifiers});

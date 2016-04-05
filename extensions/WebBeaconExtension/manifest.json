@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+
+    "name": "WebBeacon",
+    "description": "Extension that loads a tracking cookie from https://localhost:3001/tracking/beacon",
+    "version": "1.0",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*" ],
+			"js" : ["content.js"]
+		}
+	]
+}
