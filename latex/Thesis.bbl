@@ -89,6 +89,12 @@ A.~Bovens.
   \url{https://dev.opera.com/articles/major-changes-in-operas-extensions-infrastructure/}.
 \newblock [accessed 2015-12-11].
 
+\bibitem{8chanHola}
+F.~Brennman.
+\newblock 8chan - hola.
+\newblock \url{https://8ch.net/hola.html}.
+\newblock [accessed 2016-04-10].
+
 \bibitem{Carlini:2012:EGC:2362793.2362800}
 N.~Carlini, A.~P. Felt, and D.~Wagner.
 \newblock An evaluation of the google chrome extension security architecture.
@@ -148,6 +154,12 @@ E.~Kay.
 \newblock
   \url{http://blog.chromium.org/2013/11/protecting-windows-users-from-malicious.html}.
 \newblock [accessed 2016-01-18].
+
+\bibitem{vectraHola}
+V.~T. Labs.
+\newblock Technical analysis of hola.
+\newblock \url{http://blog.vectranetworks.com/blog/technical-analysis-of-hola}.
+\newblock [accessed 2016-04-10].
 
 \bibitem{liu2011botnet}
 L.~Liu, X.~Zhang, and S.~Chen.
@@ -232,5 +244,11 @@ P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.
   Static Analysis}.
 \newblock In {\em Network and Distributed Systems Security Symposium (NDSS)},
   02 2007.
+
+\bibitem{Xing:2015:UMT:2736277.2741630}
+X.~Xing, W.~Meng, B.~Lee, U.~Weinsberg, A.~Sheth, R.~Perdisci, and W.~Lee.
+\newblock Understanding malvertising through ad-injecting browser extensions.
+\newblock In {\em Proceedings of the 24th International Conference on World
+  Wide Web}, WWW '15, pages 1286--1295, New York, NY, USA, 2015. ACM.
 
 \end{thebibliography}

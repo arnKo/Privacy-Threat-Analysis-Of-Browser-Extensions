@@ -16,7 +16,8 @@ function printExtensions(extensions) {
 		var extensionDiv = document.createElement('div');
 		document.body.appendChild(extensionDiv);
 		
-		extensionDiv.innerHTML = '<h3>' + extension.name + '</h3>';
+		extensionDiv.innerHTML = '<h3>' + extension.name + ' (' + extension.version + ')</h3>';
+		extensionDiv.innerHTML += '<p>' + extension.id + '</p>';
 		
 		var permissions = extension.permissions.concat(extension.hostPermissions);
 		
