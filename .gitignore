@@ -1,1 +1,6 @@
 /server/node_modules
+/latex/*
+!/latex/Thesis.tex
+!/latex/Thesis.pdf
+!/latex/references.bib
+!/latex/bib/
