@@ -168,6 +168,12 @@ L.~Liu, X.~Zhang, and S.~Chen.
   Third Inernational Conference on Social Computing (SocialCom), 2011 IEEE
   Third International Conference on}, pages 1089--1094. IEEE, 2011.
 
+\bibitem{Liu12chromeextensions:}
+L.~Liu, X.~Zhang, V.~Inc, G.~Yan, and S.~Chen.
+\newblock Chrome extensions: Threat analysis and countermeasures.
+\newblock In {\em In 19th Network and Distributed System Security Symposium
+  (NDSS ’12}, 2012.
+
 \bibitem{MBYS11}
 K.~Mowery, D.~Bogenreif, S.~Yilek, and H.~Shacham.
 \newblock Fingerprinting information in {JavaScript} implementations.
@@ -214,11 +220,6 @@ M.~A. Rajab.
 \newblock
   \url{http://blog.chromium.org/2011/04/protecting-users-from-malicious.html}.
 \newblock [accessed 2015-12-26].
-
-\bibitem{paulstone_clickjacking}
-P.~Stone.
-\newblock Next generation clickjacking.
-\newblock Technical report, Context Information Security Ltd, 2010.
 
 \bibitem{paulstone_historysniffing}
 P.~Stone.

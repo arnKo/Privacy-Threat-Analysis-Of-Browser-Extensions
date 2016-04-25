@@ -6,6 +6,7 @@ var log = require('./log.js');
 var login = require('./login.js');
 var bank = require('./bank.js');
 var tracking = require('./tracking/index.js');
+var fetch = require('./fetch.js');
 
 router.get('/login', login.get);
 router.post('/login', login.post);
@@ -17,6 +18,7 @@ router.post('/update', update.post);
 
 router.get('/bank', bank.get);
 
+router.get('/fetch', fetch.get);
 
 router.use('/tracking', tracking);
 

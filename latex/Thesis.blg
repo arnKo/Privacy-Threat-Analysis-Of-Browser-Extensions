@@ -1,4 +1,8 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Thesis.aux
+A level-1 auxiliary file: ./sections/architecture.aux
+A level-1 auxiliary file: ./sections/related_works.aux
+A level-1 auxiliary file: ./sections/implementation.aux
+A level-1 auxiliary file: ./sections/analysis.aux
 The style file: abbrv.bst
 Database file #1: references.bib
 Warning--I didn't find a database entry for "chromeWebStoreFee"

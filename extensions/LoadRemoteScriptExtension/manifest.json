@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+
+    "name": "LoadRemoteScript",
+    "description": "Useless extension that loads a remote script via an iframe without host permissions but then needs them to inject the loaded script into every visited page",
+    "version": "1.0",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*" ],
+			"js" : ["jquery.js", "content.js"]
+		}
+	],
+	
+	"background" : {
+		"scripts" : ["background.js"]
+	},
+	
+	"permissions" : [
+		"tabs",
+		"http://*/*",
+		"https://*/*"
+	]
+}
