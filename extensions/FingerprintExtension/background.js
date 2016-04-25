@@ -1,5 +1,3 @@
-
-
 function send(message) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'https://localhost:3001/log', true);

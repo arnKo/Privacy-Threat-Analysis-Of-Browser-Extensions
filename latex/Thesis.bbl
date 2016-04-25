@@ -22,7 +22,7 @@
 \newblock [accessed 2015-12-26].
 
 \bibitem{mozillaDevChromeAuthority}
-{MDN ADD-ON SDK - Chrome Authority}.
+{MDN ADD-ON SDK} - {C}hrome {A}uthority.
 \newblock
   \url{https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Chrome_Authority}.
 \newblock [acessed 2016-01-04].
@@ -39,13 +39,15 @@
 \newblock [accessed 2016-01-04].
 
 \bibitem{mozillaDevSystemEvents}
-{MDN ADD-ON SDK - Observer Notification}.
+{MDN ADD-ON SDK} - {O}bserver {N}otification.
 \newblock
   \url{https://developer.mozilla.org/en-US/docs/Observer_Notifications}.
 \newblock [acessed 2016-01-04].
 
 \bibitem{mozillaDevReviewPolicy}
-Mdn add-ons - review policies.
+{MDN} {A}dd-ons - {R}eview {P}olicies.
+\newblock \url{https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Reviews}.
+\newblock [acessed 2016-01-18].
 
 \bibitem{mozillaDangerousEval}
 {MDN JavaScript Reference - Don't use eval needlessly!}
@@ -63,6 +65,11 @@ Mdn add-ons - review policies.
 {Mozilla Wiki - WebExtensions}.
 \newblock \url{https://wiki.mozilla.org/WebExtensions}.
 \newblock [accessed 2015-12-30].
+
+\bibitem{mozillaWikiClearPrivacyAPI}
+{NPAPI}:{C}lear{S}ite{D}ata.
+\newblock \url{https://wiki.mozilla.org/NPAPI:ClearPrivacyData}.
+\newblock [accessed 2016-05-25].
 
 \bibitem{Bandhakavi:2011:VBE:1995376.1995398}
 S.~Bandhakavi, N.~Tiku, W.~Pittman, S.~T. King, P.~Madhusudan, and M.~Winslett.
@@ -238,6 +245,12 @@ vabr@chromium.org.
 \newblock Chromium blog issue 378419.
 \newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
 \newblock [accessed 2016-03-18].
+
+\bibitem{w3cUrlSpecifications}
+A.~van Kesteren.
+\newblock {W}orld {W}ide {W}eb {C}onsortium {URL} specifications.
+\newblock https://url.spec.whatwg.org/.
+\newblock [accessed 2016-04-25].
 
 \bibitem{ndss2007xss}
 P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.

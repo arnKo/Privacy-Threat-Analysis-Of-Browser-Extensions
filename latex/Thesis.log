@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  22 APR 2016 16:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  25 APR 2016 15:54
 entering extended mode
 **./Thesis.tex
 (Thesis.tex
@@ -884,29 +884,29 @@ File: ts15ch.fd 2008/06/23 Fontinst v1.927 font definitions for TS1/5ch.
 \openout2 = `./sections/architecture.aux'.
 
  (sections/architecture.tex
-Underfull \hbox (badness 10000) in paragraph at lines 5--7
+Underfull \hbox (badness 10000) in paragraph at lines 13--17
 
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 13--13
+Underfull \hbox (badness 2027) in paragraph at lines 23--23
 []|\T1/5ch/m/n/9.5 WebExtensions are de-vel-oped lo-
+ []
+
+
+Underfull \hbox (badness 7433) in paragraph at lines 44--44
+[]|\T1/5ch/m/n/9.5 The de-vel-oper de-clares con-tent
  []
 
 [3
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 53--57
+Underfull \hbox (badness 10000) in paragraph at lines 64--68
 
  []
 
 (lib/manifest.json [4])
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
  []
 
@@ -916,57 +916,62 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--76
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
 
-Underfull \hbox (badness 5288) in paragraph at lines 88--89
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+
+ []
+
+
+Underfull \hbox (badness 5288) in paragraph at lines 99--100
 []|\T1/5ch/m/n/9.5 Get in-for-ma-tion about pre-
  []
 
 
-Underfull \hbox (badness 4967) in paragraph at lines 90--91
+Underfull \hbox (badness 4967) in paragraph at lines 101--102
 []|\T1/5ch/m/n/9.5 Reactivate set-tings that the
  []
 
 
-Underfull \hbox (badness 2913) in paragraph at lines 98--99
+Underfull \hbox (badness 2913) in paragraph at lines 109--110
 []|\T1/5ch/m/n/9.5 Silently dis-able pri-vacy pre-
  []
 
 
-Underfull \hbox (badness 1838) in paragraph at lines 106--107
+Underfull \hbox (badness 1838) in paragraph at lines 117--118
 \T1/5ch/m/n/9.5 the de-clared con-tent scripts,
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6001) has occurred while \output is active []
 
  [5]
 Overfull \vbox (34.21451pt too high) has occurred while \output is active []
 
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
 
 LaTeX Warning: Citation `chromeWebStoreFee' on page 7 undefined on input line 1
-15.
+26.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--121
+Underfull \hbox (badness 10000) in paragraph at lines 130--132
 
  []
 
 
 LaTeX Warning: Citation `w3cXMLHttpRequest' on page 7 undefined on input line 1
-26.
+37.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
+Underfull \hbox (badness 10000) in paragraph at lines 144--146
 
  []
 
@@ -1040,22 +1045,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--55
 \openout2 = `./sections/implementation.aux'.
 
  (sections/implementation.tex
-Underfull \hbox (badness 10000) in paragraph at lines 13--14
+Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 26--27
+Underfull \hbox (badness 10000) in paragraph at lines 28--29
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 34--35
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
+Underfull \hbox (badness 10000) in paragraph at lines 36--37
 
  []
 
@@ -1065,12 +1065,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--41
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--69
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
@@ -1080,12 +1075,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--73
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 76--77
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
 
  []
 
@@ -1093,32 +1083,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--77
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 78--79
+Underfull \hbox (badness 10000) in paragraph at lines 96--97
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--81
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-
- []
-
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 125--127
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--129
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
 
  []
 
@@ -1127,196 +1097,176 @@ Underfull \hbox (badness 10000) in paragraph at lines 130--131
 
  []
 
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--143
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 144--145
+Underfull \hbox (badness 10000) in paragraph at lines 188--190
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--193
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- []
-
-[16] [17]
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 248--249
+ [16]
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--251
+Underfull \hbox (badness 10000) in paragraph at lines 265--266
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--276
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+
+ []
+
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 301--302
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 284--285
+Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--287
+Underfull \hbox (badness 10000) in paragraph at lines 321--322
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 299--300
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 303--304
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 307--308
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 324--325
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
 
  []
 
 
-Overfull \hbox (11.3005pt too wide) in paragraph at lines 326--329
+Underfull \hbox (badness 10000) in paragraph at lines 359--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 372--375
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 399--400
+
+ []
+
+
+Overfull \hbox (11.3005pt too wide) in paragraph at lines 401--404
 $\T1/txtt/m/n/9.5 https : / / localhost : 3001 / log ? account0 = Giro \ &iban0
  = DE12 % 204122 % 203321 % 204212 % 207664 % 2098 & balance0 = 432 ,[] 03 %$
  []
 
 
-Overfull \hbox (6.31302pt too wide) in paragraph at lines 326--329
+Overfull \hbox (6.31302pt too wide) in paragraph at lines 401--404
 $\T1/txtt/m/n/9.5 20EUR & account1 = Daily % 20Alloance & iban1 = DE32 % 202313
  % 200429 % 203532 % 203466 % 2031 & balance1 = 10 . 023 ,[] 42 % 20EUR &$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 326--329
+Underfull \hbox (badness 10000) in paragraph at lines 401--404
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--341
+Underfull \hbox (badness 10000) in paragraph at lines 407--416
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--343
+Underfull \hbox (badness 10000) in paragraph at lines 417--418
 
  []
 
-<lib/bank.png, id=71, 986.18437pt x 395.97937pt>
+<lib/bank.png, id=74, 986.18437pt x 395.97937pt>
 File: lib/bank.png Graphic file (type png)
  <use lib/bank.png>
-Package pdftex.def Info: lib/bank.png used on input line 345.
+Package pdftex.def Info: lib/bank.png used on input line 420.
 (pdftex.def)             Requested size: 295.85759pt x 118.79472pt.
 
 (lib/bank.html)
-Underfull \hbox (badness 10000) in paragraph at lines 353--354
-
- []
-
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 364--365
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 368--369
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 376--377
-
- []
-
-<lib/login.png, id=76, 524.71031pt x 242.40562pt>
-File: lib/login.png Graphic file (type png)
- <use lib/login.png>
-Package pdftex.def Info: lib/login.png used on input line 380.
-(pdftex.def)             Requested size: 209.8804pt x 96.96053pt.
-
-(lib/login.html)
-Overfull \hbox (26.90218pt too wide) in paragraph at lines 379--387
-[]$[]$ $[]$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 391--392
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 402--403
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 417--419
+Underfull \hbox (badness 10000) in paragraph at lines 428--429
 
  []
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 422--424
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 427--428
-
- []
-
-[22]
 Underfull \hbox (badness 10000) in paragraph at lines 439--440
 
  []
@@ -1327,73 +1277,94 @@ Underfull \hbox (badness 10000) in paragraph at lines 441--442
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 445--446
+Underfull \hbox (badness 10000) in paragraph at lines 443--444
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
+
+ []
+
+<lib/login.png, id=79, 524.71031pt x 242.40562pt>
+File: lib/login.png Graphic file (type png)
+ <use lib/login.png>
+Package pdftex.def Info: lib/login.png used on input line 455.
+(pdftex.def)             Requested size: 209.8804pt x 96.96053pt.
+
+(lib/login.html)
+Overfull \hbox (26.90218pt too wide) in paragraph at lines 454--462
+[]$[]$ $[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 466--467
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 492--494
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 495--496
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 497--499
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--501
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--503
 
  []
 
 [23]
-Underfull \hbox (badness 10000) in paragraph at lines 489--490
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
 
  []
 
 
-Overfull \hbox (5.58168pt too wide) in paragraph at lines 495--496
+Underfull \hbox (badness 10000) in paragraph at lines 516--517
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 520--521
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 564--565
+
+ []
+
+
+Overfull \hbox (5.58168pt too wide) in paragraph at lines 570--571
 [][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Underfull \hbox (badness 1939) in paragraph at lines 504--505
+Underfull \hbox (badness 1939) in paragraph at lines 579--580
 []\T1/5ch/m/n/9.5 We start with adding an event lis-tener for the \T1/txtt/m/n/
 9.5 message \T1/5ch/m/n/9.5 event. This event is trig-gered if the method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 506--507
-
- []
-
-
-Overfull \hbox (11.28174pt too wide) in paragraph at lines 513--514
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 520--521
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 543--544
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 555--556
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 569--570
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 571--572
-
- []
-
-[25]
-Underfull \hbox (badness 10000) in paragraph at lines 573--574
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 575--576
+Underfull \hbox (badness 10000) in paragraph at lines 579--580
 
  []
 
@@ -1403,9 +1374,54 @@ Underfull \hbox (badness 10000) in paragraph at lines 581--582
  []
 
 
+Overfull \hbox (11.28174pt too wide) in paragraph at lines 588--589
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 595--596
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 630--631
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 644--645
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 646--647
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 648--649
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 650--651
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 656--657
+
+ []
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [26] [27 <./lib/bank.png>] [28 <./lib/login.png>]
+) [27] [28 <./lib/bank.png>] [29 <./lib/login.png>]
 \openout2 = `./sections/analysis.aux'.
 
  (sections/analysis.tex
@@ -1431,7 +1447,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-[29
+[30
 
 
 ]
@@ -1445,7 +1461,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [30] [31] (Thesis.bbl
+) [31] [32] (Thesis.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 14--18
 []\T1/5ch/m/n/9.5 Dev.Opera - Pub-lish-ing Guide-lines.  $\T1/txtt/m/n/9.5 http
 s : / / dev . opera . com / extensions / publishing-[]guidelines /$
@@ -1458,30 +1474,30 @@ Underfull \hbox (badness 3189) in paragraph at lines 42--46
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--61
+Underfull \hbox (badness 10000) in paragraph at lines 59--63
 []\T1/5ch/m/n/9.5 MDN We-bEx-ten-sions - Chrome in-com-pat-i-bil-i-ties.  $\T1/
 txtt/m/n/9.5 https : / / developer . mozilla . org / en-[]US / Add-[]ons /$
  []
 
-[32
+[33
 
 ]
-Underfull \hbox (badness 5022) in paragraph at lines 218--223
+Underfull \hbox (badness 5022) in paragraph at lines 225--230
 []\T1/5ch/m/n/9.5 M. A. Ra-jab.  Pro-tect-ing users from ma-li-cious down-loads
 .  $\T1/txtt/m/n/9.5 http : / / blog . chromium . org / 2011 / 04 /$
  []
 
-) [33] (Thesis.aux (sections/architecture.aux) (sections/related_works.aux)
+[34]) [35] (Thesis.aux (sections/architecture.aux) (sections/related_works.aux)
 (sections/implementation.aux) (sections/analysis.aux))
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8921 strings out of 493634
- 137717 string characters out of 3145797
- 292539 words of memory out of 3000000
- 12051 multiletter control sequences out of 15000+200000
+ 8927 strings out of 493634
+ 137855 string characters out of 3145797
+ 292583 words of memory out of 3000000
+ 12057 multiletter control sequences out of 15000+200000
  93979 words of font info for 100 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  65i,17n,77p,2900b,1544s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1494,9 +1510,9 @@ n/texmf/fonts/type1/softmake/frontpage/5fpr8a.pfb><D:/Programme/MiKTeX2.9/fonts
 /type1/bitstrea/charter/bchr8a.pfb><D:/Programme/MiKTeX2.9/fonts/type1/mathdesi
 gn/mdbch/md-chr7t.pfb><D:/Programme/MiKTeX2.9/fonts/type1/mathdesign/mdbch/md-c
 hr7y.pfb><D:/Programme/MiKTeX2.9/fonts/type1/public/txfonts/t1xtt.pfb>
-Output written on Thesis.pdf (33 pages, 257725 bytes).
+Output written on Thesis.pdf (35 pages, 264573 bytes).
 PDF statistics:
- 151 PDF objects out of 1000 (max. 8388607)
+ 157 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
