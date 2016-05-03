@@ -2,5 +2,6 @@
 /latex/*
 !/latex/Thesis.tex
 !/latex/Thesis.pdf
+!/latex/sections
 !/latex/references.bib
 !/latex/bib/
