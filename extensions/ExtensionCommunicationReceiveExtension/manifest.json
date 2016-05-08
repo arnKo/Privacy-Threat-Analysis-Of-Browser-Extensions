@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ExtensionCommunicationReceive",
+    "description": "Extension that receives a remote loaded script from another extension" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["content.js"]
+		}
+	],
+	
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

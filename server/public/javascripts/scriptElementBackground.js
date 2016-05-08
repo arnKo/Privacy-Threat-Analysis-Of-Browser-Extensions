@@ -1,0 +1,1 @@
+alert('This script was loaded with a script tag in the extension\'s background');

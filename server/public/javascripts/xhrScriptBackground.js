@@ -1,0 +1,1 @@
+alert('This script was loaded with an XHR request and is executed in the background with eval');

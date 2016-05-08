@@ -16,19 +16,34 @@
 		
 		\subsubsection{Code Obfuscation}
 			
-			Code obfuscation describes the transformation of a program's source code into a form in which it takes more time to analyze it's capabilities and purpose than in it's original state but without changing the execution result. \\
+			Code obfuscation describes the transformation of a program's source code into a form in which it takes more time to analyze it's capabilities and purpose than in it's original state but without changing the execution result.  \\
 			% not revertible
 			% stealthy
 			
 			It was originally developed to protect a developer's implementation from code plagiarism. Other developers should not be able to understand the concrete implementation of the program or algorithm. Nowadays, it is often used to hide malicious behavior from detection. Code obfuscation changes the code's structure and therefore prevents the detection of known code pattern. It also changes the application's hash signatures which are often used by anti-virus software to identify known threats. A simple method of code obfuscation is to change the order of methods in the source code. This results in a different hash signature for each order but still gives the same result after execution. \\
 			
-			Code obfuscation is used in programing languages without a strict syntax. The first languages for which obfuscation was used were C and C++. 
+			Code obfuscation is used in programing languages without a strict syntax. The first languages for which obfuscation was used were C and C++. \\
 			
 			% originally used for C or C++, languages without strong syntax specifications, obfuscation often settled in compiled machine code 
 			% JavaScript files are not compiled, obfuscation in source code, often enlarges source code
 			% strong obfuscation is not or only with great expense reversible
 		
 			Code obfuscation should not be confused with minification or encryption. Minification targets to decrease the size and hence the download time of JavaScript files. It is often implemented as a script which prints the original script. Although the minimized JavaScript code is not readable by the human eye, its execution returns the original source code. This fact renders minification useless as an obfuscation technique. Similar, encrypted code is unreadable not only to a human but also to the compiler. Consequently, encryption can not be used as an obfuscation technique because obfuscated code has still to be executable. \\
+	
+			
+	
+			% \cite{caffinemonkey}
+			% add random sections to source code that are ignored by the JavaScript compiler such as whitespace or comments, does not change the semantics but changes binary representation which is used by security technologies, hampers human analysts and content matching
+			% reassign functions and randomzie variable names, no certainity that beyond a function name the standartised function stands,
+			
+			%\cite{Xu:2013:JMS:2435349.2435364} 
+			% variable values converted in computional results, string splitting, 
+			% JavaScript code encoding in ascii unicode or hexadecimal
+			% JavaScript code encoded with custom function, decode function in source code is executed at runtime
+			% change execution path without effecting semantics, add dead code,
+			% \cite{kim2011suspicious}
+		
+		
 		
 			Some techniques which are used for code obfuscation only hamper manual analysis. They change the visual representation of the code and remove information that assist developer to understand the code's capabilities.
 			
@@ -41,6 +56,7 @@
 			Static analysis tools such as VEX or the implementation from Hallaraker et al. are still able to detect malicious behavior in code which was obfuscated with previously described techniques \cite{Bandhakavi:2011:VBE:1995376.1995398, Hallaraker:2005:DMJ:1078029.1078861}. 
 			
 			\begin{itemize}
+				\item \textbf{Remove Code } Reducing the readability of an application's source code is often the first step of obfuscation. This is achieved by removing comments and code structure such as whitespace, linebreaks, and indenting and replacing variable names with meaningless or random names. These procedures only hamper manual analysis but static analysis tools such as VEX are still able to detect malicious code pattern \cite{Bandhakavi:2011:VBE:1995376.1995398}. Removing comments is a non-revertible procedure, whereas many tools exists that add structure to source code for example the JavaScript library \textit{js-prettify}. 
 				\item \textbf{String Encoding} The method \texttt{Number.toString(radix)} returns a string representation of the numeric value in the specified radix. This allows to encode single characters with numeric values. For example, if we use a radix of 36, we can encode all lowercase characters starting with \texttt{(10).toString(36)} returns \texttt{"a"} and finishing with \texttt{(35).toString(36)} returns \texttt{"z"}.
 				\item \textbf{String Splitting} Splitting strings and concatenating at runtime hides code words in the source code. Adding mathematical calculations to determine the exact location of a string part adds even more confusion.
 				\item \textbf{String Based Method Execution} JavaScript methods are normally called with the notation \texttt{object.method()}. But in JavaScript even methods are objects and any object can be called like an associative array. So we can execute a method like this \texttt{object["method"]()}. This allows us to hide method names with the above described techniques of string encoding and splitting. %TODO
@@ -103,7 +119,7 @@ var IlIIlI = {
 				\begin{tabular}{|p{0.473\textwidth}|p{0.473\textwidth}|} \hline
 					\multicolumn{2}{|l|}{\textbf{String Encoding}} \\ \hline
 					\begin{lstlisting}
-var x = "hello";
+var x = 'hello';
 					\end{lstlisting} &
 					\begin{lstlisting}
 var x = (17).toString(18) 
@@ -114,17 +130,21 @@ var x = (17).toString(18)
 					\end{lstlisting} \\ \hline
 					\multicolumn{2}{|l|}{\textbf{String Splitting}} \\ \hline
 					\begin{lstlisting}
-var x = "Hello world";
+var x = 'Hello world';
 					\end{lstlisting} &
 					\begin{lstlisting}
-var x1 = "He", x2 = "l", 
-  x3 = "o", x4 = "w", 
-  x5 = "d";
+var y = ['d','w','l','He',' ','r','o'];
+var x = y[3] + y[6-5+1] + y[2] 
+  + y[y.length -1] + y[2*2]
+  + y[y.length - 6] + y[6]
+  + y[3+2] + y[1*2] + y[0];
 					\end{lstlisting} \\ \hline
-					\multicolumn{2}{|l|}{\textbf{Rename Variables}} \\ \hline
+					\multicolumn{2}{|l|}{\textbf{String Based Method Execution}} \\ \hline
 					\begin{lstlisting}
+eval('alert(1)');
 					\end{lstlisting} &
 					\begin{lstlisting}
+[]['sort']['constructor']('alert(1)')();
 					\end{lstlisting} \\ \hline
 				\end{tabular}
 			\end{table}
@@ -151,12 +171,12 @@ var x1 = "He", x2 = "l",
 			% webeval detects obfuscated or minification by comparing the length of the original to a pretified version
 			% many open source libraries
 		
-		\subsubsection{Remote Loaded Scripts}
+		\subsubsection{Remotely Loaded Scripts}
 			
 			Another possibility to hide a malicious code snippet is to load it from a remote server and execute it at runtime. The code is not present in the extension's installation and can therefore not be detected by a static analysis. \\
 		
 			An extension has several possibilities to load a remote script. HTML pages which are bundled in the extension's installation can include \texttt{<script>} elements with a \texttt{src} attribute pointing to a remote server. If the extension is executed and the page is loaded, the browser automatically loads and executes the remote script. This mechanism is often used to include public scripts for example from Google Analytics. \\
-			A WebExtension needs to explicit state that it wants to fetch remote scripts in its background page. The default Content Security Policy disables the loading of scripts per script element which have another origin than the extension's installation. We can relax the default CSP and enable the loading of remote scripts over HTTPS by adding an URL pattern for the desired origin. The CSP allows wildcards in the URL pattern, but only for subdomains. The domain itself has to be explicit stated denying the attacker the possibility to disguise the address of his remote server. \\
+			A WebExtension needs to explicit state that it wants to fetch remote scripts in its background page. The default Content Security Policy disables the loading of scripts per script element which have another origin than the extension's installation. We can relax the default CSP and enable the loading of remote scripts over HTTPS by adding an URL pattern for the desired origin. \\
 
 			Extensions are able to load resources with a XMLHttpRequest. If called from a content script, the XMLHttpRequest will be blocked by the Same Origin Policy if the target does not match the current web page's origin. However, the same restriction does not apply to the extension's background. If the XMLHttpRequest is executed from within the background process, any arbitrary host is allowed as target. \\
 			Again, WebExtensions underly a further restriction. Only if a matching host permission is declared in the extension's manifest, the browser will allow the web request. The attacker has to declare an URL pattern which matches his remote server. To disguise the concrete URL of his remote server, the attacker may take use of the pattern \url{http://*/*} and \url{https://*/*}. \\
@@ -177,11 +197,11 @@ xhr.send();
 				\label{xhrLoadScript}
 			\end{code}
 			
-			Scripts which are loaded remotely with an XMLHttpRequest are not executed directly. The request only fetches the script as plain text. To execute the script, we have to consider what the scripts objectives are. Whether it should act in the extension's background or as a content script. If the first case applies, we can use the JavaScript method \texttt{eval} to execute the remote loaded text as a JavaScript application. The use of eval is frowned upon because it is a main source of XSS attacks if not used correctly \cite{mozillaDangerousEval}. On that account, the default CSP of a WebExtension disables the use of eval in its background process. We can relax the default policy and add the key \texttt{unsafe\_eval} to lift the restriction. \\
+			Before we can execute a remote loaded script, we have to consider what the scripts objectives are. Whether it should act in the extension's background or as a content script. If the first case applies, we can use the JavaScript method \texttt{eval} to execute the remote loaded text as a JavaScript application. The use of eval is frowned upon because it is a main source of XSS attacks if not used correctly \cite{mozillaDangerousEval}. On that account, the default CSP of a WebExtension disables the use of eval in its background process. We can relax the default policy and add the key \texttt{unsafe\_eval} to lift the restriction. \\
 			
 			If we want to execute the remote loaded script as a content script, we can programmatically inject it. A WebExtension can use the method \texttt{chrome.tabs.executeScript} to execute a given string as a content script in a currently open tab. To use this feature, the extension needs the \texttt{tabs} permission. This permission is also granted, if the extension uses the \texttt{activeTab} permission but with the drawback that we can only inject the script if the user invokes the extension. A Firefox Add-on can inject the script in an open tab with the method \texttt{require("sdk/tabs").activeTab.attach}. But other than WebExtensions, it can also register a content script with an URL pattern at runtime using the \texttt{sdk/page-mod} module. \\
 			
-			If we want to execute our remote loaded script only in the scope of a web page, we can take use of the DOM API. It allows us to add a new script element to the current web page. If we set the source attribute of the script element to the URL of our remote server, the browser will fetch and execute the script for us. As a proof of concept, we  implemented a WebExtension that executes the content script shown in \coderef{contentScriptRemotLoad} in any web page without the need for further permissions. The content script creates a new \texttt{script} element, sets the element's \texttt{src} attribute to the URL of our remote server and appends it to the web page's body. The remote loaded script is immediately executed. The disadvantage of this approach is, that the URL to the remote server is plainly visible to the user. A possible solution would be to delete the script element, after the script has finished its execution.
+			If we want to execute a remote loaded script only in the scope of a web page, we can take use of the DOM API. It allows us to add a new script element to the current web page. If we set the source attribute of the script element to the URL of our remote server, the browser will fetch and execute the script for us. As a proof of concept, we  implemented a WebExtension that executes the content script shown in \coderef{contentScriptRemotLoad} in any web page without the need for further permissions. The content script creates a new \texttt{script} element, sets the element's \texttt{src} attribute to the URL of our remote server and appends it to the web page's body. The remote loaded script is immediately executed.
 			
 			\begin{code}
 				\begin{lstlisting}	
@@ -201,12 +221,12 @@ document.body.appendChild(script);
 			
 			A communication channel that does not need any special interface can be established over any web page's DOM. All extensions with an active content script in the same web page have access to the same DOM. The extensions which want to communicate with each other can agree upon a specific DOM element and set it's text to exchange messages. Another way to exchange messages is to use the DOM method \texttt{window.postMessage}. This method dispatches a \texttt{message} event on the web pages \texttt{window} object. Any script with access to the web page's \texttt{window} object can register to be notified if the event was dispatched and then read the message. \\
 			
-			The code shown in \coderef{postMessageListener} and \coderef{postMessageMethod} is an example how to use this method. In \coderef{postMessageListener} we add an event listener to the \texttt{window} object that listens to the \texttt{message} event. The event handler method awaits the key \texttt{from} to be present in the event's data object and the value of \texttt{from} to equal \texttt{extension}. We use this condition to identify messages which were dispatched by an extension. Further, the handler awaits that the message from the other extension is stored with the \texttt{message} key. In \coderef{postMessageMethod} we create our message object with the key-value pairs \texttt{"from":"extension"} and \texttt{"message":"secret"} and call the \textit{postMessage} method with our message object as first parameter. The second parameter defines what the origin of the \texttt{window} object must be in order for the event to be dispatched. In our case, the web page and all content scripts share the same \texttt{window} object. Therefore, a domain check is unnecessary and we us a wildecard to match any domain.
+			The code shown in \coderef{postMessageListener} and \coderef{postMessageMethod} is an example how to use this method. In \coderef{postMessageListener} we add an event listener to the \texttt{window} object that listens to the \texttt{message} event. The event handler method awaits the key \texttt{from} to be present in the event's data object and the value of \texttt{from} to equal \texttt{extension}. We use this condition to identify messages which were dispatched by an extension. Further, the handler awaits that the message from the other extension is stored with the \texttt{message} key. In \coderef{postMessageMethod} we create our message object with the key-value pairs \texttt{'from':'extension'} and \texttt{'message':'secret'} and call the \textit{postMessage} method with our message object as first parameter. The second parameter defines what the origin of the \texttt{window} object must be in order for the event to be dispatched. In our case, the web page and all content scripts share the same \texttt{window} object. Therefore, a domain check is unnecessary and we us a wildecard to match any domain.
 			
 			\begin{code}
 				\begin{lstlisting}
-window.addEventListener("message", function(event) {
-  if(event.data.from && event.data.from === "extension") {
+window.addEventListener('message', function(event) {
+  if(event.data.from && event.data.from === 'extension') {
     handle(event.data.message);
   }
 });
@@ -218,10 +238,10 @@ window.addEventListener("message", function(event) {
 			\begin{code}
 				\begin{lstlisting}
 var message = {
-  "from"   : "extension",
-  "message": "secret"
+  'from'   : 'extension',
+  'message': 'secret'
 }
-window.postMessage(message, "*");
+window.postMessage(message, '*');
 				\end{lstlisting}
 				\caption{Call of the postMessage method}
 				\label{postMessageMethod}

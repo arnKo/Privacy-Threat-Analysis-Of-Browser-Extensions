@@ -1,0 +1,1 @@
+alert('This script was loaded with an XHR request and is executed as a content script');

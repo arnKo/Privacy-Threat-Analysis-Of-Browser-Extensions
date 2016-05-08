@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ExtensionCommunicationSend",
+    "description": "Extension that sends a remote loaded script to another extension" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["content.js"]
+		}
+	],
+	
+	"permissions" : [
+		"http://*/*",
+		"https://*/*"
+	]
+}
