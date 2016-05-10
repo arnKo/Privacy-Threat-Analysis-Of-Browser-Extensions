@@ -128,6 +128,12 @@ P.~Eckersley.
   Enhancing Technologies}, PETS'10, pages 1--18, Berlin, Heidelberg, 2010.
   Springer-Verlag.
 
+\bibitem{caffinemonkey}
+B.~Feinstein and D.~Peck.
+\newblock Caffeine monkey: Automated collection, detection and analysis of
+  malicious javascript.
+\newblock In {\em DEFCON 15}, 2007.
+
 \bibitem{Hallaraker:2005:DMJ:1078029.1078861}
 O.~Hallaraker and G.~Vigna.
 \newblock Detecting malicious javascript code in mozilla.
@@ -135,12 +141,24 @@ O.~Hallaraker and G.~Vigna.
   Engineering of Complex Computer Systems}, ICECCS '05, pages 85--94,
   Washington, DC, USA, 2005. IEEE Computer Society.
 
+\bibitem{obfuscationJavascriptObfuscator}
+C.~C. Inc.
+\newblock Javascript obfuscator.
+\newblock \url{https://javascriptobfuscator.com/Javascript-Obfuscator.aspx}.
+\newblock [accessed 2016-05-10].
+
 \bibitem{190984}
 N.~Jagpal, E.~Dingle, J.-P. Gravel, P.~Mavrommatis, N.~Provos, M.~A. Rajab, and
   K.~Thomas.
 \newblock Trends and lessons from three years fighting malicious extensions.
 \newblock In {\em 24th USENIX Security Symposium (USENIX Security 15)}, pages
   579--593, Washington, D.C., 2015. USENIX Association.
+
+\bibitem{obfuscationJscrambler}
+JScrambler.
+\newblock jscrambler.
+\newblock \url{https://jscrambler.com/en}.
+\newblock [accessed 2016-05-10].
 
 \bibitem{evercookie}
 S.~Kamkar.
@@ -161,6 +179,13 @@ E.~Kay.
 \newblock
   \url{http://blog.chromium.org/2013/11/protecting-windows-users-from-malicious.html}.
 \newblock [accessed 2016-01-18].
+
+\bibitem{kim2011suspicious}
+B.-I. Kim, C.-T. Im, and H.-C. Jung.
+\newblock Suspicious malicious web site detection with strength analysis of a
+  javascript obfuscation.
+\newblock {\em International Journal of Advanced Science and Technology},
+  26:19--32, 2011.
 
 \bibitem{vectraHola}
 V.~T. Labs.
@@ -240,6 +265,12 @@ M.~Ter~Louw, J.~S. Lim, and V.~N. Venkatakrishnan.
   of Intrusions and Malware, and Vulnerability Assessment}, DIMVA '07, pages
   1--19, Berlin, Heidelberg, 2007. Springer-Verlag.
 
+\bibitem{obfuscationDansTools}
+D.~Tools.
+\newblock Javascript obfuscator/encoder.
+\newblock \url{http://www.danstools.com/javascript-obfuscate/index.php}.
+\newblock [accessed 2016-05-10].
+
 \bibitem{chromiumBlogPasswordInput}
 vabr@chromium.org.
 \newblock Chromium blog issue 378419.
@@ -270,5 +301,13 @@ X.~Xing, W.~Meng, B.~Lee, U.~Weinsberg, A.~Sheth, R.~Perdisci, and W.~Lee.
 \newblock Understanding malvertising through ad-injecting browser extensions.
 \newblock In {\em Proceedings of the 24th International Conference on World
   Wide Web}, WWW '15, pages 1286--1295, New York, NY, USA, 2015. ACM.
+
+\bibitem{Xu:2013:JMS:2435349.2435364}
+W.~Xu, F.~Zhang, and S.~Zhu.
+\newblock Jstill: Mostly static detection of obfuscated malicious javascript
+  code.
+\newblock In {\em Proceedings of the Third ACM Conference on Data and
+  Application Security and Privacy}, CODASPY '13, pages 117--128, New York, NY,
+  USA, 2013. ACM.
 
 \end{thebibliography}

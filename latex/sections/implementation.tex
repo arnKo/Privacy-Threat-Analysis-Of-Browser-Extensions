@@ -11,165 +11,112 @@
 		
 		% mention analysis tooles
 		% static and dynamic
+		% static analysis, content matching, 
 		
 		
 		
 		\subsubsection{Code Obfuscation}
 			
-			Code obfuscation describes the transformation of a program's source code into a form in which it takes more time to analyze it's capabilities and purpose than in it's original state but without changing the execution result.  \\
-			% not revertible
-			% stealthy
+			Code obfuscation describes the transformation of a program's source code into a form in which it takes more time to analyze it's capabilities and purpose than in it's original state but without changing the execution result. Strong obfuscation is not or only with great expense reversible. \\
 			
-			It was originally developed to protect a developer's implementation from code plagiarism. Other developers should not be able to understand the concrete implementation of the program or algorithm. Nowadays, it is often used to hide malicious behavior from detection. Code obfuscation changes the code's structure and therefore prevents the detection of known code pattern. It also changes the application's hash signatures which are often used by anti-virus software to identify known threats. A simple method of code obfuscation is to change the order of methods in the source code. This results in a different hash signature for each order but still gives the same result after execution. \\
+			It was originally developed to protect a developer's implementation from code plagiarism. Other developers should not be able to understand the concrete implementation of the program or algorithm. Nowadays, it is often used to hide malicious behavior from detection. Code obfuscation changes the code's structure and therefore prevents the detection of known code pattern. It also changes the application's binary representation which is often used by anti-virus software to identify known threats. A simple method of code obfuscation is to change the order of methods in the source code. This results in a different binary representation for each order but still gives the same result after execution. \\
 			
-			Code obfuscation is used in programing languages without a strict syntax. The first languages for which obfuscation was used were C and C++. \\
-			
-			% originally used for C or C++, languages without strong syntax specifications, obfuscation often settled in compiled machine code 
-			% JavaScript files are not compiled, obfuscation in source code, often enlarges source code
-			% strong obfuscation is not or only with great expense reversible
+			Code obfuscation is used in programing languages without a strict syntax. The first languages for which obfuscation was used were C and C++. JavaScript is suited for obfuscation due to it's very lax syntax. Many open source libraries and tools exist to obfuscate JavaScript \cite{obfuscationDansTools, obfuscationJavascriptObfuscator, obfuscationJscrambler}. Because JavaScript files are not compiled into machine code but directly executed in the browser, obfuscation takes place in the source code and often enlarges it. This fact is used by detection tools. For example, \textit{WebEval} detects obfuscation by comparing the original source code to a prettified version \cite{190984}. If the original code was obfuscated, the difference in line size between both versions is large. \\
 		
 			Code obfuscation should not be confused with minification or encryption. Minification targets to decrease the size and hence the download time of JavaScript files. It is often implemented as a script which prints the original script. Although the minimized JavaScript code is not readable by the human eye, its execution returns the original source code. This fact renders minification useless as an obfuscation technique. Similar, encrypted code is unreadable not only to a human but also to the compiler. Consequently, encryption can not be used as an obfuscation technique because obfuscated code has still to be executable. \\
 	
+			There exists many techniques used for JavaScript obfuscation. The following list shows a subset of common techniques with a brief description and code examples. Detailed explanations are found in several research papers \cite{caffinemonkey, Xu:2013:JMS:2435349.2435364, kim2011suspicious}.
 			
-	
-			% \cite{caffinemonkey}
-			% add random sections to source code that are ignored by the JavaScript compiler such as whitespace or comments, does not change the semantics but changes binary representation which is used by security technologies, hampers human analysts and content matching
-			% reassign functions and randomzie variable names, no certainity that beyond a function name the standartised function stands,
-			
-			%\cite{Xu:2013:JMS:2435349.2435364} 
-			% variable values converted in computional results, string splitting, 
-			% JavaScript code encoding in ascii unicode or hexadecimal
-			% JavaScript code encoded with custom function, decode function in source code is executed at runtime
-			% change execution path without effecting semantics, add dead code,
-			% \cite{kim2011suspicious}
-		
-		
-		
-			Some techniques which are used for code obfuscation only hamper manual analysis. They change the visual representation of the code and remove information that assist developer to understand the code's capabilities.
-			
+			\def\leftside{0.475\textwidth}
+			\def\rightside{0.475\textwidth}
 			\begin{itemize}
-				\item \textbf{Remove Comments} Comments help other developers to understand the code. They are often placed next to code sections where the exact operation is not obvious. The removing of comments can not be reverted because there are no traces left which may be used to restore them.
-				\item \textbf{Remove Code Structure} Using whitespace, linebreaks, and indenting improves the readability of a source code. Removing them results in a single line of code. There exist many tools that can revert this action. For instance, the JavaScript library \textit{js-prettify} which was especially developed for this task. %TODO cite
-				\item \textbf{Rename Variables} Meaningful variable and method names facilitate the comprehension of an application's source code. Replacing them with meaningless or random strings removes a further information that helps understanding the code and increases the probability to mistake variables.
+					\begin{minipage}{\leftside}
+						\item \textbf{Random Noise} The JavaScript compiler ignores several sections of the source code such as comments, whitespaces, indenting, and linefeeds. Adding those in a random manner does not change the semantics of the source code but changes it's binary representation and hampers content matching.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+							\begin{lstlisting}
+var/*foo*/add/*bar      foo*/
+= //      3;
+  /* 1 2 3*/        function       (x
+,      y //   return(  x  ); // foo
+)      {    return/*bar*/(x+/*
+y);   */      y      ;} //  alert('1');\end{lstlisting}
+					\end{minipage} 
+			
+					\begin{minipage}{\leftside}
+						\item \textbf{Reassign Functions} Reassigning function names seizes the assurance that a function with a known and standardized name is actually the expected function implementation. In our example, we reassign the \texttt{eval} function to the standardized \texttt{unescape} function on line 1. A simple static analysis that does not keep track of all variable and function assignments will not recognize the call to the eval function on line 2.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+						\begin{lstlisting}
+unescape = eval;
+unescape('document.write("secret")');\end{lstlisting}
+					\end{minipage} 
+					
+					\begin{minipage}{\leftside}
+						\item \textbf{Random Symbol Names} Replacing the names of variable, functions, and object elements with non-meaningful names hampers manual analysis and removes further information which facilitate the comprehension of the source code.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+						\begin{lstlisting}
+function jf21f(2jd2, k201) {
+	return(2jd2 + k201);
+}
+var 2eh90 = jf21f(2,4);\end{lstlisting}
+					\end{minipage} 	
+					
+					\begin{minipage}{\leftside}
+						\item \textbf{String Splitting} Splitting strings in the source code in several parts hides code words and hampers content matching. The string parts are stored inside arrays and concatenated at run time. To add more confusion, the exact position of each part is often determined by arithmetic calculations. Our example prints the string \textit{"Hello World"}.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+						\begin{lstlisting}
+var y = ['d', 'W', 'l', 'He', ' ', 'r', 'o'];
+alert(y[3] + y[6-5+1] + y[2] 
+	+ y[y.length - 1] + y[2*2]
+	+ y[y.length - 6] + y[6] 
+	+ y[3+2] + y[1*2] + y[0]);\end{lstlisting}
+					\end{minipage} 	
+					
+					\begin{minipage}{\leftside}
+						\item \textbf{String Encoding} To hide strings even more, they are stored encoded. The hexadecimal representation (e.g.: \texttt{\textbackslash x43}) is often used because the JavaScript compiler decodes them automatically at runtime. Other approaches use the method \texttt{Number.toString(radix)} which returns a string representation of the numeric value in the specified radix. This allows to encode single characters with numeric values. For example, if we use a radix of 36, we can encode all lowercase characters from \texttt{(10).toString(36)} returns \texttt{"a"} to \texttt{(35).toString(36)} returns \texttt{"z"}.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+						\begin{lstlisting}
+var y = ['\x64', '\x57', '\x6c', '\x48\x65', 
+	'\x20', '\x72', '\x6f'];
+alert(y[3] + y[6-5+1] + y[2] 
+	+ y[y.length -1] + y[2*2]
+	+ y[y.length - 6] + y[6] 
+	+ y[3+2] + y[1*2] + y[0]);\end{lstlisting}
+						\begin{lstlisting}
+alert((15).toString(18) 
+	+ (24).toString(26) 
+	+ (24).toString(31));\end{lstlisting}
+					\end{minipage} 
+									
+					\begin{minipage}{\leftside}
+						\item \textbf{Array Subscript Notation} Commonly, elements of objects in JavaScript are accessed with the dot notation \texttt{object.element} whereas element may also be a function. Using the array subscript notation \texttt{object['element']} allows us to call functions based on string values. This in combination with string encoding or string splitting gives us the opportunity, to hide the name of the called function. Our example calls the constructor of the \texttt{Array.sort()} function \texttt{new Function()} which is equal to \texttt{eval}.
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}
+						\begin{lstlisting}
+[]['sort']['constructor']('alert(1)')();\end{lstlisting}
+					\end{minipage} 	
+						
+					\begin{minipage}{\leftside}
+						\item \textbf{Dead Code} Adding code sections which will never execute does not change the semantics or the execution time. A static analysis tool will not remove the dead code if it relies on opaque conditions which are never true but based on values from the original source code. The tool will analyze every possible execution path. 
+					\end{minipage} \hspace{1em}
+					\begin{minipage}{\rightside}	
+						\begin{lstlisting}
+function add(x, y) {
+	if(x > 0 && y != 0 && x / y == 0) {
+		for(int i = 0; i < y; i++) {
+			x = i < x ? y + 2 : x - 3;
+		}
+	}
+	return(x + y);
+}\end{lstlisting}
+					\end{minipage} 									
 			\end{itemize}
 			
-			Static analysis tools such as VEX or the implementation from Hallaraker et al. are still able to detect malicious behavior in code which was obfuscated with previously described techniques \cite{Bandhakavi:2011:VBE:1995376.1995398, Hallaraker:2005:DMJ:1078029.1078861}. 
-			
-			\begin{itemize}
-				\item \textbf{Remove Code } Reducing the readability of an application's source code is often the first step of obfuscation. This is achieved by removing comments and code structure such as whitespace, linebreaks, and indenting and replacing variable names with meaningless or random names. These procedures only hamper manual analysis but static analysis tools such as VEX are still able to detect malicious code pattern \cite{Bandhakavi:2011:VBE:1995376.1995398}. Removing comments is a non-revertible procedure, whereas many tools exists that add structure to source code for example the JavaScript library \textit{js-prettify}. 
-				\item \textbf{String Encoding} The method \texttt{Number.toString(radix)} returns a string representation of the numeric value in the specified radix. This allows to encode single characters with numeric values. For example, if we use a radix of 36, we can encode all lowercase characters starting with \texttt{(10).toString(36)} returns \texttt{"a"} and finishing with \texttt{(35).toString(36)} returns \texttt{"z"}.
-				\item \textbf{String Splitting} Splitting strings and concatenating at runtime hides code words in the source code. Adding mathematical calculations to determine the exact location of a string part adds even more confusion.
-				\item \textbf{String Based Method Execution} JavaScript methods are normally called with the notation \texttt{object.method()}. But in JavaScript even methods are objects and any object can be called like an associative array. So we can execute a method like this \texttt{object["method"]()}. This allows us to hide method names with the above described techniques of string encoding and splitting. %TODO
-				\item \textbf{Dead Code} Adding code sections which ...
-				% depend on conditions never true => never executes
-				% execute differend 
-			\end{itemize}
-			
-			\begin{table}
-				\begin{tabular}{|p{0.473\textwidth}|p{0.473\textwidth}|} \hline
-					\multicolumn{2}{|l|}{\textbf{Remove Comments}} \\ \hline
-					\begin{lstlisting}
-/**
- * Subtract the higher value 
- * from the lower value.
- * @throws If x equals y
- */
-function sub(x, y) {...}
-					\end{lstlisting} &
-					\begin{lstlisting}
-function sub(x, y) {...}
-					\end{lstlisting} \\ \hline
-					\multicolumn{2}{|l|}{\textbf{Remove Code Structure}} \\ \hline
-					\begin{lstlisting}
-function sub(x, y) {
-  if(x < y) {
-    return(y - x);}
-  }
-  if(x > y) {
-    return(x - y);
-  }
-  throw new Exception();
-}
-					\end{lstlisting} &
-					\begin{lstlisting}
-function sub(x,y){if(x<y){return(y-x);}}if(x>y){return(x-y);}throw new Exception();}
-					\end{lstlisting} \\ \hline
-					\multicolumn{2}{|l|}{\textbf{Rename Variables}} \\ \hline
-					\begin{lstlisting}
-var person = {
-  firstname: 'Paul',
-  lastname: 'Hendricson',
-  age: 32,
-  city: 'Darmstadt'
-}
-					\end{lstlisting} &
-					\begin{lstlisting}
-var IlIIlI = {
-  IllIlI: 'Paul',
-  IlIllI: 'Hendricson',
-  IIlIlI: 32,
-  IlIlII: 'Darmstadt'
-}
-					\end{lstlisting} \\ \hline
-				\end{tabular}
-			\end{table}
-			
-			
-			\begin{table}
-				\begin{tabular}{|p{0.473\textwidth}|p{0.473\textwidth}|} \hline
-					\multicolumn{2}{|l|}{\textbf{String Encoding}} \\ \hline
-					\begin{lstlisting}
-var x = 'hello';
-					\end{lstlisting} &
-					\begin{lstlisting}
-var x = (17).toString(18) 
-  + (14).toString(23) 
-  + (21).toString(24) 
-  + (21).toString(30) 
-  + (24).toString(29);	
-					\end{lstlisting} \\ \hline
-					\multicolumn{2}{|l|}{\textbf{String Splitting}} \\ \hline
-					\begin{lstlisting}
-var x = 'Hello world';
-					\end{lstlisting} &
-					\begin{lstlisting}
-var y = ['d','w','l','He',' ','r','o'];
-var x = y[3] + y[6-5+1] + y[2] 
-  + y[y.length -1] + y[2*2]
-  + y[y.length - 6] + y[6]
-  + y[3+2] + y[1*2] + y[0];
-					\end{lstlisting} \\ \hline
-					\multicolumn{2}{|l|}{\textbf{String Based Method Execution}} \\ \hline
-					\begin{lstlisting}
-eval('alert(1)');
-					\end{lstlisting} &
-					\begin{lstlisting}
-[]['sort']['constructor']('alert(1)')();
-					\end{lstlisting} \\ \hline
-				\end{tabular}
-			\end{table}
-			
-			
-			% Techniques that change the execu
-			
-			% techniques:
-			% * remove comments
-			% * remove whitspace
-			% * rename variables/methods with meaningless names
-			% * encod strings as numeric values, use .toString to decode
-			% * split strings
-			% * add dead code
-			% 	-> code does not change program execution, increases complexity of control flow,
-			% * use JS type names to extract characters and build strings
-			%	-> (![]+"")[1] => (false+"")[1] => "false"[1] => "a"
-			% * use uncommon methods to execute functions
-			% -> eval("alert(1)") => []["some"]["constructor"]("alert(1)")()
-			% some techniques are reversible (whitespace)
-			
-			% detectable through dynamic analysis or information flow tracing
-			% code execution
-			% webeval detects obfuscated or minification by comparing the length of the original to a pretified version
-			% many open source libraries
+			Code obfuscation only hampers static analysis. Because it does not change the code's execution, dynamic analysis still detects malicious code.
 		
 		\subsubsection{Remotely Loaded Scripts}
 			
@@ -247,7 +194,9 @@ window.postMessage(message, '*');
 				\label{postMessageMethod}
 			\end{code}
 		
-		
+		\subsubsection{Targeting}
+			
+			If we are able to identify the current user, we can exchange a otherwise benign script with a malicious one or add malicious behavior to an existing script. 
 		%%%% fetch different scripts depending on current context
 		% no need to hide the servers address if server loads benign scripts most of the time
 		% context: web page, user, device
@@ -294,7 +243,13 @@ function send(data) {
 	
 	\subsection{Attack Vectors}
 		
+		\subsubsection{Known Attacks}
+			
+			
+			
+		\subsubsection{Implementations}
 		
+			
 		
 	\subsection{Targeting}
 	
@@ -375,7 +330,7 @@ function send(data) {
 		
 		\subsubsection{Implementations}
 			
-			We have shown techniques which are used in web page's to track and identify the current user. Almost all techniques are based on JavaScript and executed inside the current web page. Therefore, an extension which has full access to the web page can also execute them. \\
+			We have shown techniques which are used in web page's to track and identify the current user. Almost all techniques are based on JavaScript and executed inside the current web page. Therefore, an extension which has full access to the web page can execute them, too. \\
 			
 			\textbf{Identifier Storage} An extension is able to store information between browser sessions. Chrome provides an additional cloud based storage that is automatically synced with all devices if the user uses Chrome with his Google account. Firefox Add-ons on the other hand are able to store information on the user's hard disk. We can use this mechanism to provide a storage for a tracking identifier additional to cookies or similar. Such identifier are propagated from a web page to the browser. To receive one, we can use a previous described technique for communicate between a content script and the underlying web page. \\
 			

@@ -4,7 +4,11 @@
 \usepackage{listings}
 \usepackage{array}
 \usepackage{url}
+\usepackage{hyperref}
 \usepackage{float}
+\usepackage{cmap}
+\usepackage{accsupp}
+\usepackage{textcomp}
 
 \let\stdsection\section
 \let\stdsubsection\subsection
@@ -15,13 +19,22 @@
 
 \newfloat{code}{h}{codeextracts}
 \floatname{code}{Code Extract}
-\newcommand{\coderef}[1]{\textit{Code Extract \ref{#1}}}
+\newcommand{\coderef}[1]{\textit{Code Extract \autoref{#1}}}
 
 \newfloat{listing}{h}{enumerates}
 \floatname{listing}{List}
 
+
+\newcommand\emptyaccsupp[1]{\BeginAccSupp{method=escape,ActualText={}}#1\EndAccSupp{}}
+
 \lstset{
-	breaklines=true	
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true,
+	numberstyle=\emptyaccsupp,
+	literate={-}{-}1
+	         {*}{*}1,
+	upquote=true         
 }
 
 \begin{document}
