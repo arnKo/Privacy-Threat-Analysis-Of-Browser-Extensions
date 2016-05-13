@@ -237,19 +237,7 @@ function send(data) {
 		
 		The Same Origin Policy creates a boundary between the iframe and it's parent web page. It prevents scripts to access content that has another origin than the script itself. Therefore, if the web page inside the iframe was loaded from another domain as the parent web page, the iframe's JavaScript can not access the parent web page and vice versa. This boundary does not prevent an extension to access information in an iframe. The extension can execute a content script in every web page hence in the iframe's web page, too. This allows us to use the content script in \coderef{contentScriptSendDataWithIframe} for a two way communication channel. Executing a second content script inside the iframe, allows us to read information which our server has embedded inside the fetched web page. \\
 		
-		In a previous research, Liu et al. implemented extensions for major browsers that act as bot in a botnet \cite{liu2011botnet}. Their implementation is able to perform DDoS and spamming attacks. A botnet needs a communication channel over which the attacker controls his bots and sends needed information such as the target for a DoS attack or a spamming text. Liu et al. used the automatic update of extensions as their communication channel. They added a file to the extension's bundle which contains the commands. The extension reads the file and executes the attack.  
-		% stealthy
-		% distributed attack times, next attack next time user starts browser
-	
-	\subsection{Attack Vectors}
-		
-		\subsubsection{Known Attacks}
-			
-			
-			
-		\subsubsection{Implementations}
-		
-			
+		In previous researches, Liu et al. implemented extensions for major browsers that can be remote controlled to execute web based attacks such as \texttt{Denial of Service} or spamming. \cite{liu2011botnet, Liu12chromeextensions:}. To control the extensions and send needed information such as the target for a DoS attack or a spamming text, communication between the attacker and the extensions is needed. Liu et al. use the automatic update of extensions for that purpose. The browser checks for any extension update on startup and periodically on runtime. The attacker can distribute an attack by pushing a new update, where the extension can read commands from a file in it's bundle. This communication channel is more stealthy than previous approaches because no web request is executed between the extension and the attacker. The update process is a legitimate function of the browser and therefore it does not trigger any anti-virus software. \\		
 		
 	\subsection{Targeting}
 	
@@ -323,51 +311,81 @@ function send(data) {
 				\item \textbf{Fonts} The list of fonts available to a web page can serve as part of a user identification. The browser plugin Flash provides an API that returns a list of fonts installed on the current system. As per current scientific works, the order of the fonts list is stable and machine-specific. %TODO cite
 				If the Flash plugin is not available in a browser, JavaScript can be used to test whether particular fonts are installed or not. This approach needs a predefined list and may not cover unpopular fonts. It is implemented by writing a string with each font on the web page. If a font is not installed, the browser uses a fall-back font to draw the text. Comparing the width and hight of the drawn font to those of the fall-back font gives an evidence about the font being installed. 
 				
-				\item \textbf{History Sniffing} Reading out the user's web history can not only serve as fingerprinting method but also to simplify user tracking. The attacker  An outdated approach to test if a user has visited a particular web page was to use the browser's feature to display links to visited web pages in a different color. A web site would hidden from the user add a list of URLs to a web page as link elements and determinate the displayed color. Nowadays, link elements that were queried by JavaScript calls behave like unvisited links fixing the tread from this sniffing attack. A current approach detects the redrawing of link elements to determine if the underlying web page was visited before \cite{paulstone_historysniffing}. If a link is drawn the first time, it is drawn as an unvisited link and simultaneously a query to the browser's web history database is send. When the query returns that the web page behind the link was visited before, it redraws the link element. This event can be captured giving the desired evidence.
+				\item \textbf{History Sniffing} Reading out the user's web history can not only serve as fingerprinting method but also to simplify user tracking. The attacker  An outdated approach to test if a user has visited a particular web page was to use the browser's feature to display links to visited web pages in a different color. A web site would hidden from the user add a list of URLs to a web page as link elements and determinate the displayed color. Nowadays, link elements that were queried by JavaScript calls behave like unvisited links fixing the thread from this sniffing attack. A current approach detects the redrawing of link elements to determine if the underlying web page was visited before \cite{paulstone_historysniffing}. If a link is drawn the first time, it is drawn as an unvisited link and simultaneously a query to the browser's web history database is send. When the query returns that the web page behind the link was visited before, it redraws the link element. This event can be captured giving the desired evidence.
 				
 				\item \textbf{JavaScript Benchmark Testing} The execution speed of a JavaScript engine depends on the implementation but also on the systems processor architecture and clock speed. Keaton Mowery et al. implemented a set of benchmark test suits to fingerprint different execution speeds \cite{MBYS11}. Using these information, they could distinguish between major browser versions, operating systems and micro architectures. 
 			\end{itemize}
+	
+	\subsection{Attack Vectors}
+	
+		\subsubsection{Accessing The Web Page}
+			
+			An extension has unrestricted access to the displayed web page. This gives a malicious extension the possibility to steal arbitrary user information and manipulate the web page in every possible way. 
+			
+			\cite{liu2011botnet, Liu12chromeextensions:, extensions:cns14, TerLouw:2007:EWB:1420581.1420583} extension  with a content script has full access to the current web page and all information in it, extension can steal any of this information, be it password and usernames, financial information, ... , can also modify any content \\
+	 
+			\cite{extensions:cns14} many attacks for web extension sorted by permissions, implemented each attack as proof of concept, host permission \texttt{http://*/*}, can load other web pages by e.a. \texttt{chrome.tabs.update} which is not restricted by the \texttt{tabs} permission, if browser has stored auto fill data extension can steal them, load other web page in current tab is very suspicious, more stealthy by loading web page in inactive tab or even in other window which is currently in background, these information can be accessed with the \texttt{chrome.tabs} API and do not need the \texttt{tabs} permission too, other stealthy approach is to use an iframe, can be hidden from the user by loading in background tab, invisible or very small, webextension needs \texttt{all_frames} option for content scripts to execute content script in iframe, including \texttt{all_frames} does not cause additional warning, many web pages set \texttt{X-Frame-Options} header to disallow being opened in iframe, they implemented an extension that sets the security header to \texttt{ALLOW} using the \texttt{webRequestBlocking} permission and API, user tracking and identifying with an extension, reading user information such as facebook name, email addresses or other sensitive data, cross devices tracking if extension is installed on multiple devices, check same username used on different devices, tracking mouse movements and key input using document events, history sniffing with \texttt{history} permission \\
+	 
+	 	\subsubsection{Execute Web Attacks}
+	 	
+	 		\cite{liu2011botnet, Liu12chromeextensions:} bot net, password sniffing, DoS attack and spamming, DoS either by XHR or DOM, webextension: XHR needs host permissions, spamming uses user's email account, catches credentials if user logs into email account, sends emails on behalf of user, stealthy because many different email addresses are used for spamming and spamming is distributed in time, \\
+	 	
+		 	A botnet is a network consisting of multiple compromised clients which can be controlled remotely. They are mostly used to execute large scaled cyber attacks such as Distributed Denial of Service (DDoS) or spamming. In recent times, botnets are also used to harvest social media valuations such as Facebook's likes. The controller of such a botnet - also called bot master - sales these valuations to thousands and executes them with the social media accounts which are used on the compromised machines. With the same manner, the bot master can execute DDoS attacks to make a web service unavailable for the general public. This is achieved by overwhelming the server's capacities with requests. Either targeting the network and flooding it's bandwidth or the application itself using up all of the computer's CPU resources. A simple Denial of Service (DoS) attack calls the targeted web service numerous times a second from a single origin. If the attacker uses a botnet, he is able to perform the DoS attack from multiple devices simultaneously which results in an ever bigger overwhelm at the targeted server. \\
+	 	
+		 	Extensions may be used as a bots. They are hosted on many different computers and can execute web requests. 
+		 	Extensions that act as a bot where previously researched for Internet Explorer, Firefox and Chrome \cite{liu2011botnet}.
+	 
+		\subsubsection{Intercept Requests}
+		 
+			The Man-in-the-browser (MITB) is a browser based attack related to man-in-the-middle attack (MITM) \cite{Curran:2012:MBA:2433195.2433198}. It intercepts and alters web traffic to simulate a false environment for the user where his interactions will harm himself. \\
+			
+			The MITM is an attack scenario in computer cryptography against a direct communication between two parties where the attacker secretly gains access to the exchanged messages. This gives him the opportunity to either steal desired information or alter the communication. If he alters the traffic in the right way, he is able to impersonate one party and deceive the other one to think the communication is still private. To gain access to the communication channel, an MITM attacker has to use vulnerabilities in obsolete cryptography algorithm or exploits in buggy implemented soft or hardware. An MITB attack on the other hand is located inside the browser from where it intercepts in and outgoing web requests. The attack will be successful irrespective of security mechanisms because it takes place before any encryption or authentication is applied. \\
+			
+			An MITB attacker often manipulates the code base of a browser to perform his attacks and therefore needs access to the user's machine. A simpler realization of MITB attacks can be achieved using extensions. An extension can manipulate a web page to show false information and alter outgoing web requests without knowledge of the user. It is a part of the browser itself and therefore obviates the need to manipulate the browser's code base which also decreases the probability of discovery. \\
+			
+			A simple MITB attack scenario using an extension: The user logs into the online platform of his bank to perform a transaction. He enters needed information into the provided form and submits it back to the bank's server. The extension reads the outgoing web request and changes the target account and rises the transfer amount. The banking system will not recognize the manipulated request. It will trust to request because the communication channel is secured and the user was successfully identified. To review and check the transaction, the banking system sends back an receipt to the user. The extension intercepts the returning web request and changes the previously manipulated data back to its original state. The user does not recognize the manipulation at this point, too. To hamper such attacks, modern banking systems use an extra verification before they execute the transaction. It often consists a piece of information which comes from an external source. For example, a TAN generator calculates a values from the target account number, the transfer amount, and some data stored on the user's banking card. This would prevent our attack scenario, because the value which is entered by the user will not match the value calculated on the server and the extension can not access the information on the banking card to calculate the correct value itself. \\
+	 
+	\subsection{Implementation}
+
+		We have shown techniques which are used in web page's to track and identify the current user. Almost all techniques are based on JavaScript and executed inside the current web page. Therefore, an extension which has full access to the web page can execute them, too. \\
 		
-		\subsubsection{Implementations}
-			
-			We have shown techniques which are used in web page's to track and identify the current user. Almost all techniques are based on JavaScript and executed inside the current web page. Therefore, an extension which has full access to the web page can execute them, too. \\
-			
-			\textbf{Identifier Storage} An extension is able to store information between browser sessions. Chrome provides an additional cloud based storage that is automatically synced with all devices if the user uses Chrome with his Google account. Firefox Add-ons on the other hand are able to store information on the user's hard disk. We can use this mechanism to provide a storage for a tracking identifier additional to cookies or similar. Such identifier are propagated from a web page to the browser. To receive one, we can use a previous described technique for communicate between a content script and the underlying web page. \\
-			
-			% TODO
-			
-			\textbf{Web Beacon} This is another tracking method which we can support with an extension. It notifies a third party that a specific web page was accessed by fetching a resource from a server and sending possible tracking cookies along the request. We implemented an extension that embeds an invisible iframe element in every visited web page. The iframe loads an empty web page from our server along with a tracking cookie. The second time our content script is executed, the tracking cookie will be sent back to our server with the request from the iframe. The extension needs a single content script with the matching attributes \texttt{"http://*/*"} and \texttt{"https://*/*"} and no further permissions. The content script is shown in \coderef{contentScriptWebBeacon}.
-			
-			\begin{code}
-				\begin{lstlisting}
-var iframe = document.createElement('iframe');
-iframe.setAttribute('src', 'https://localhost:3001/tracking/beacon');
-iframe.setAttribute('style', 'display: none;');
-document.body.appendChild(iframe);
-				\end{lstlisting}
-				\caption{Content script that executes a web beacon}
-				\label{contentScriptWebBeacon}
-			\end{code}
+		\textbf{Identifier Storage} An extension is able to store information between browser sessions. Chrome provides an additional cloud based storage that is automatically synced with all devices if the user uses Chrome with his Google account. Firefox Add-ons on the other hand are able to store information on the user's hard disk. We can use this mechanism to provide a storage for a tracking identifier additional to cookies or similar. Such identifier are propagated from a web page to the browser. To receive one, we can use a previous described technique for communicate between a content script and the underlying web page. \\
 		
-			\textbf{Keylogger} JavaScript enables us to register events for every interaction the user has with the current web page. This gives us the possibility to exactly observe what elements the user clicks, double clicks, or drag and drops and what text he enters in input fields. If we combine all these information, we are able to track the user on his path through the web page. 
+		% TODO
 		
-			\textbf{Additional Fingerprint Information} The browser provides additional information to its extension which are not available for web pages. Those information may be used to generate a more accurate fingerprint of the user's browser and system. Accessing the information needs additional permissions. \ref{fingerprintExtension} shows provided information that may be retrieved for a fingerprint and the permissions needed to access them. \\
-			
-			\begin{table}[h]
-				\begin{tabular}{|l|l|l|} \hline
-					\textbf{Permission} & \textbf{Information} & \textbf{Example} \\ \hline
-					system.cpu & Number of processor kernels & \\
-					& Processor's name & Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz \\
-					& Processor's capabilities & "sse", "sse2", "sse3"  \\ \hline
-					system.memory & Memory capacity & 6501200096 \\ \hline
-					gcm & An unique ID for the extension instance & \\ \hline
-					management & List of installed extensions & Extension ID and version \\ \hline
-				\end{tabular}
-				\caption{Additional fingerprint information available to WebExtension}
-				\label{fingerprintExtension}
-			\end{table} 
-			
+		\textbf{Web Beacon} This is another tracking method which we can support with an extension. It notifies a third party that a specific web page was accessed by fetching a resource from a server and sending possible tracking cookies along the request. We implemented an extension that embeds an invisible iframe element in every visited web page. The iframe loads an empty web page from our server along with a tracking cookie. The second time our content script is executed, the tracking cookie will be sent back to our server with the request from the iframe. The extension needs a single content script with the matching attributes \texttt{"http://*/*"} and \texttt{"https://*/*"} and no further permissions. The content script is shown in \coderef{contentScriptWebBeacon}.
+		
+		\begin{code}
+			\begin{lstlisting}
+			var iframe = document.createElement('iframe');
+			iframe.setAttribute('src', 'https://localhost:3001/tracking/beacon');
+			iframe.setAttribute('style', 'display: none;');
+			document.body.appendChild(iframe);
+			\end{lstlisting}
+			\caption{Content script that executes a web beacon}
+			\label{contentScriptWebBeacon}
+		\end{code}
+		
+		\textbf{Keylogger} JavaScript enables us to register events for every interaction the user has with the current web page. This gives us the possibility to exactly observe what elements the user clicks, double clicks, or drag and drops and what text he enters in input fields. If we combine all these information, we are able to track the user on his path through the web page. 
+		
+		\textbf{Additional Fingerprint Information} The browser provides additional information to its extension which are not available for web pages. Those information may be used to generate a more accurate fingerprint of the user's browser and system. Accessing the information needs additional permissions. \ref{fingerprintExtension} shows provided information that may be retrieved for a fingerprint and the permissions needed to access them. \\
+		
+		\begin{table}[h]
+			\begin{tabular}{|l|l|l|} \hline
+				\textbf{Permission} & \textbf{Information} & \textbf{Example} \\ \hline
+				system.cpu & Number of processor kernels & \\
+				& Processor's name & Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz \\
+				& Processor's capabilities & "sse", "sse2", "sse3"  \\ \hline
+				system.memory & Memory capacity & 6501200096 \\ \hline
+				gcm & An unique ID for the extension instance & \\ \hline
+				management & List of installed extensions & Extension ID and version \\ \hline
+			\end{tabular}
+			\caption{Additional fingerprint information available to WebExtension}
+			\label{fingerprintExtension}
+		\end{table} 
+
 	\subsection{Summary}
+	
 
 
 \section{OLD}
@@ -716,13 +734,7 @@ As we tested our extension, our server output server received the following URL:
 	
 	An extension %TODO..
 	
-	\subsection{Botnet}
-	
-	A botnet is a network consisting of multiple compromised clients which can be controlled remotely. They are mostly used to execute large scaled cyber attacks such as Distributed Denial of Service (DDoS) or spamming. In recent times, botnets are also used to harvest social media valuations such as Facebook's likes. The controller of such a botnet - also called bot master - sales these valuations to thousands and executes them with the social media accounts which are used on the compromised machines. With the same manner, the bot master can execute DDoS attacks to make a web service unavailable for the general public. This is achieved by overwhelming the server's capacities with requests. Either targeting the network and flooding it's bandwidth or the application itself using up all of the computer's CPU resources. A simple Denial of Service (DoS) attack calls the targeted web service numerous times a second from a single origin. If the attacker uses a botnet, he is able to perform the DoS attack from multiple devices simultaneously which results in an ever bigger overwhelm at the targeted server. \\
-	
-	Extensions may be used as a bots. They are hosted on many different computers and can execute web requests. 
-	Extensions that act as a bot where previously researched for Internet Explorer, Firefox and Chrome \cite{liu2011botnet}.
-	
+
 	%TODO..
 	
 	%Browser extension can be used as bot's. They are hosted on many different computers and can execute web requests. A message channel is needed to command the bots to execute some task. One possible way is to let the extension fetch its command from a server. But this method can be tracked down to the person controlling the botnet who of course wants to remain unknown. A more stealthy way is to use an extension's automatically update service. The command can be added for example as a text file which will be parsed by the extension if a new update was installed. The extension can not only launch DDoS attacks but can also be used to spam emails. Therefor the extension can use the user's email account. If the user logs into his account the extension can either use send E-Mails itself over the 
