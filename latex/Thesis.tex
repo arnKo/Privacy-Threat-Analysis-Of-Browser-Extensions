@@ -4,7 +4,9 @@
 \usepackage{listings}
 \usepackage{array}
 \usepackage{url}
+\usepackage[hypcap=true]{caption}
 \usepackage{hyperref}
+%\usepackage[all]{hypcap} 
 \usepackage{float}
 \usepackage{cmap}
 \usepackage{accsupp}
@@ -19,7 +21,7 @@
 
 \newfloat{code}{h}{codeextracts}
 \floatname{code}{Code Extract}
-\newcommand{\coderef}[1]{\textit{Code Extract \autoref{#1}}}
+\def\codeautorefname{Code Extract}
 
 \newfloat{listing}{h}{enumerates}
 \floatname{listing}{List}
@@ -47,7 +49,7 @@
 	\makethesistitle
 	%	\affidavit{Arno Krause}
 	
-	%	\tableofcontents
+	\tableofcontents
 	\newpage
 	
 \section{Abstract}

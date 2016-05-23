@@ -13,30 +13,22 @@
 \BOOKMARK [3][-]{subsubsection.5.1.1}{Code Obfuscation}{subsection.5.1}% 13
 \BOOKMARK [3][-]{subsubsection.5.1.2}{Remotely Loaded Scripts}{subsection.5.1}% 14
 \BOOKMARK [3][-]{subsubsection.5.1.3}{Mutual Extension Communication}{subsection.5.1}% 15
-\BOOKMARK [2][-]{subsection.5.2}{Communication}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.3}{Attack Vectors}{section.5}% 17
-\BOOKMARK [2][-]{subsection.5.4}{Targeting}{section.5}% 18
-\BOOKMARK [3][-]{subsubsection.5.4.1}{User Tracking}{subsection.5.4}% 19
-\BOOKMARK [3][-]{subsubsection.5.4.2}{Fingerprinting}{subsection.5.4}% 20
-\BOOKMARK [3][-]{subsubsection.5.4.3}{Implementations}{subsection.5.4}% 21
-\BOOKMARK [2][-]{subsection.5.5}{Summary}{section.5}% 22
-\BOOKMARK [1][-]{section.6}{OLD}{}% 23
-\BOOKMARK [2][-]{subsection.6.1}{Data Theft}{section.6}% 24
-\BOOKMARK [3][-]{subsubsection.6.1.1}{Send Data}{subsection.6.1}% 25
-\BOOKMARK [3][-]{subsubsection.6.1.2}{Steal Data From A Web Page}{subsection.6.1}% 26
-\BOOKMARK [3][-]{subsubsection.6.1.3}{Steal Data From Web Forms}{subsection.6.1}% 27
-\BOOKMARK [3][-]{subsubsection.6.1.4}{Steal Data From Password Managers}{subsection.6.1}% 28
-\BOOKMARK [2][-]{subsection.6.2}{User Tracking}{section.6}% 29
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Extension As Identifier Storage}{subsection.6.2}% 30
-\BOOKMARK [3][-]{subsubsection.6.2.2}{Extension As Web Beacon}{subsection.6.2}% 31
-\BOOKMARK [3][-]{subsubsection.6.2.3}{Key Logger}{subsection.6.2}% 32
-\BOOKMARK [3][-]{subsubsection.6.2.4}{Additional Fingerprint Data From Extensions}{subsection.6.2}% 33
-\BOOKMARK [3][-]{subsubsection.6.2.5}{History Sniffing With An Extension}{subsection.6.2}% 34
-\BOOKMARK [3][-]{subsubsection.6.2.6}{Bypass IP Proxies}{subsection.6.2}% 35
-\BOOKMARK [2][-]{subsection.6.3}{Man In The Browser}{section.6}% 36
-\BOOKMARK [2][-]{subsection.6.4}{Botnet}{section.6}% 37
-\BOOKMARK [2][-]{subsection.6.5}{Summary}{section.6}% 38
-\BOOKMARK [1][-]{section.7}{Extension Analysis}{}% 39
-\BOOKMARK [2][-]{subsection.7.1}{Google Translate}{section.7}% 40
-\BOOKMARK [2][-]{subsection.7.2}{Unlimited Free VPN - Hola}{section.7}% 41
-\BOOKMARK [2][-]{subsection.7.3}{Evernote Web Clipper}{section.7}% 42
+\BOOKMARK [2][-]{subsection.5.2}{Targeting}{section.5}% 16
+\BOOKMARK [3][-]{subsubsection.5.2.1}{User Tracking}{subsection.5.2}% 17
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Fingerprinting}{subsection.5.2}% 18
+\BOOKMARK [2][-]{subsection.5.3}{Communication}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.4}{Attack Vectors}{section.5}% 20
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Accessing The Web Page}{subsection.5.4}% 21
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Execute Web Attacks}{subsection.5.4}% 22
+\BOOKMARK [3][-]{subsubsection.5.4.3}{Intercept Requests}{subsection.5.4}% 23
+\BOOKMARK [2][-]{subsection.5.5}{Implementation}{section.5}% 24
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Steal Credentials}{subsection.5.5}% 25
+\BOOKMARK [3][-]{subsubsection.5.5.2}{Identifier Storage}{subsection.5.5}% 26
+\BOOKMARK [3][-]{subsubsection.5.5.3}{Web Beacon}{subsection.5.5}% 27
+\BOOKMARK [3][-]{subsubsection.5.5.4}{Keylogger}{subsection.5.5}% 28
+\BOOKMARK [3][-]{subsubsection.5.5.5}{Fingerprinting}{subsection.5.5}% 29
+\BOOKMARK [2][-]{subsection.5.6}{Summary}{section.5}% 30
+\BOOKMARK [1][-]{section.6}{Extension Analysis}{}% 31
+\BOOKMARK [2][-]{subsection.6.1}{Google Translate}{section.6}% 32
+\BOOKMARK [2][-]{subsection.6.2}{Unlimited Free VPN - Hola}{section.6}% 33
+\BOOKMARK [2][-]{subsection.6.3}{Evernote Web Clipper}{section.6}% 34

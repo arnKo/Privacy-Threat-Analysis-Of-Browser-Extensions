@@ -11,7 +11,7 @@
 	\end{itemize}
 	
 	In 2009, Google introduced a new extension model for its Chrome browser. 4 years later, the developer of the Opera browser decided to change their browser framework to Chromium \cite{operaBlogSwitchToChromium}. By adapting the same underlying framework as Chrome, Opera also adapted the extension model. It became possible to use the same extension on both browsers. The Mozilla developers recently started to implement their own implementation to support Chrome's extension model in Firefox. Their goal is to establish a general model for extensions which is applicable on all browsers. They orientate themselves on the standardization of web pages. The same extension implementation should work equal on all browsers, similar how the same web page is displayed equal on all browsers. %TODO
-	In their development process, they named their implementation \textit{WebExtension}. We agreed to adapt their nomenclature in our paper to reefer to this cross-browser extension model. Because the WebExtension support for Firefox is still in development, extensions for Firefox are currently implemented in their old model called \textit{Add-ons}. \\
+	In their development process, the developers named their implementation \textit{WebExtension}. We agreed to adapt their nomenclature in our paper to reefer to this cross-browser extension model. Because the WebExtension support for Firefox is still in development, extensions for Firefox are currently implemented in their old model called \textit{Add-ons}. \\
 	%We abstained from analyzing the extension architecture of Internet-Explorer. The browser is out-of-date with the publishing of Windows 10 and their new Browser \textit{Edge} which currently does not support extensions.
 	
 	\textbf{Development} All extensions are written in web technologies such as JavaScript, HTML and CSS. Therefore, a standard editor can be used to write the extension's source code. 
@@ -21,7 +21,7 @@
 			\textbf{WebExtension} & \textbf{Firefox Add-on} & \textbf{Safari Extension} \\ \hline
 			WebExtensions are developed locally as a bundle of JavaScript, HTML, and CSS files. To debug them, the developer can load the bundle in the browser. There is no need for additional software. & 
 			Mozilla provides a JavaScript framework to develop Firefox Add-ons. The developer has to install the framework before he starts to implement an Add-on. & 
-			Safari provides an user interface to build extensions. The developer can enter needed information directly in the browser and add local source code files. \\ \hline
+			Safari provides an user interface to build extensions. The developer can enter needed information directly in the browser and add source code files with a file chooser dialog. \\ \hline
 		\end{tabular}
 		\caption{Differences in extension development}	
 	\end{table}
@@ -60,20 +60,20 @@
 			\textbf{WebExtension} & \textbf{Firefox Add-on} & \textbf{Safari Extension} \\ \hline
 			The access to the browser API is restricted by permissions. Each API module has a proper permission which needs to be declared in the extension's manifest to get access to the module. Additionally, some permissions throw a warning when the user installs the extension. & 
 			& 
-			Safari does not support programmatically injection of content script. The developer can only declare them in the extension builder interface. \\ \hline 
+			 \\ \hline 
 		\end{tabular}
 		\caption{Differences in browser API's}
 	\end{table}
 
-	\textbf{Content Scripts} To interact with a web page, the extension executes \textit{content scripts} which have full access to the web page's DOM. They behave like JavaScript embedded inside a HTML page which means they have access to the \texttt{window.document} object. This allows them to manipulate the page's structure or change the reaction to user input. Content scripts can not call methods on the extension's core scripts, but only exchange string based messages with them. \\ 
-	The developer can register content scripts for his extension with corresponding URL pattern. The browser compares the pattern with the web pages URL every time a web page is loaded. If both match, the browser will inject the content script in the web page. The developer can use wildcards in the URL pattern to match several web pages at once. For example, a content script with the pattern \texttt{http://*.example.com/*} will be injected into web pages from the domain \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not into the pages from \texttt{https://www.example.com/} and \texttt{http://www.example.org/}. Additional, if the developer wants to determine himself when to inject a content script, he can programmatically inject them. \\
+	\textbf{Content Scripts} To interact with a web page, the extension executes \textit{content scripts} which have full access to the web page's DOM. They behave like JavaScript embedded inside the web page which means they have access to the we page's \texttt{window.document} object. This allows them to manipulate the page's content or change the reaction to user input. Content scripts can not call methods on the extension's core scripts, but only exchange messages with them. \\ 
+	The developer can register content scripts for his extension with corresponding URL pattern. The browser compares the pattern with the web pages URL every time a web page is loaded. If they match, the browser will inject the content script in the web page. The developer can use wildcards in the URL pattern to match several web pages at once. For example, a content script with the pattern \texttt{http://*.example.com/*} will be injected into web pages from the domain \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not into the pages from \texttt{https://www.example.com/} and \texttt{http://www.example.org/}. Furthermore, if the developer wants to inject a content script based on additional conditions, he can programmatically inject them himself. \\
 	
 	\begin{table}[h]
 		\begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}\hline
 			\textbf{WebExtension} & \textbf{Firefox Add-on} & \textbf{Safari Extension} \\ \hline
 			The developer declares content scripts statically in the extension's manifest. At runtime, the injection of static content scripts can not be prevented. Programmatically injection is also possible, but needs special permissions to access the web page. & 
 			Content scripts are dynamically registered in the source code at any time. & 
-			Safari supports both static and dynamic registration of content scripts, but not programmatically injection. The extension builder interface provides the functionality to add static content scripts. Safari uses not only as a whitelist for its content scripts but also an additional blacklist. \\ \hline 
+			Safari supports both static and dynamic registration of content scripts, but not programmatically injection. The extension builder interface provides the functionality to add static content scripts. Safari uses not only a whitelist for its content scripts but also an additional blacklist. \\ \hline 
 		\end{tabular}
 		\caption{Differences in content scripts}
 	\end{table}

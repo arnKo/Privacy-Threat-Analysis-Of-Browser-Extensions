@@ -1,3 +1,4 @@
+// needs host permission
 function send(message) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'https://localhost:3001/log', true);
@@ -5,6 +6,7 @@ function send(message) {
 	xhr.send(message);
 }
 
+// needs "system.cpu" permissions
 function getCPUInformation(report) {
 	chrome.system.cpu.getInfo(function(info) {
 		report.push('numOfProcessors=' + info.numOfProcessors);
@@ -16,6 +18,7 @@ function getCPUInformation(report) {
 	});
 }
 
+// needs "system.memory" permission
 function getMemoryInformation(report) {
 	chrome.system.memory.getInfo(function(info) {
 		report.push('memoryCapacity=' + info.capacity);
@@ -25,6 +28,7 @@ function getMemoryInformation(report) {
 	});
 }
 
+// needs "gcm" permission
 function getInstanceId(report) {
 	chrome.instanceID.getID(function(instanceID) {
 		report.push('instanceID=' + instanceID);
@@ -34,6 +38,7 @@ function getInstanceId(report) {
 	});
 }
 
+// needs "management" permission
 function getInstalledExtensions(report) {
 	chrome.management.getAll(function(extensionArray) {
 		for(var i in extensionArray) {
@@ -47,4 +52,15 @@ function getInstalledExtensions(report) {
 }
 
 // call first function and start asynchronous function queue
-getInstalledExtensions([]);
+// does not need any permissions
+getInstalledExtensions([
+	'system=' + navigator.platform,
+	'browserName=' + navigator.userAgent,
+	'browserEngine=' + navigator.appName,
+	'screenWidth=' + screen.width,
+	'screenHeight=' + screen.height,
+	'screenPixels=' + screen.pixelDepth,
+	'timezone=' + (new Date()).getTimezoneOffset(),
+	'browserLanguage=' + navigator.language,
+	'systemLanguages=' + navigator.languages
+]);

