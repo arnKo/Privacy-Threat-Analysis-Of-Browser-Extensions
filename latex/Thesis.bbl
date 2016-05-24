@@ -206,6 +206,13 @@ L.~Liu, X.~Zhang, V.~Inc, G.~Yan, and S.~Chen.
 \newblock In {\em In 19th Network and Distributed System Security Symposium
   (NDSS ’12}, 2012.
 
+\bibitem{xFrameOptionsCompability}
+MDN.
+\newblock The x-frame-options response header.
+\newblock
+  \url{https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options}.
+\newblock [accessed 2016-05-24].
+
 \bibitem{MBYS11}
 K.~Mowery, D.~Bogenreif, S.~Yilek, and H.~Shacham.
 \newblock Fingerprinting information in {JavaScript} implementations.
@@ -252,6 +259,12 @@ M.~A. Rajab.
 \newblock
   \url{http://blog.chromium.org/2011/04/protecting-users-from-malicious.html}.
 \newblock [accessed 2015-12-26].
+
+\bibitem{xFrameOptionsSpezification}
+D.~Ross, T.~Gondrom, and T.~Stanley.
+\newblock {HTTP} {H}eader {F}ield {X}-{F}rame-{O}ptions.
+\newblock \url{https://tools.ietf.org/html/rfc7034}.
+\newblock [accessed 2016-05-24].
 
 \bibitem{paulstone_historysniffing}
 P.~Stone.
