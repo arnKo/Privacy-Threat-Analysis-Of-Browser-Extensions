@@ -1,22 +1,10 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Thesis.aux
-A level-1 auxiliary file: ./sections/architecture.aux
-A level-1 auxiliary file: ./sections/related_works.aux
-A level-1 auxiliary file: ./sections/implementation.aux
-A level-1 auxiliary file: ./sections/analysis.aux
+A level-1 auxiliary file: ./chapters/introduction.aux
+A level-1 auxiliary file: ./chapters/related_works.aux
+A level-1 auxiliary file: ./chapters/background.aux
+A level-1 auxiliary file: ./chapters/analysis_and_design.aux
 The style file: abbrv.bst
 Database file #1: references.bib
-Warning--I didn't find a database entry for "chromeWebStoreFee"
-Warning--to sort, need author or key in domBrowserCompatibility
 Warning--to sort, need author or key in mozillaDangerousEval
-Warning--to sort, need author or key in chromeDevApiList
-Warning--to sort, need author or key in operaDevApiList
-Warning--to sort, need author or key in mozillaDevApiList
-Warning--to sort, need author or key in operaSecurityReviewAcceptance
-Warning--to sort, need author or key in mozillaWebExtensionStatus
-Warning--to sort, need author or key in mozillaDevChromeAuthority
-Warning--to sort, need author or key in mozillaDevHighLevelApiList
-Warning--to sort, need author or key in mozillaDevLowLevelApiList
-Warning--to sort, need author or key in mozillaDevSystemEvents
-Warning--to sort, need author or key in mozillaDevReviewPolicy
 Warning--to sort, need author or key in mozillaWikiClearPrivacyAPI
-(There were 14 warnings)
+(There were 2 warnings)

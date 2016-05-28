@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var tracking = require('./middleware/tracking.js');
+
 var routes = require('./routes/index');
 
 var app = express();
@@ -19,6 +21,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+//app.use(tracking);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

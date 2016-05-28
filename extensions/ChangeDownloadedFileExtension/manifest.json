@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ChangeDownloadedFile",
+    "description": "If the user has downloaded a file, the extensin will delete the file and download another one with the same name as the deleted one",
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"downloads"
+	]
+}

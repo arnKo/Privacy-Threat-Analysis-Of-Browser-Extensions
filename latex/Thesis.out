@@ -1,34 +1,33 @@
-\BOOKMARK [1][-]{section.1}{Abstract}{}% 1
-\BOOKMARK [1][-]{section.2}{Introduction}{}% 2
-\BOOKMARK [1][-]{section.3}{Extension Architecture}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Multi Browser Extensions}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Firefox ADD-ONs}{section.3}% 5
-\BOOKMARK [1][-]{section.4}{Related Works}{}% 6
-\BOOKMARK [2][-]{subsection.4.1}{Extension Analysis}{section.4}% 7
-\BOOKMARK [2][-]{subsection.4.2}{Extension Attacks}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.3}{Malicious Code Detection}{section.4}% 9
-\BOOKMARK [2][-]{subsection.4.4}{Information Flow Control In JavaScript}{section.4}% 10
-\BOOKMARK [1][-]{section.5}{Extension Implementation}{}% 11
-\BOOKMARK [2][-]{subsection.5.1}{Hide Malicious Behavior}{section.5}% 12
-\BOOKMARK [3][-]{subsubsection.5.1.1}{Code Obfuscation}{subsection.5.1}% 13
-\BOOKMARK [3][-]{subsubsection.5.1.2}{Remotely Loaded Scripts}{subsection.5.1}% 14
-\BOOKMARK [3][-]{subsubsection.5.1.3}{Mutual Extension Communication}{subsection.5.1}% 15
-\BOOKMARK [2][-]{subsection.5.2}{Targeting}{section.5}% 16
-\BOOKMARK [3][-]{subsubsection.5.2.1}{User Tracking}{subsection.5.2}% 17
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Fingerprinting}{subsection.5.2}% 18
-\BOOKMARK [2][-]{subsection.5.3}{Communication}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.4}{Attack Vectors}{section.5}% 20
-\BOOKMARK [3][-]{subsubsection.5.4.1}{Accessing The Web Page}{subsection.5.4}% 21
-\BOOKMARK [3][-]{subsubsection.5.4.2}{Execute Web Attacks}{subsection.5.4}% 22
-\BOOKMARK [3][-]{subsubsection.5.4.3}{Intercept Requests}{subsection.5.4}% 23
-\BOOKMARK [2][-]{subsection.5.5}{Implementation}{section.5}% 24
-\BOOKMARK [3][-]{subsubsection.5.5.1}{Steal Credentials}{subsection.5.5}% 25
-\BOOKMARK [3][-]{subsubsection.5.5.2}{Identifier Storage}{subsection.5.5}% 26
-\BOOKMARK [3][-]{subsubsection.5.5.3}{Web Beacon}{subsection.5.5}% 27
-\BOOKMARK [3][-]{subsubsection.5.5.4}{Keylogger}{subsection.5.5}% 28
-\BOOKMARK [3][-]{subsubsection.5.5.5}{Fingerprinting}{subsection.5.5}% 29
-\BOOKMARK [2][-]{subsection.5.6}{Summary}{section.5}% 30
-\BOOKMARK [1][-]{section.6}{Extension Analysis}{}% 31
-\BOOKMARK [2][-]{subsection.6.1}{Google Translate}{section.6}% 32
-\BOOKMARK [2][-]{subsection.6.2}{Unlimited Free VPN - Hola}{section.6}% 33
-\BOOKMARK [2][-]{subsection.6.3}{Evernote Web Clipper}{section.6}% 34
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Goals}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Approach}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{Related Works}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Threat Analysis And Counter Measurement}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Analysis Of Possible Extension Attacks}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.3}{Extension Evaluation}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.4}{Information Flow Control In JavaScript}{chapter.2}% 9
+\BOOKMARK [0][-]{chapter.3}{Background}{}% 10
+\BOOKMARK [1][-]{section.3.1}{Terminology}{chapter.3}% 11
+\BOOKMARK [2][-]{subsection.3.1.1}{Browser}{section.3.1}% 12
+\BOOKMARK [2][-]{subsection.3.1.2}{Browser Extension}{section.3.1}% 13
+\BOOKMARK [2][-]{subsection.3.1.3}{Web Application}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.4}{Web Page}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Extension Architecture}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.2.1}{General Structure}{section.3.2}% 17
+\BOOKMARK [2][-]{subsection.3.2.2}{Differences Between The Browsers}{section.3.2}% 18
+\BOOKMARK [0][-]{chapter.4}{Analysis And Design}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Permission Analysis}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.1.1}{Privacy Preservation}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.2}{Dangerous Permissions}{section.4.1}% 22
+\BOOKMARK [1][-]{section.4.2}{Attack Analysis}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.2.1}{Hide Malicious Behavior}{section.4.2}% 24
+\BOOKMARK [2][-]{subsection.4.2.2}{Tracking}{section.4.2}% 25
+\BOOKMARK [2][-]{subsection.4.2.3}{Communication}{section.4.2}% 26
+\BOOKMARK [2][-]{subsection.4.2.4}{Attack Vectors}{section.4.2}% 27
+\BOOKMARK [1][-]{section.4.3}{Implementations}{chapter.4}% 28
+\BOOKMARK [2][-]{subsection.4.3.1}{Identifier Storage}{section.4.3}% 29
+\BOOKMARK [2][-]{subsection.4.3.2}{Web Beacon}{section.4.3}% 30
+\BOOKMARK [2][-]{subsection.4.3.3}{Keylogger}{section.4.3}% 31
+\BOOKMARK [2][-]{subsection.4.3.4}{Fingerprinting}{section.4.3}% 32
+\BOOKMARK [1][-]{section.4.4}{Extension Analysis}{chapter.4}% 33

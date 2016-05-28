@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ChangeDownloadFile",
+    "description": "If the user initiates a download, the extension will exchange the file." ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"downloads"
+	]
+}

@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "WebBeacon",
-    "description": "Extension that loads a tracking cookie from https://localhost:3001/tracking/beacon",
+    "description": "Extension that adds an image to every web page. The image is fetched from 'https://localhost:3001/images/pixel.png'. Possible tracking cookies are send along.",
     "version": "1.0",
 
 	"content_scripts" : [

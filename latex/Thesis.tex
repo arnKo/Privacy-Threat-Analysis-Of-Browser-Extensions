@@ -1,23 +1,15 @@
 % !TeX spellcheck = en_US
-\documentclass[article,colorback,accentcolor=tud9c,type=bsc]{tudthesis}
+\documentclass[parskip=full,bigchapter,linedtoc,colorback,accentcolor=tud9c,type=bsc]{tudthesis}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{array}
 \usepackage{url}
 \usepackage[hypcap=true]{caption}
 \usepackage{hyperref}
-%\usepackage[all]{hypcap} 
 \usepackage{float}
 \usepackage{cmap}
 \usepackage{accsupp}
 \usepackage{textcomp}
-
-\let\stdsection\section
-\let\stdsubsection\subsection
-\let\stdsubsubsection\subsubsection
-\renewcommand\section{\newpage\stdsection}
-%\renewcommand\subsection{\newpage\stdsubsection}
-%\renewcommand\subsubsection{\newpage\stdsubsubsection}
 
 \newfloat{code}{h}{codeextracts}
 \floatname{code}{Code Extract}
@@ -25,7 +17,6 @@
 
 \newfloat{listing}{h}{enumerates}
 \floatname{listing}{List}
-
 
 \newcommand\emptyaccsupp[1]{\BeginAccSupp{method=escape,ActualText={}}#1\EndAccSupp{}}
 
@@ -52,29 +43,24 @@
 	\tableofcontents
 	\newpage
 	
-\section{Abstract}
+	\chapter{Introduction}
+	\include{./chapters/introduction}
 	
-	Browser extensions are widely used today to enhance the way end users interact with the Internet. They can access data from the user by using interfaces provided by the browser. This can be misused to violate their privacy or manipulate the content of a web page in a malicious way. In this work we analyze the possibilities to integrate malicious behavior in extensions. First, we take a look which interfaces the browser provides to the extensions and whether and, if so, how the access is restricted. Using this knowledge, we develop and implement extensions with malicious behavior that uses the provided functionality. We examine popular extensions and what parts of the interfaces they use. Then, show that we can integrate parts of our previously implemented behavior into them. Finally we describe ways to improve the privacy of those susceptible extensions by limiting the possibilities to integrate malicious behavior.	
+	\chapter{Related Works}
+	\include{./chapters/related_works}
 	
-\section{Introduction}
+	\chapter{Background}
+	\include{./chapters/background}
 	
-	It is impossible to think about our modern society without the use of web browsers. They represent the connection to the Internet, the biggest until now created information distribution system. Even a person in far reaches can access the newest global information using a browser and the world wide web. There are different ways to deliver the information to the user, such as plain text, embellished web pages, or video and audio streams. The browser then displays these information and allows the user to send information himself back to the origin or other web services. But browsers are limited. The content they are displaying is largely dictated by the web service's author. The best %TODO too emotional
-	example here are advertisements. The user often does not wish to see them, but the author gets profit from displaying them. It is unreasonable to ask the author to remove his source of gainings. Another example is the design of a web page that is fixed by the developer and the user can only change it, if the developer has implemented the option to do so. To overcome the limitations and to enhance the way the end user interacts with the Internet, most browsers support the use of extensions. These are small programs that add new functionality to the browser by changing the look and the behavior of the browser itself and the web pages that are loaded. Of course, changing the content of a browser itself distinguishes depending on what user interfaces the browser provides. To change the content of a web page the browser grants the extension access to the web pages \textit{Document Object Model (DOM)}. The DOM is a standardized interface for accessing and updating the content, structure, and style of a HTML or XML document \footnote{World Wide Web Consortium DOM specification: \url{http://www.w3.org/DOM/}}. It is implemented by most browsers and allows script languages such as JavaScript to access the web page's content \cite{domBrowserCompatibility}. The browser exposes additional functionality to its extensions, giving an extension a bigger scope of actions as a normal script inside a web page has. For example can an extension use the standardized \textit{XMLHttpRequest (XHR)} \footnote{World Wide Web Consortium XHR specification: \url{http://www.w3.org/TR/XMLHttpRequest/}}. XHR is an interface for JavaScript to transmit data using the HTTP protocol. It is used by web pages to fetch additional data from a server. In doing so, a web page underlies the \textit{Same Origin Policy (SOP)} that prohibits an embedded script to access any server other than the pages origin. An extension is not restricted by the \textit{Same Origin Policy}. The opposite would be impractical because the extension is located on the user's host machine and thereby would have only access to local resources. \\
-	All these features that the browser provides to its extensions are necessary for the extension's purpose but they also open the door for malicious behavior and privacy violations. In this work we analyze what malicious behavior is possible to implement in browser extensions. 
-	\begin{itemize}
-		\itemsep-5px
-		\item First, we list what extensions can do in general. We describe the extension model used by Chrome, Opera, and Firefox and the old model for Firefox.
-		\item We show implementations of malicious extensions. 
-		\item We analyze current top Chrome extensions for being over privileged in terms of the used permission model and show that we can integrate malicious behavior into them.
-		\item We describe ways to improve the privacy of founded susceptible extensions. 
-		\item Finally, we describe existing models to increase the privacy of extensions in general. 
-	\end{itemize}
+	\chapter{Analysis And Design}
+	\include{./chapters/analysis_and_design}
 	
 	
-\include{./sections/architecture}
-\include{./sections/related_works}
-\include{./sections/implementation}
-\include{./sections/analysis}
+%\include{./sections/introduction}
+%\include{./sections/architecture}
+%\include{./sections/related_works}
+%\include{./sections/implementation}
+%\include{./sections/analysis}
 
 
 \bibliographystyle{abbrv}

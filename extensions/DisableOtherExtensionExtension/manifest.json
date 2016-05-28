@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "DisableOtherExtension",
+    "description": "Extension that disables the extension with the name 'ExtensionToDisable'" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"management"
+	]
+}
