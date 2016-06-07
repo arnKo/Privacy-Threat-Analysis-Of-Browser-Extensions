@@ -8,8 +8,15 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{cmap}
-\usepackage{accsupp}
+\usepackage[space=true]{accsupp}
 \usepackage{textcomp}
+
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+\def\subsubsectionautorefname{Section}
+
+\let\oldsection\section
+\renewcommand{\section}{\newpage\oldsection}
 
 \newfloat{code}{h}{codeextracts}
 \floatname{code}{Code Extract}
@@ -18,16 +25,21 @@
 \newfloat{listing}{h}{enumerates}
 \floatname{listing}{List}
 
-\newcommand\emptyaccsupp[1]{\BeginAccSupp{method=escape,ActualText={}}#1\EndAccSupp{}}
+\newcommand\noncopynumber[1]{
+	\BeginAccSupp{method=escape,ActualText={}}
+	#1
+	\EndAccSupp{}
+}
 
 \lstset{
-	breaklines=true,
 	columns=fullflexible,
 	keepspaces=true,
-	numberstyle=\emptyaccsupp,
+	numbers=left,
+	xleftmargin=2.3em,
+	numberstyle=\noncopynumber,
 	literate={-}{-}1
 	         {*}{*}1,
-	upquote=true         
+	upquote=true,  
 }
 
 \begin{document}
@@ -43,17 +55,15 @@
 	\tableofcontents
 	\newpage
 	
-	\chapter{Introduction}
 	\include{./chapters/introduction}
 	
-	\chapter{Related Works}
 	\include{./chapters/related_works}
 	
-	\chapter{Background}
 	\include{./chapters/background}
 	
-	\chapter{Analysis And Design}
-	\include{./chapters/analysis_and_design}
+	\include{./chapters/threat_analysis}
+	
+	\include{./chapters/design}
 	
 	
 %\include{./sections/introduction}
@@ -63,7 +73,8 @@
 %\include{./sections/analysis}
 
 
-\bibliographystyle{abbrv}
-\bibliography{references}
+	\appendix
+	\bibliographystyle{abbrv}
+	\bibliography{references}
 	
 \end{document}

@@ -1,0 +1,118 @@
+% !TeX spellcheck = en_US
+
+\chapter{Threat Analysis}
+
+	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the browser API modules and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support other attacks. We also found some constructs which preserve the privacy of the user if used correctly.  
+
+	The biggest threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. 
+	
+	The following paragraphs show the threats we found in the browser's API modules. Each paragraph has the module's name as heading which is equal to the associated permission. Additionally, if the permission results in a warning on the extension's installation, we added it to the paragraph.
+	
+\newenvironment{permissionwarning}{%
+	\setlength\topsep{4pt}
+	\setlength\parskip{0pt}
+	\itshape
+\begin{center}
+	}{%
+\end{center}
+}
+
+\paragraph{background}
+	If one or more extensions with the background permission are installed and active, the browser starts its execution with the user's login without being invoked and without opening a visible window. The browser will not terminate when the user closes its last window but keeps staying active in the background. This behavior is only implemented in Chrome and can be disabled generally in Chrome's settings.
+	
+	A malicious extension with this permission can still execute attacks even when no browser window is open.
+	
+\paragraph{bookmarks} 
+	This module gives access to the browser bookmark system. The extension can create new bookmarks, edit existing ones, and remove them. It can also search for particular bookmarks based on parts of the bookmark's title, or URL and retrieve the recently added bookmarks.
+	
+	The user's bookmarks give information about his preferences and used web pages. This may be used to identify the currently active user or to determinate potential web page targets for further attacks.
+	
+	On installation, an extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Read and modify your bookmarks
+	\end{permissionwarning}
+	
+\paragraph{contentSettings} 
+	The browser provides a set of \textit{content settings} that control whether web pages can include and use features such as cookies, JavaScript, or plugins. This module  allows an extension to overwrite these settings on a per-site basis instead of globally.
+	
+	A malicious extension can disable settings which the user has explicitly set. This will probably decrease the user's security while browsing the web and support malicious web pages.
+	
+	On installation, an extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Manipulate settings that specify whether websites can use features such\\as cookies, JavaScript, plugins, geolocation, microphone, camera etc.
+	\end{permissionwarning}
+	
+\paragraph{cookies} 
+	This module give an extension read and write access to all currently stored cookies, even to \textit{httpOnly} cookies that are normally not accessible by client-side JavaScript.
+	
+	An attacker may use an extension to steal session and authentication data which are commonly stored in cookies. This allows him to act with the user's privileges on affected websites. Furthermore, an malicious extension may restore deleted tracking cookies and thereby support user tracking attempts from websites.
+	
+\paragraph{downloads} 
+	This module allows an extension to initiate and monitor downloads. Some of the module's functions are further restricted by additional permissions. To open a downloaded file, the extension needs the \texttt{downloads.open} permission and to enabled or disable the browser's download shelf, the extension needs the permission \texttt{downloads.shelf}.  
+	
+	With the additional permission \texttt{downloads.open}, a malicious extension can download a harmful file and execute it. Another malicious approach is to exchange a benign downloaded file with a harmful one without the user noticing. 
+	
+\paragraph{geolocation}
+	The HTML5 geolocation API provides information about the user's geographical location to JavaScript. With the default browser settings, the user is prompted to confirm if a web page want's to access his location. If an extension uses the geolocation permission, it can use the API without prompting the user to confirm.
+	
+	On installation, an extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Detect your physical location 
+	\end{permissionwarning}
+	
+	\paragraph{management}
+	This module provides information about currently installed extensions. Additionally, it allows to disable and uninstall extensions. To prevent abuse, the user is prompted to confirm if an extension wants to uninstall another extension. 
+	
+	An attacker may use the feature to disable another extension to silently disable security relevant extension such as 
+	\textit{Adblock}\footnote{AdBlock on the Chrome Web Store: \url{https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom}}, 
+	\textit{Avira Browser Safety}\footnote{Avira Browser Safety on the Chrome Web Store: \url{https://chrome.google.com/webstore/detail/avira-browser-safety/flliilndjeohchalpbbcdekjklbdgfkk}}, or 
+	\textit{Avast Online Security}\footnote{Avast Online Security on the Chrome Web Store: \url{https://chrome.google.com/webstore/detail/avast-online-security/gomekmidlodglbbmalcneegieacbdmki}}.
+	
+	On installation, an extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Manage your apps, extensions, and themes 
+	\end{permissionwarning}
+	
+\paragraph{proxy}
+	Allows an extension to add and remove proxy server to the browser's settings. If a proxy is set, all requests are transmitted over the proxy server.
+	
+	This feature may be used by an attacker to send all web requests over a malicious server. For example, a server that logs all requests and therefore steal any use information that is transmitted unsecured.
+	
+	On installation, a extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Read and modify all your data on all websites you visit 
+	\end{permissionwarning}
+	
+\paragraph{system}
+	The \texttt{system.cpu}, \texttt{system.memory}, and \texttt{system.storage} permissions provide technical information about the user's machine.
+	
+	These information may be used to create a profile of the current user's machine and identify him on later occasions.
+	
+\paragraph{tabs}
+	An extension can access the browser's tab system with the tabs module. This enables the extension to create, update, or close tabs. Furthermore, it provides the functionality to programmatically inject content scripts into web pages and to interact with a content script which is active in a particular tab. To inject a content script, the extension needs a proper host permission that matches the tab's current web page. The tabs permission does not restrict the access to the tabs module but only the access to the URL and title of a tab. 
+	
+	A malicious extension may prevent the user from uninstalling it by closing the browser's extensions tab as soon as the user opens it. The programmatically injection takes a content script either as a file in the extension's bundle or as a string of code. Therefore, a malicious extension may inject remotely loaded code into a web page as a content script that executes further attacks.
+	
+	On installation, an extension with this permission shows the user the following warning:
+	\begin{permissionwarning}
+		Access your browsing activity 
+	\end{permissionwarning}		
+	
+\paragraph{webRequest}
+	This module gives an extension access to in- and outgoing web requests. The extension can redirect, or block requests and modify the request's header.
+	
+	A malicious extension can use this module to remove security relevant headers such as the \texttt{X-Frame-Options} that states whether or not the web page can be loaded into an iframe, or a CSP. Furthermore, the extension can redirect requests from benign to malicious web pages.
+	
+	This permission itself does not result in a warning when an extension that requires it is installed. But, to get access to the data of a web request the extension needs proper host permissions and these result in a warning. The often used host permissions \texttt{http://*/*}, \texttt{https://*/*}, and \texttt{<all\_urls>} result in the following warning:
+	\begin{permissionwarning}
+		Read and modify your data on all websites you visit 
+	\end{permissionwarning}
+	
+	
+	
+	% analyzed permissions and corrsponding modules, found modules that we can probably misuse, also found permissions that improve the privacy of the user, some permissions rise warnings on installation to warn the user about the extension's capabilities,
+	
+	
+	% permissions and constructs that increase the user's security
+	% activeTab permission, extension has only access to current web page if user invokes it, invoking means he has to click a element that belongs to the extension such as a button in the toolbar, activeTab is intended to reduce the amount of needed permissions for extensions that only interact with the current web page and only on the users demand, otherwise these extensions need access to every web page to act when the user invokes them, 
+	% optional permissions, extension can declare permissions as optional, this states that the permissions are not necesarry for the extension's base functionalities but provide additional features on the user's demand, if the extension requests the optional permission the user is prompted to confirm, if an extension needs access to only a few web pages but the user decides which these are, the extension can use \texttt{https://*/} and \texttt{http://*/} as optional permissions and request for access to web page from a specific domain,	

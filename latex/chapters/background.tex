@@ -1,5 +1,7 @@
 % !TeX spellcheck = en_US
 
+\chapter{Background}
+
 \section{Terminology}
 	% We explain therms we use in this paper
 
@@ -27,36 +29,44 @@
 \subsubsection{XMLHttpRequest (XHR)}
 	% Allows to make HTTP/HTTPS requests with JavaScript, used to dynamically load content or transfer information, 
 
+
 \section{Extension Architecture}
 	% we have analysed the architecture models of differend browsers, chrome extension/firefox add-ons/safari extensions, we show the general strucutre and differenses between the models,
 	
 \subsection{General Structure}
-	% implemented with HTML/CSS/JS, two parts: extension core and content scripts, 
 
+	Extensions are developed in the web technologies JavaScript, HTML, and CSS. They consist of two parts: the extension's background and content scripts. Each extension has a manifest that holds the its meta information.
+	
 \subsubsection{Background} 
 	% holds main logic, also includes additional UI such as popups or buttons in the browser toolbar, access to browser functionality,
 
-\subsubsection{Browser API}
-	% browser provides additional functions to its extensions, such as ..., 
-
 \subsubsection{Content Scripts}
-	% used to access the web page, has full access to the DOM, can manipulate and add content, generally injected with URL pattern, only injected into web page if URL matches, using wildecards to match multiple web pages at once, separated from background, can not directly call methods in background scripts, can exchange messages with background, only restricted access to browser API, how much is browser dependend, 
+
+	The extension has no direct access to a web page from withing its background process. Therefore, it executes content scripts in the scope of the web page with access to the web page's DOM. The extension's content scripts and background can not directly interact with each other. They can only exchange messages over a string-based channel. This communication channel comes in handy, because content scripts have almost no access to the browser's provided functions.  
+	
+	An extension can register a content script in combination with an URL pattern which is then injected in each web page whose URL matches the pattern. Wildecards in the URL pattern allow to register a content script for multiple web pages. For example, a content script with the URL pattern \texttt{http://*.example.com/*} would be injected into the pages \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not into the pages \texttt{https://www.example.com/} and \texttt{http://www.example.org/}.
 			
 \subsection{Differences Between The Browsers}
 
 	
 \subsubsection{Chrome Extensions}
-	% opera switch to chromium, firefox support for chrome extensions
-	% model from barth et al, focused to protect the user from exploited extensions, secure extension model to prevent, three prinizples: privilege separation, least privileges, isolated world,
+
+	Chrome's extension architecture is based on a research from Barth et al. in 2010 \cite{Barth10protectingbrowsers}. In their work they investigated the old extension model of Mozilla's Firefox and revealed many vulnerabilities in connection to Firefox extensions running with the user's full privileges. This enables the extension to access arbitrary files and launch new processes. They proposed an new model with a strict separation of an extension's components and an permission system to make it more difficult for an attacker to gain access to the user's machine.
+	
+	
+	
+	 They analyzed Firefox's extension architecture and found several threats which allow an attacker to compromise the extension and the user's computer. This is due to the fact that a Firefox extension has access to the user's machine, can read and write files, and can even start other applications. To protect the user from exploited extensions, they proposed a more secure model for extensions. Their approach contains the three main principles \textit{privilege separation}, \textit{least privileges}, and \textit{strong isolation}. 
 	
 	\begin{itemize}
-		\item \textbf{Privilege Separation}
-			% separation different processes, only communicate over message channel, prevent leak of browser API functions to content scripts
-		\item \textbf{Least Privileges} 
-			% extension has by default no access to browser API, uses permissions to grant access, extension has to explicit state for what API modules it needs access, in case of exploit, attacker has no access to unrequested modules, smallers the attackers operating range,
-		\item \textbf{Isolated World}
-			% separation between content scripts among each other and the web page, each runs in own process with own JavaScript heap, not possible to call a function on another script, protection against a malicious web page altering a content script and attacking the extension, but they all share the web page's DOM, to prevent that a malicious web page overrides a DOM method and probably exploits a content script, each has own instance of document object that mirrows the browser intern DOM object, 
+		\item \textbf{Privilege Separation} The extension is divided in three components with different privileges. Content scripts have direct access to the web page and are therefore exposed to potential malicious web content. They have no further privileges except exchanging messages with the background. The background can only interact with the web page using content scripts. It has full access to the browser's API but no access to the user's host machine. Finally, optionally included native binaries can access the user's operating system. The background can exchange messages with the binaries, too. 
+	
+		\item \textbf{Least Privileges} To restrict the access to the browser API in the case that the extension is exploited by an attacker, Barth et al. proposed a permission system for the browser's API modules. The extension has only access to a module if it has explicitly declared a corresponding permission in its manifest. Because the extension's manifest is static and not editable at runtime, an attacker has only access to declared API modules. This efficiently decreases the attacker's operating range and the harm he can cause.
+		
+		\item \textbf{Strong Isolation} Each of an extension's component runs in a separate operating system process which disables any direct interaction between them. An attacker can target only the content script from within a web page and has to forward his malicious input from the content script to the extension's background and along to the native binaries to gain access to the user's host machine. \\
+		A further separation exists between content scripts among each other and the web page. Each runs in its own process on the operating system with its own JavaScript heap. It is not possible to invoke a function on a script in another process. This prevents a malicious script in a web page from altering a content script and probably exploit the extension. They only share the web page's DOM among each other. To prevent that a malicious web page overrides a DOM method, each process has its own instance of the \texttt{document} object that mirrors the DOM object which is stored natively in the browser. Any change to the document object, that is not executed over the standard DOM API is not mirrored to other instances of the DOM.
 	\end{itemize}
+
+% opera switch to chromium, firefox support for chrome extensions
 
 
 \subsubsection{Firefox Add-ons}
