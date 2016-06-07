@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  7 JUN 2016 15:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  7 JUN 2016 17:38
 entering extended mode
 **./Thesis.tex
 (Thesis.tex
@@ -1419,7 +1419,7 @@ LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
 (Font)              scaled to size 5.546pt on input line 52.
 \@TUD@titlelines=\count130
 
-<tud_logo.pdf, id=136, 157.58875pt x 63.23625pt>
+<tud_logo.pdf, id=140, 157.58875pt x 63.23625pt>
 File: tud_logo.pdf Graphic file (type pdf)
  <use tud_logo.pdf>
 Package pdftex.def Info: tud_logo.pdf used on input line 52.
@@ -1669,24 +1669,33 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[28]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[29]
+Overfull \hbox (65.20753pt too wide) in paragraph at lines 417--418
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
+Overfull \hbox (86.33546pt too wide) in paragraph at lines 437--438
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Underfull \vbox (badness 1460) has occurred while \output is active []
-
- [28]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) [29] [30] (Thesis.bbl [31
+) [30] [31] (Thesis.bbl [32
 
 
 ]
@@ -1701,26 +1710,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 206--210
 L-HttpRe-quest Level 1.
  []
 
-[32])
+[33])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 80.
- [33]
+ [34]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 80.
  (Thesis.aux (chapters/introduction.aux) (chapters/related_works.aux) (chapters
 /background.aux) (chapters/threat_analysis.aux) (chapters/design.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 80.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 80.
 Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: FCFC8A9076CF193DDE6EDB9513DE078A;2165.
+(rerunfilecheck)             Checksum: 070BB915E7E9A211603774961B522BBD;2245.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 80.
  ) 
 Here is how much of TeX's memory you used:
- 15125 strings out of 493634
- 232423 string characters out of 3145797
- 405016 words of memory out of 3000000
- 17864 multiletter control sequences out of 15000+200000
+ 15175 strings out of 493634
+ 233162 string characters out of 3145797
+ 409351 words of memory out of 3000000
+ 17868 multiletter control sequences out of 15000+200000
  121060 words of font info for 102 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 65i,13n,102p,1922b,1205s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,13n,102p,1922b,1211s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/Programme/MiKTeX2.9/fonts/enc/dvips/fontname/8r.enc}<D:/LatexTUDesign/tex
 mf/fonts/type1/softmake/charter/5chb8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/
 softmake/charter/5chr8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/softmake/charte
@@ -1728,9 +1737,9 @@ r/5chri8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/softmake/frontpage/5fpm8a.pfb
 ><D:/LatexTUDesign/texmf/fonts/type1/softmake/frontpage/5fpr8a.pfb><D:/Programm
 e/MiKTeX2.9/fonts/type1/public/txfonts/t1xtt.pfb><D:/Programme/MiKTeX2.9/fonts/
 type1/urw/helvetic/uhvr8a.pfb>
-Output written on Thesis.pdf (35 pages, 258867 bytes).
+Output written on Thesis.pdf (36 pages, 268114 bytes).
 PDF statistics:
- 679 PDF objects out of 1000 (max. 8388607)
- 243 named destinations out of 1000 (max. 500000)
- 294 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 742 PDF objects out of 1000 (max. 8388607)
+ 289 named destinations out of 1000 (max. 500000)
+ 302 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,4 +1,3 @@
-var disabled = false;
 var state = "idle";
 var downloadItem;
 

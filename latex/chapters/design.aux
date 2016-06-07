@@ -59,25 +59,33 @@
 \@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }}{27}{table.caption.28}}
 \newlabel{tab:permissionsRemoteCommunication}{{5.2}{27}{Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }{table.caption.28}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Attacks With Content Scripts}{27}{subsection.5.3.2}}
-\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials}{27}{subsubsection*.29}}
-\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials In Background}{27}{subsubsection*.30}}
+\@writefile{toc}{\contentsline {subsubsection}{Steal Sensitive Data}{27}{subsubsection*.29}}
+\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials}{27}{subsubsection*.30}}
+\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials In Background}{27}{subsubsection*.31}}
 \citation{xFrameOptionsSpezification}
 \citation{xFrameOptionsCompability}
 \@writefile{codeextracts}{\contentsline {code}{\numberline {6}{\ignorespaces Content Script that steals credentials from a login form if the user submits the form.\relax }}{28}{code.6}}
-\newlabel{contentScriptStealCredentialsOnSubmit}{{6}{28}{Content Script that steals credentials from a login form if the user submits the form.\relax }{code.6}{}}
+\newlabel{code:stealCredentialsOnSubmit}{{6}{28}{Content Script that steals credentials from a login form if the user submits the form.\relax }{code.6}{}}
 \@writefile{codeextracts}{\contentsline {code}{\numberline {7}{\ignorespaces Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }}{28}{code.7}}
-\newlabel{contentScriptStealCredentialsFromPasswordManager}{{7}{28}{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }{code.7}{}}
+\newlabel{code:stealCredentialsFromPasswordManager}{{7}{28}{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }{code.7}{}}
 \citation{chromiumBlogPasswordInput}
 \@writefile{codeextracts}{\contentsline {code}{\numberline {8}{\ignorespaces Extension code to remove the \texttt  {X-Frame-Options} header from any incoming web request.\relax }}{29}{code.8}}
-\newlabel{backgroundRemoveXFrameOptionsHeader}{{8}{29}{Extension code to remove the \texttt {X-Frame-Options} header from any incoming web request.\relax }{code.8}{}}
+\newlabel{code:removeXFrameOptionsHeader}{{8}{29}{Extension code to remove the \texttt {X-Frame-Options} header from any incoming web request.\relax }{code.8}{}}
 \@writefile{codeextracts}{\contentsline {code}{\numberline {9}{\ignorespaces Content script to open a particular web page in an iframe.\relax }}{29}{code.9}}
-\newlabel{contentScriptOpenWebPageInIframe}{{9}{29}{Content script to open a particular web page in an iframe.\relax }{code.9}{}}
-\@writefile{codeextracts}{\contentsline {code}{\numberline {10}{\ignorespaces Pseudo code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }}{29}{code.10}}
-\newlabel{backgroundOpenPageInInactiveTab}{{10}{29}{Pseudo code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }{code.10}{}}
-\@writefile{codeextracts}{\contentsline {code}{\numberline {11}{\ignorespaces Pseudo code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }}{30}{code.11}}
-\newlabel{backgroundOpenPageInNewBackgroundTab}{{11}{30}{Pseudo code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }{code.11}{}}
+\newlabel{code:openWebPageInIframe}{{9}{29}{Content script to open a particular web page in an iframe.\relax }{code.9}{}}
+\@writefile{codeextracts}{\contentsline {code}{\numberline {10}{\ignorespaces Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }}{29}{code.10}}
+\newlabel{code:openPageInInactiveTab}{{10}{29}{Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }{code.10}{}}
+\@writefile{codeextracts}{\contentsline {code}{\numberline {11}{\ignorespaces Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }}{30}{code.11}}
+\newlabel{code:openPageInNewBackgroundTab}{{11}{30}{Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }{code.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Manipulate Download Files}{30}{subsection.5.3.3}}
+\@writefile{codeextracts}{\contentsline {code}{\numberline {12}{\ignorespaces Extension code to download and open a file without the user noticing.\relax }}{30}{code.12}}
+\newlabel{code:downloadAndOpenFile}{{12}{30}{Extension code to download and open a file without the user noticing.\relax }{code.12}{}}
+\@writefile{codeextracts}{\contentsline {code}{\numberline {13}{\ignorespaces Extension code to silently exchange a file that the user currently downloads with a file from our remote server.\relax }}{31}{code.13}}
+\newlabel{code:exchangeDownloadFile}{{13}{31}{Extension code to silently exchange a file that the user currently downloads with a file from our remote server.\relax }{code.13}{}}
+\@writefile{codeextracts}{\contentsline {code}{\numberline {14}{\ignorespaces Extension code to silently exchange a file after the user has downloaded it.\relax }}{31}{code.14}}
+\newlabel{code:exchangeDownloadedFile}{{14}{31}{Extension code to silently exchange a file after the user has downloaded it.\relax }{code.14}{}}
 \@setckpt{./chapters/design}{
-\setcounter{page}{31}
+\setcounter{page}{32}
 \setcounter{equation}{0}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}
@@ -88,7 +96,7 @@
 \setcounter{part}{0}
 \setcounter{chapter}{5}
 \setcounter{section}{3}
-\setcounter{subsection}{2}
+\setcounter{subsection}{3}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
@@ -96,13 +104,13 @@
 \setcounter{table}{2}
 \setcounter{TUD@cols@n}{12}
 \setcounter{seclinedepth}{3}
-\setcounter{lstnumber}{10}
+\setcounter{lstnumber}{15}
 \setcounter{ContinuedFloat}{0}
 \setcounter{Item}{6}
 \setcounter{Hfootnote}{3}
-\setcounter{bookmark@seq@number}{32}
+\setcounter{bookmark@seq@number}{33}
 \setcounter{float@type}{32}
-\setcounter{code}{11}
+\setcounter{code}{14}
 \setcounter{listing}{0}
 \setcounter{lstlisting}{0}
 \setcounter{section@level}{0}
