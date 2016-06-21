@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ReadSendingEmails",
+    "description": "Extension that reads emails that the user sends from his telekom maily account." ,
+
+	"background" : {
+		"scripts" : ["background.js"]
+	},
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["jquery.js", "content.js"]
+		}
+	],
+	
+	"permissions": [
+		"<all_urls>"
+	]
+}

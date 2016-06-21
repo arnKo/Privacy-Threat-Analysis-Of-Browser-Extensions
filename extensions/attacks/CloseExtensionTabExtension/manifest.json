@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "CloseExtensionTab",
+    "description": "Closes the extension tab if the user opens it" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"tabs"
+	]
+}

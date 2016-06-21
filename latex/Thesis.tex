@@ -10,20 +10,20 @@
 \usepackage{cmap}
 \usepackage[space=true]{accsupp}
 \usepackage{textcomp}
+\usepackage{newfloat}
 
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Section}
 \def\subsubsectionautorefname{Section}
 
-\let\oldsection\section
-\renewcommand{\section}{\newpage\oldsection}
 
-\newfloat{code}{h}{codeextracts}
-\floatname{code}{Code Extract}
-\def\codeautorefname{Code Extract}
-
-\newfloat{listing}{h}{enumerates}
-\floatname{listing}{List}
+\DeclareFloatingEnvironment[
+	fileext=cex,
+	listname={List of Code Extracts},
+	name={Code Extract},
+	placement=h,
+	within=chapter
+]{code}
 
 \newcommand\noncopynumber[1]{
 	\BeginAccSupp{method=escape,ActualText={}}
@@ -74,6 +74,8 @@
 
 
 	\appendix
+	\listof{table}{List of Tables}
+	\listof{code}{List of Code Extracts}
 	\bibliographystyle{abbrv}
 	\bibliography{references}
 	

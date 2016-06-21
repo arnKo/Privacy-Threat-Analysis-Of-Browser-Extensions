@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "HistoryModuleSniffing",
+    "description": "Executes history sniffing using the chrome.history module",
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"history"
+	]
+}

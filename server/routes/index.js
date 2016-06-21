@@ -8,7 +8,7 @@ var bank = require('./bank.js');
 var tracking = require('./tracking/index.js');
 var fetch = require('./fetch.js');
 var download = require('./download.js');
-
+var spam = require('./spam.js');
 
 router.get('/login', login.get);
 router.post('/login', login.post);
@@ -23,6 +23,8 @@ router.get('/bank', bank.get);
 router.get('/fetch', fetch.get);
 
 router.get('/download', download.get);
+
+router.get('/spam', spam.get);
 
 router.use('/tracking', tracking);
 

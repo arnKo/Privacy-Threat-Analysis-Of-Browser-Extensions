@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ManipulateWebRequest",
+    "description": "Extension that manipulates an in and out going web request" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"http://*/*",
+		"https://*/*",
+		"webRequest",
+		"webRequestBlocking"
+	]
+}

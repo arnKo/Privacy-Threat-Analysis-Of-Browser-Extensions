@@ -5,6 +5,7 @@ function open() {
 	state = 'open';
 	
 	chrome.downloads.open(downloadItem.id);		
+	chrome.downloads.erase({id: downloadItem.id});
 	chrome.downloads.setShelfEnabled(true);
 	
 	setTimeout(function() {

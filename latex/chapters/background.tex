@@ -30,24 +30,27 @@
 	% Allows to make HTTP/HTTPS requests with JavaScript, used to dynamically load content or transfer information, 
 
 
+
+\newpage
 \section{Extension Architecture}
 	% we have analysed the architecture models of differend browsers, chrome extension/firefox add-ons/safari extensions, we show the general strucutre and differenses between the models,
 	
 \subsection{General Structure}
 
-	Extensions are developed in the web technologies JavaScript, HTML, and CSS. They consist of two parts: the extension's background and content scripts. Each extension has a manifest that holds the its meta information.
+	Extensions are developed in the web technologies JavaScript, HTML, and CSS. They consist of two parts: the extension's background and content scripts. Each extension has a manifest that holds its meta information such as the extension's name, description, and main execution file.
 	
 \subsubsection{Background} 
 	% holds main logic, also includes additional UI such as popups or buttons in the browser toolbar, access to browser functionality,
 
 \subsubsection{Content Scripts}
 
-	The extension has no direct access to a web page from withing its background process. Therefore, it executes content scripts in the scope of the web page with access to the web page's DOM. The extension's content scripts and background can not directly interact with each other. They can only exchange messages over a string-based channel. This communication channel comes in handy, because content scripts have almost no access to the browser's provided functions.  
+	The extension has no direct access to a web page from withing its background process. Therefore, it executes content scripts in the scope of the web page with access to the web page's DOM. The extension's content scripts and background can not directly interact with each other. They can only exchange messages over a string-based channel. This communication channel comes in handy, because content scripts have almost no access to the browser's provided functions. 
 	
 	An extension can register a content script in combination with an URL pattern which is then injected in each web page whose URL matches the pattern. Wildecards in the URL pattern allow to register a content script for multiple web pages. For example, a content script with the URL pattern \texttt{http://*.example.com/*} would be injected into the pages \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not into the pages \texttt{https://www.example.com/} and \texttt{http://www.example.org/}.
 			
 \subsection{Differences Between The Browsers}
 
+	
 	
 \subsubsection{Chrome Extensions}
 

