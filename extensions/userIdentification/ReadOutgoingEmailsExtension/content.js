@@ -1,4 +1,4 @@
-if(window.location.host === 'email.t-online.de') {
+if(window.location.host === 'email.t-online.de' && window.location.href.indexOf('showWritemail') !== -1) {
 	$('div#toolbarLeft a.toolbarItem.single.normal').click(function() {
 		chrome.runtime.sendMessage({
 			'recipients': $('div#fieldTo ul li').not(':first-child').text(),

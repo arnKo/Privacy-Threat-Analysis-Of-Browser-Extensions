@@ -2,7 +2,9 @@ This is BibTeX, Version 0.99dThe top-level auxiliary file: Thesis.aux
 A level-1 auxiliary file: ./chapters/introduction.aux
 A level-1 auxiliary file: ./chapters/related_works.aux
 A level-1 auxiliary file: ./chapters/background.aux
-A level-1 auxiliary file: ./chapters/analysis_and_design.aux
+A level-1 auxiliary file: ./chapters/threat_analysis.aux
+A level-1 auxiliary file: ./chapters/design.aux
+A level-1 auxiliary file: ./chapters/extension_analysis.aux
 The style file: abbrv.bst
 Database file #1: references.bib
 Warning--to sort, need author or key in mozillaWikiClearPrivacyAPI

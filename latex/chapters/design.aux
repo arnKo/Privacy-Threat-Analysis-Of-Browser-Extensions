@@ -1,20 +1,21 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\citation{184485}
-\citation{190984}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Design}{14}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{cex}{\addvspace {10\p@ }}
+\@writefile{lst}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
 \@writefile{cex}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Identification}{14}{section.5.1}}
+\@writefile{lst}{\addvspace {10\p@ }}
+\citation{184485}
+\citation{190984}
 \citation{mozillaWikiClearPrivacyAPI}
 \citation{evercookie}
-\citation{Eckersley:2010:UYW:1881151.1881152}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Identification}{15}{section.5.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}User Tracking}{15}{subsection.5.1.1}}
 \@writefile{toc}{\contentsline {subsubsection}{Web Beacon}{15}{subsubsection*.24}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{15}{subsection.5.1.2}}
+\citation{Eckersley:2010:UYW:1881151.1881152}
 \citation{paulstone_historysniffing}
 \citation{MBYS11}
 \citation{Nikiforakis:2013:CME:2497621.2498133}
@@ -22,100 +23,112 @@
 \citation{MS12}
 \citation{olejnik:hal-00747841}
 \citation{flashPlayerGetFonts}
-\citation{paulstone_historysniffing}
-\citation{MBYS11}
 \@writefile{cex}{\contentsline {code}{\numberline {5.1}{\ignorespaces Content script that injects a tracking pixel in the current web page.\relax }}{16}{code.caption.25}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{code:webBeacon}{{5.1}{16}{Content script that injects a tracking pixel in the current web page.\relax }{code.caption.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{16}{subsection.5.1.2}}
+\citation{MS12}
+\citation{paulstone_historysniffing}
+\citation{MBYS11}
 \@writefile{toc}{\contentsline {subsubsection}{Additional Fingerprinting Data}{17}{subsubsection*.26}}
 \@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Additional fingerprint information available to an extension.\relax }}{17}{table.caption.27}}
-\newlabel{fingerprintExtension}{{5.1}{17}{Additional fingerprint information available to an extension.\relax }{table.caption.27}{}}
+\newlabel{tab:fingerprintExtension}{{5.1}{17}{Additional fingerprint information available to an extension.\relax }{table.caption.27}{}}
 \@writefile{toc}{\contentsline {subsubsection}{History Sniffing}{17}{subsubsection*.28}}
 \@writefile{cex}{\contentsline {code}{\numberline {5.2}{\ignorespaces Extension code to execute a history sniffing attack.\relax }}{18}{code.caption.29}}
 \newlabel{code:historySniffing}{{5.2}{18}{Extension code to execute a history sniffing attack.\relax }{code.caption.29}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Personal User Information}{18}{subsubsection*.30}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Summary of extension implementations for user identification with needed permissions.\relax }}{19}{table.caption.31}}
-\newlabel{tab:summaryUserIdentification}{{5.2}{19}{Summary of extension implementations for user identification with needed permissions.\relax }{table.caption.31}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Fetching}{19}{section.5.2}}
-\newlabel{sec:fetching}{{5.2}{19}{Fetching}{section.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Script Element In Background}{19}{subsection.5.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Script Element In Content Script}{19}{subsection.5.2.2}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.3}{\ignorespaces Content script that fetches a remotely loaded script and executes it\relax }}{19}{code.caption.32}}
-\newlabel{contentScriptRemotLoad}{{5.3}{19}{Content script that fetches a remotely loaded script and executes it\relax }{code.caption.32}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}XMLHttpRequest}{19}{subsection.5.2.3}}
-\newlabel{sec:xhr}{{5.2.3}{19}{XMLHttpRequest}{subsection.5.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Personal User Information}{18}{subsection.5.1.3}}
+\@writefile{toc}{\contentsline {subsubsection}{Read Outgoing Emails}{19}{subsubsection*.30}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.3}{\ignorespaces Content script to read an outgoing email at the Telekom's email client.\relax }}{19}{code.caption.31}}
+\newlabel{code:readOutgoingEmailContent}{{5.3}{19}{Content script to read an outgoing email at the Telekom's email client.\relax }{code.caption.31}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Read Incoming Emails}{19}{subsubsection*.33}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.4}{\ignorespaces Extension code to read an outgoing mail at the Telekom's email client.\relax }}{20}{code.caption.32}}
+\newlabel{code:readOutgoingEmailBackground}{{5.4}{20}{Extension code to read an outgoing mail at the Telekom's email client.\relax }{code.caption.32}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.5}{\ignorespaces Content script to read an email from the user's in-box at the Telekom's email client.\relax }}{20}{code.caption.34}}
+\newlabel{code:readIncomingEmailContent}{{5.5}{20}{Content script to read an email from the user's in-box at the Telekom's email client.\relax }{code.caption.34}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.6}{\ignorespaces Extension code to read an email from the user's in-box at the Telekom's email client.\relax }}{21}{code.caption.35}}
+\newlabel{code:readIncomingEmailBackground}{{5.6}{21}{Extension code to read an email from the user's in-box at the Telekom's email client.\relax }{code.caption.35}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Summary of extension implementations for user identification with needed permissions.\relax }}{21}{table.caption.36}}
+\newlabel{tab:summaryUserIdentification}{{5.2}{21}{Summary of extension implementations for user identification with needed permissions.\relax }{table.caption.36}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Fetching}{21}{section.5.2}}
+\newlabel{sec:fetching}{{5.2}{21}{Fetching}{section.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Script Element In Background}{21}{subsection.5.2.1}}
 \citation{mozillaDangerousEval}
 \citation{extensions:cns14}
-\@writefile{cex}{\contentsline {code}{\numberline {5.4}{\ignorespaces Load remote script with a XMLHttpRequest\relax }}{20}{code.caption.33}}
-\newlabel{xhrLoadScript}{{5.4}{20}{Load remote script with a XMLHttpRequest\relax }{code.caption.33}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Mutual Extension Communication}{20}{subsection.5.2.4}}
-\newlabel{sec:mutualExtensionCommunication}{{5.2.4}{20}{Mutual Extension Communication}{subsection.5.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Script Element In Content Script}{22}{subsection.5.2.2}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.7}{\ignorespaces Content script that fetches a remotely loaded script and executes it\relax }}{22}{code.caption.37}}
+\newlabel{contentScriptRemotLoad}{{5.7}{22}{Content script that fetches a remotely loaded script and executes it\relax }{code.caption.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}XMLHttpRequest}{22}{subsection.5.2.3}}
+\newlabel{sec:xhr}{{5.2.3}{22}{XMLHttpRequest}{subsection.5.2.3}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.8}{\ignorespaces Load remote script with a XMLHttpRequest\relax }}{22}{code.caption.38}}
+\newlabel{xhrLoadScript}{{5.8}{22}{Load remote script with a XMLHttpRequest\relax }{code.caption.38}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Mutual Extension Communication}{22}{subsection.5.2.4}}
+\newlabel{sec:mutualExtensionCommunication}{{5.2.4}{22}{Mutual Extension Communication}{subsection.5.2.4}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.9}{\ignorespaces Content script to send script code from an extension's background to another extension.\relax }}{23}{code.caption.39}}
+\newlabel{code:sendScriptToOtherExtension}{{5.9}{23}{Content script to send script code from an extension's background to another extension.\relax }{code.caption.39}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.10}{\ignorespaces Content script to receive script code from another extension and forward it to its background.\relax }}{23}{code.caption.40}}
+\newlabel{code:receiveScriptFromOtherExtension}{{5.10}{23}{Content script to receive script code from another extension and forward it to its background.\relax }{code.caption.40}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Summary of techniques to load and execute a remote script with needed privileges.\relax }}{23}{table.caption.41}}
+\newlabel{tab:summaryFetchScript}{{5.3}{23}{Summary of techniques to load and execute a remote script with needed privileges.\relax }{table.caption.41}{}}
 \citation{Liu12chromeextensions:}
-\@writefile{cex}{\contentsline {code}{\numberline {5.5}{\ignorespaces Content script to send script code from an extension's background to another extension.\relax }}{21}{code.caption.34}}
-\newlabel{code:sendScriptToOtherExtension}{{5.5}{21}{Content script to send script code from an extension's background to another extension.\relax }{code.caption.34}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.6}{\ignorespaces Content script to receive script code from another extension and forward it to its background.\relax }}{21}{code.caption.35}}
-\newlabel{code:receiveScriptFromOtherExtension}{{5.6}{21}{Content script to receive script code from another extension and forward it to its background.\relax }{code.caption.35}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Execution}{21}{section.5.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Remote Communication}{21}{subsection.5.3.1}}
-\@writefile{toc}{\contentsline {subsubsection}{XMLHttpRequest}{21}{subsubsection*.37}}
-\@writefile{toc}{\contentsline {subsubsection}{Iframe}{21}{subsubsection*.38}}
 \citation{liu2011botnet}
 \citation{Liu12chromeextensions:}
-\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Summary of techniques to load and execute a remote script with needed privileges.\relax }}{22}{table.caption.36}}
-\newlabel{tab:summaryFetchScript}{{5.3}{22}{Summary of techniques to load and execute a remote script with needed privileges.\relax }{table.caption.36}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.7}{\ignorespaces Content script that sends data to a remote server using an \texttt  {iframe} element\relax }}{22}{code.caption.39}}
-\newlabel{code:sendDataWithIframe}{{5.7}{22}{Content script that sends data to a remote server using an \texttt {iframe} element\relax }{code.caption.39}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Automatic Extension Update}{22}{subsubsection*.40}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }}{22}{table.caption.41}}
-\newlabel{tab:summaryRemoteCommunication}{{5.4}{22}{Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }{table.caption.41}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Steal Information With Content Scripts}{22}{subsection.5.3.2}}
-\@writefile{toc}{\contentsline {subsubsection}{Steal Sensitive Data}{22}{subsubsection*.42}}
-\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials}{22}{subsubsection*.43}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Execution}{24}{section.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Remote Communication}{24}{subsection.5.3.1}}
+\@writefile{toc}{\contentsline {subsubsection}{XMLHttpRequest}{24}{subsubsection*.42}}
+\@writefile{toc}{\contentsline {subsubsection}{Iframe}{24}{subsubsection*.43}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.11}{\ignorespaces Content script that sends data to a remote server using an \texttt  {iframe} element\relax }}{24}{code.caption.44}}
+\newlabel{code:sendDataWithIframe}{{5.11}{24}{Content script that sends data to a remote server using an \texttt {iframe} element\relax }{code.caption.44}{}}
 \citation{extensions:cns14}
+\@writefile{toc}{\contentsline {subsubsection}{Automatic Extension Update}{25}{subsubsection*.45}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }}{25}{table.caption.46}}
+\newlabel{tab:summaryRemoteCommunication}{{5.4}{25}{Summary of communication techniques between an extension and a remote server and the privileges needed to use them.\relax }{table.caption.46}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Steal Information With Content Scripts}{25}{subsection.5.3.2}}
+\@writefile{toc}{\contentsline {subsubsection}{Steal Sensitive Data}{25}{subsubsection*.47}}
+\@writefile{toc}{\contentsline {subsubsection}{Steal Credentials}{25}{subsubsection*.48}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.12}{\ignorespaces Content Script that steals credentials from a login form if the user submits the form.\relax }}{25}{code.caption.49}}
+\newlabel{code:stealCredentialsOnSubmit}{{5.12}{25}{Content Script that steals credentials from a login form if the user submits the form.\relax }{code.caption.49}{}}
 \citation{xFrameOptionsSpezification}
 \citation{xFrameOptionsCompability}
-\@writefile{cex}{\contentsline {code}{\numberline {5.8}{\ignorespaces Content Script that steals credentials from a login form if the user submits the form.\relax }}{23}{code.caption.44}}
-\newlabel{code:stealCredentialsOnSubmit}{{5.8}{23}{Content Script that steals credentials from a login form if the user submits the form.\relax }{code.caption.44}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.9}{\ignorespaces Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }}{23}{code.caption.45}}
-\newlabel{code:stealCredentialsFromPasswordManager}{{5.9}{23}{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }{code.caption.45}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Execute Attack In Background}{23}{subsubsection*.46}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.13}{\ignorespaces Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }}{26}{code.caption.50}}
+\newlabel{code:stealCredentialsFromPasswordManager}{{5.13}{26}{Content Script that steals credentials from a login form if the browser's password manager has filled in the credentials.\relax }{code.caption.50}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Execute Attack In Background}{26}{subsubsection*.51}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.14}{\ignorespaces Content script to open a particular web page in an iframe.\relax }}{26}{code.caption.52}}
+\newlabel{code:openWebPageInIframe}{{5.14}{26}{Content script to open a particular web page in an iframe.\relax }{code.caption.52}{}}
 \citation{chromiumBlogPasswordInput}
-\@writefile{cex}{\contentsline {code}{\numberline {5.10}{\ignorespaces Content script to open a particular web page in an iframe.\relax }}{24}{code.caption.47}}
-\newlabel{code:openWebPageInIframe}{{5.10}{24}{Content script to open a particular web page in an iframe.\relax }{code.caption.47}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.11}{\ignorespaces Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }}{24}{code.caption.48}}
-\newlabel{code:openPageInInactiveTab}{{5.11}{24}{Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }{code.caption.48}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.12}{\ignorespaces Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }}{25}{code.caption.49}}
-\newlabel{code:openPageInNewBackgroundTab}{{5.12}{25}{Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }{code.caption.49}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Attacks With Content Scripts}{25}{subsection.5.3.3}}
-\@writefile{toc}{\contentsline {subsubsection}{Denial Of Service}{25}{subsubsection*.50}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.13}{\ignorespaces Content Script which executes a DoS attack by calling a URL multiple times with an iframe.\relax }}{25}{code.caption.51}}
-\newlabel{code:DoSWithIframe}{{5.13}{25}{Content Script which executes a DoS attack by calling a URL multiple times with an iframe.\relax }{code.caption.51}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Download Files}{25}{subsection.5.3.4}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.14}{\ignorespaces Extension code to download and open a file without the user noticing.\relax }}{26}{code.caption.52}}
-\newlabel{code:downloadAndOpenFile}{{5.14}{26}{Extension code to download and open a file without the user noticing.\relax }{code.caption.52}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.15}{\ignorespaces Extension code to silently exchange a file that the user currently downloads.\relax }}{26}{code.caption.53}}
-\newlabel{code:exchangeDownloadFile}{{5.15}{26}{Extension code to silently exchange a file that the user currently downloads.\relax }{code.caption.53}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Steal Cookies}{26}{subsection.5.3.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.6}Hamper Extension Management}{26}{subsection.5.3.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.7}Web Requests}{26}{subsection.5.3.7}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.16}{\ignorespaces Extension code to silently exchange a file after the user has downloaded it.\relax }}{27}{code.caption.54}}
-\newlabel{code:exchangeDownloadedFile}{{5.16}{27}{Extension code to silently exchange a file after the user has downloaded it.\relax }{code.caption.54}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.17}{\ignorespaces Extension code to steal cookies from any website.\relax }}{27}{code.caption.55}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Summary of implemented attacks with needed permissions.\relax }}{27}{table.caption.60}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.18}{\ignorespaces Content script to steal cookies from the current web page.\relax }}{28}{code.caption.56}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.19}{\ignorespaces Extension code to silently disable another extension.\relax }}{28}{code.caption.57}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.20}{\ignorespaces Extension code to remove a probably security relevant header from any incoming web request.\relax }}{28}{code.caption.58}}
-\newlabel{code:removeHTTPResponseHeader}{{5.20}{28}{Extension code to remove a probably security relevant header from any incoming web request.\relax }{code.caption.58}{}}
-\@writefile{cex}{\contentsline {code}{\numberline {5.21}{\ignorespaces Extension code to manipulate an outgoing web requests that contains a form.\relax }}{28}{code.caption.59}}
-\newlabel{code:manipulateWebRequestForm}{{5.21}{28}{Extension code to manipulate an outgoing web requests that contains a form.\relax }{code.caption.59}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.15}{\ignorespaces Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }}{27}{code.caption.53}}
+\newlabel{code:openPageInInactiveTab}{{5.15}{27}{Extension code to open a particular web page in an inactive tab to steal probably stored credentials.\relax }{code.caption.53}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.16}{\ignorespaces Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }}{27}{code.caption.54}}
+\newlabel{code:openPageInNewBackgroundTab}{{5.16}{27}{Extension code to open a new tab in a background window an load a particular web page to steal probably stored credentials.\relax }{code.caption.54}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Attacks With Content Scripts}{27}{subsection.5.3.3}}
+\@writefile{toc}{\contentsline {subsubsection}{Denial Of Service}{28}{subsubsection*.55}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.17}{\ignorespaces Content Script which executes a DoS attack by calling a URL multiple times with an iframe.\relax }}{28}{code.caption.56}}
+\newlabel{code:DoSWithIframe}{{5.17}{28}{Content Script which executes a DoS attack by calling a URL multiple times with an iframe.\relax }{code.caption.56}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Download Files}{28}{subsection.5.3.4}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.18}{\ignorespaces Extension code to download and open a file without the user noticing.\relax }}{28}{code.caption.57}}
+\newlabel{code:downloadAndOpenFile}{{5.18}{28}{Extension code to download and open a file without the user noticing.\relax }{code.caption.57}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.19}{\ignorespaces Extension code to silently exchange a file that the user currently downloads.\relax }}{29}{code.caption.58}}
+\newlabel{code:exchangeDownloadFile}{{5.19}{29}{Extension code to silently exchange a file that the user currently downloads.\relax }{code.caption.58}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.20}{\ignorespaces Extension code to silently exchange a file after the user has downloaded it.\relax }}{29}{code.caption.59}}
+\newlabel{code:exchangeDownloadedFile}{{5.20}{29}{Extension code to silently exchange a file after the user has downloaded it.\relax }{code.caption.59}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Steal Cookies}{29}{subsection.5.3.5}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.21}{\ignorespaces Extension code to steal cookies from any website.\relax }}{29}{code.caption.60}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.6}Hamper Extension Management}{29}{subsection.5.3.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.7}Web Requests}{29}{subsection.5.3.7}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.22}{\ignorespaces Content script to steal cookies from the current web page.\relax }}{30}{code.caption.61}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.23}{\ignorespaces Extension code to silently disable another extension.\relax }}{30}{code.caption.62}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.24}{\ignorespaces Extension code to remove a probably security relevant header from any incoming web request.\relax }}{30}{code.caption.63}}
+\newlabel{code:removeHTTPResponseHeader}{{5.24}{30}{Extension code to remove a probably security relevant header from any incoming web request.\relax }{code.caption.63}{}}
+\@writefile{cex}{\contentsline {code}{\numberline {5.25}{\ignorespaces Extension code to manipulate an outgoing web requests that contains a form.\relax }}{31}{code.caption.64}}
+\newlabel{code:manipulateWebRequestForm}{{5.25}{31}{Extension code to manipulate an outgoing web requests that contains a form.\relax }{code.caption.64}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Summary of implemented attacks with needed permissions.\relax }}{31}{table.caption.65}}
 \@setckpt{./chapters/design}{
-\setcounter{page}{29}
+\setcounter{page}{32}
 \setcounter{equation}{0}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
-\setcounter{footnote}{1}
+\setcounter{footnote}{2}
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{5}
@@ -131,12 +144,15 @@
 \setcounter{lstnumber}{9}
 \setcounter{ContinuedFloat}{0}
 \setcounter{Item}{6}
-\setcounter{Hfootnote}{4}
-\setcounter{bookmark@seq@number}{38}
-\setcounter{float@type}{16}
-\setcounter{code}{21}
-\setcounter{code}{21}
-\setcounter{code}{21}
+\setcounter{Hfootnote}{5}
+\setcounter{bookmark@seq@number}{39}
+\setcounter{float@type}{32}
+\setcounter{code}{25}
+\setcounter{code}{25}
+\setcounter{code}{25}
+\setcounter{listing}{0}
+\setcounter{listing}{0}
+\setcounter{listing}{0}
 \setcounter{lstlisting}{0}
 \setcounter{section@level}{0}
 }

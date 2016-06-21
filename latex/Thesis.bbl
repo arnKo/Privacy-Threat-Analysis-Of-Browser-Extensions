@@ -29,17 +29,18 @@ L.~Bauer, S.~Cai, L.~Jia, T.~Passaro, and Y.~Tian.
 \newblock In {\em Proceedings of the IEEE Conference on Communications and
   Network Security}, pages 184--192. IEEE, Oct. 2014.
 
+\bibitem{8chanHola}
+F.~Brennman.
+\newblock 8chan - hola.
+\newblock \url{https://8ch.net/hola.html}.
+\newblock [accessed 2016-04-10].
+
 \bibitem{Carlini:2012:EGC:2362793.2362800}
 N.~Carlini, A.~P. Felt, and D.~Wagner.
 \newblock An evaluation of the google chrome extension security architecture.
 \newblock In {\em Proceedings of the 21st USENIX Conference on Security
   Symposium}, Security'12, pages 7--7, Berkeley, CA, USA, 2012. USENIX
   Association.
-
-\bibitem{Curran:2012:MBA:2433195.2433198}
-K.~Curran and T.~Dougan.
-\newblock Man in the browser attacks.
-\newblock {\em Int. J. Ambient Comput. Intell.}, 4(1):29--39, Jan. 2012.
 
 \bibitem{Dhawan:2009:AIF:1723192.1723250}
 M.~Dhawan and V.~Ganapathy.
@@ -55,24 +56,12 @@ P.~Eckersley.
   Enhancing Technologies}, PETS'10, pages 1--18, Berlin, Heidelberg, 2010.
   Springer-Verlag.
 
-\bibitem{caffinemonkey}
-B.~Feinstein and D.~Peck.
-\newblock Caffeine monkey: Automated collection, detection and analysis of
-  malicious javascript.
-\newblock In {\em DEFCON 15}, 2007.
-
 \bibitem{Hallaraker:2005:DMJ:1078029.1078861}
 O.~Hallaraker and G.~Vigna.
 \newblock Detecting malicious javascript code in mozilla.
 \newblock In {\em Proceedings of the 10th IEEE International Conference on
   Engineering of Complex Computer Systems}, ICECCS '05, pages 85--94,
   Washington, DC, USA, 2005. IEEE Computer Society.
-
-\bibitem{obfuscationJavascriptObfuscator}
-C.~C. Inc.
-\newblock Javascript obfuscator.
-\newblock \url{https://javascriptobfuscator.com/Javascript-Obfuscator.aspx}.
-\newblock [accessed 2016-05-10].
 
 \bibitem{flashPlayerGetFonts}
 A.~S. Incorporated.
@@ -88,12 +77,6 @@ N.~Jagpal, E.~Dingle, J.-P. Gravel, P.~Mavrommatis, N.~Provos, M.~A. Rajab, and
 \newblock In {\em 24th USENIX Security Symposium (USENIX Security 15)}, pages
   579--593, Washington, D.C., 2015. USENIX Association.
 
-\bibitem{obfuscationJscrambler}
-JScrambler.
-\newblock jscrambler.
-\newblock \url{https://jscrambler.com/en}.
-\newblock [accessed 2016-05-10].
-
 \bibitem{evercookie}
 S.~Kamkar.
 \newblock evercookie -- never forget.
@@ -106,12 +89,11 @@ A.~Kapravelos, C.~Grier, N.~Chachra, C.~Kruegel, G.~Vigna, and V.~Paxson.
 \newblock In {\em 23rd USENIX Security Symposium (USENIX Security 14)}, pages
   641--654, San Diego, CA, Aug. 2014. USENIX Association.
 
-\bibitem{kim2011suspicious}
-B.-I. Kim, C.-T. Im, and H.-C. Jung.
-\newblock Suspicious malicious web site detection with strength analysis of a
-  javascript obfuscation.
-\newblock {\em International Journal of Advanced Science and Technology},
-  26:19--32, 2011.
+\bibitem{vectraHola}
+V.~T. Labs.
+\newblock Technical analysis of hola.
+\newblock \url{http://blog.vectranetworks.com/blog/technical-analysis-of-hola}.
+\newblock [accessed 2016-04-10].
 
 \bibitem{liu2011botnet}
 L.~Liu, X.~Zhang, and S.~Chen.
@@ -184,29 +166,11 @@ M.~Ter~Louw, J.~S. Lim, and V.~N. Venkatakrishnan.
   of Intrusions and Malware, and Vulnerability Assessment}, DIMVA '07, pages
   1--19, Berlin, Heidelberg, 2007. Springer-Verlag.
 
-\bibitem{obfuscationDansTools}
-D.~Tools.
-\newblock Javascript obfuscator/encoder.
-\newblock \url{http://www.danstools.com/javascript-obfuscate/index.php}.
-\newblock [accessed 2016-05-10].
-
 \bibitem{chromiumBlogPasswordInput}
 vabr@chromium.org.
 \newblock Chromium blog issue 378419.
 \newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
 \newblock [accessed 2016-03-18].
-
-\bibitem{w3cUrlSpecifications}
-A.~van Kesteren.
-\newblock {URL} {L}iving {S}tandard.
-\newblock https://url.spec.whatwg.org/.
-\newblock [accessed 2016-04-25].
-
-\bibitem{w3cXMLHttpRequest}
-A.~van Kesteren, J.~Aubourg, J.~Song, and H.~R.~M. Steen.
-\newblock {XMLHttpRequest} {L}evel 1.
-\newblock https://www.w3.org/TR/XMLHttpRequest/.
-\newblock [accessed 2016-04-27].
 
 \bibitem{ndss2007xss}
 P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.
@@ -214,13 +178,5 @@ P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.
   Static Analysis}.
 \newblock In {\em Network and Distributed Systems Security Symposium (NDSS)},
   02 2007.
-
-\bibitem{Xu:2013:JMS:2435349.2435364}
-W.~Xu, F.~Zhang, and S.~Zhu.
-\newblock Jstill: Mostly static detection of obfuscated malicious javascript
-  code.
-\newblock In {\em Proceedings of the Third ACM Conference on Data and
-  Application Security and Privacy}, CODASPY '13, pages 117--128, New York, NY,
-  USA, 2013. ACM.
 
 \end{thebibliography}

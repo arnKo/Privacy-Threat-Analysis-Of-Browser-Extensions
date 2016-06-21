@@ -40,31 +40,37 @@
 \contentsline {paragraph}{tabs}{13}{paragraph*.22}
 \contentsline {paragraph}{webRequest}{13}{paragraph*.23}
 \contentsline {chapter}{\numberline {5}Design}{14}{chapter.5}
-\contentsline {section}{\numberline {5.1}Identification}{14}{section.5.1}
+\contentsline {section}{\numberline {5.1}Identification}{15}{section.5.1}
 \contentsline {subsection}{\numberline {5.1.1}User Tracking}{15}{subsection.5.1.1}
 \contentsline {subsubsection}{Web Beacon}{15}{subsubsection*.24}
-\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{15}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{16}{subsection.5.1.2}
 \contentsline {subsubsection}{Additional Fingerprinting Data}{17}{subsubsection*.26}
 \contentsline {subsubsection}{History Sniffing}{17}{subsubsection*.28}
-\contentsline {subsubsection}{Personal User Information}{18}{subsubsection*.30}
-\contentsline {section}{\numberline {5.2}Fetching}{19}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Script Element In Background}{19}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Script Element In Content Script}{19}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}XMLHttpRequest}{19}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Mutual Extension Communication}{20}{subsection.5.2.4}
-\contentsline {section}{\numberline {5.3}Execution}{21}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Remote Communication}{21}{subsection.5.3.1}
-\contentsline {subsubsection}{XMLHttpRequest}{21}{subsubsection*.37}
-\contentsline {subsubsection}{Iframe}{21}{subsubsection*.38}
-\contentsline {subsubsection}{Automatic Extension Update}{22}{subsubsection*.40}
-\contentsline {subsection}{\numberline {5.3.2}Steal Information With Content Scripts}{22}{subsection.5.3.2}
-\contentsline {subsubsection}{Steal Sensitive Data}{22}{subsubsection*.42}
-\contentsline {subsubsection}{Steal Credentials}{22}{subsubsection*.43}
-\contentsline {subsubsection}{Execute Attack In Background}{23}{subsubsection*.46}
-\contentsline {subsection}{\numberline {5.3.3}Attacks With Content Scripts}{25}{subsection.5.3.3}
-\contentsline {subsubsection}{Denial Of Service}{25}{subsubsection*.50}
-\contentsline {subsection}{\numberline {5.3.4}Download Files}{25}{subsection.5.3.4}
-\contentsline {subsection}{\numberline {5.3.5}Steal Cookies}{26}{subsection.5.3.5}
-\contentsline {subsection}{\numberline {5.3.6}Hamper Extension Management}{26}{subsection.5.3.6}
-\contentsline {subsection}{\numberline {5.3.7}Web Requests}{26}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.1.3}Personal User Information}{18}{subsection.5.1.3}
+\contentsline {subsubsection}{Read Outgoing Emails}{19}{subsubsection*.30}
+\contentsline {subsubsection}{Read Incoming Emails}{19}{subsubsection*.33}
+\contentsline {section}{\numberline {5.2}Fetching}{21}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Script Element In Background}{21}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Script Element In Content Script}{22}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}XMLHttpRequest}{22}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Mutual Extension Communication}{22}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}Execution}{24}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Remote Communication}{24}{subsection.5.3.1}
+\contentsline {subsubsection}{XMLHttpRequest}{24}{subsubsection*.42}
+\contentsline {subsubsection}{Iframe}{24}{subsubsection*.43}
+\contentsline {subsubsection}{Automatic Extension Update}{25}{subsubsection*.45}
+\contentsline {subsection}{\numberline {5.3.2}Steal Information With Content Scripts}{25}{subsection.5.3.2}
+\contentsline {subsubsection}{Steal Sensitive Data}{25}{subsubsection*.47}
+\contentsline {subsubsection}{Steal Credentials}{25}{subsubsection*.48}
+\contentsline {subsubsection}{Execute Attack In Background}{26}{subsubsection*.51}
+\contentsline {subsection}{\numberline {5.3.3}Attacks With Content Scripts}{27}{subsection.5.3.3}
+\contentsline {subsubsection}{Denial Of Service}{28}{subsubsection*.55}
+\contentsline {subsection}{\numberline {5.3.4}Download Files}{28}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}Steal Cookies}{29}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}Hamper Extension Management}{29}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}Web Requests}{29}{subsection.5.3.7}
+\contentsline {chapter}{\numberline {6}Extension Analysis}{32}{chapter.6}
+\contentsline {section}{\numberline {6.1}Google Translate}{32}{section.6.1}
+\contentsline {section}{\numberline {6.2}Unlimited Free VPN - Hola}{33}{section.6.2}
+\contentsline {section}{\numberline {6.3}Evernote Web Clipper}{33}{section.6.3}
 \contentsfinish 

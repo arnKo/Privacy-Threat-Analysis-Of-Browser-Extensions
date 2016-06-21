@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ReadIncommingEmails",
+    "description": "Extension that reads emails that the user has received and are stored in the in-box of his telekom email account." ,
+
+	"background" : {
+		"scripts" : ["background.js"]
+	},
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["jquery.js", "content.js"],
+			"all_frames": true
+		}
+	],
+	
+	"permissions": [
+		"<all_urls>"
+	]
+}
