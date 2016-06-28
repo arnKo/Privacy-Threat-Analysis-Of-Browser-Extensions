@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ReadFacebookData",
+    "description": "Extension that reads user data from facebook." ,
+
+	"background" : {
+		"scripts" : ["background.js"]
+	},
+	
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["jquery.js", "content.js"]
+		}
+	]
+}

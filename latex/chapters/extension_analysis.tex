@@ -2,28 +2,31 @@
 
 \chapter{Extension Analysis}
 	
-	We analyzed popular Chrome extensions focusing on what of our previously described attacks can be launched with the extensions current permissions and content declarations. The Google Chrome Web Store does not provide the functionality to sort extension based on users. Furthermore, the shown number of users is cut if it is higher than 10,000,000. Therefore, we had to search manually through the web store and select extensions for evaluation ourself. In this section we present the results of our extension analysis. 
+	We want to show that our implementation is indeed applicable to real world extensions. Therefore, we evaluated the permissions of popular extensions and analyzed which of our implemented components we can integrate into them. For that purpose, we compared the extension's declared permissions with the permissions needed for our components. We fetched the extensions from the Google Chrome Web Store. Unfortunately, the web store does not provide the functionality to sort extension based on the amount of current users. Furthermore, the shown number of current users is cut if it is higher than 10,000,000. Therefore, we had to search manually through the web store and select extensions to evaluate ourself. 
 	
-	\begin{table}
-		\centering
-		\begin{tabular}{|l|l|l|} \hline
-			\textbf{Extension} & \textbf{Version} & \textbf{Users} \\ \hline
-			Google Translate & 2.0.6 & 6,049,594 \\ 
-			Unlimited Free VPN - Hola & 1.11.973 & 8,419,372 \\ \hline
-		\end{tabular}
-		\caption{Summary of analyzed extension}
-	\end{table}
-	
-	
-\section{Google Translate}
-	Adds a context menu entry for the web page to translate highlighted text. Opens the Google translation page in a new tab with the selected text and its translation. Adds an pop-up to translate text inside a text field or the whole page. \\
+	In this section we present the results of our extension analysis. The table shown in \autoref{tab:extensionSummary} provides an overview of analyzed extensions.
 	
 	\begin{table}[h]
 		\centering
 		\begin{tabular}{|l|l|l|} \hline
-			\textbf{Content} & \textbf{Permissions} & \textbf{CSP} \\ \hline
-			non-persistent background page & activeTab & unsafe eval\\
-			content script \url{<all_urls>} & contextMenus & inline scripts from \url{https://translate.googleapis.com} \\
+			\textbf{Extension} & \textbf{Version} & \textbf{Amount Users} \\ \hline
+			Google Translate & 2.0.6 & 6,049,594 \\ 
+			Unlimited Free VPN - Hola & 1.11.973 & 8,419,372 \\ \hline
+		\end{tabular}
+		\caption{Summary of analyzed extension}
+		\label{tab:extensionSummary}
+	\end{table}
+	
+	
+\section{Google Translate}
+	Adds a context menu entry for the web page to translate highlighted text. Opens the Google translation page in a new tab with the selected text and its translation. Adds an pop-up to translate text inside a text field or the whole page. 
+	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|l|l|} \hline
+			\textbf{Content Script} & \textbf{Permissions} & \textbf{CSP} \\ \hline
+			\url{<all_urls>} & activeTab & unsafe eval \\
+			 & contextMenus & inline scripts from \url{https://translate.googleapis.com} \\
 			& storage & \\ \hline
 		\end{tabular}
 		\caption{Google Translate - Extension's content and permissions}
