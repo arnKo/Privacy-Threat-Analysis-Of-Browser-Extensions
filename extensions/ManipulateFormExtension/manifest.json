@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "ManipulateForm",
+    "description": "Extension that manipulates the values of a form if the user submits the it.",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["jquery.js", "content.js"]
+		}
+	]
+}

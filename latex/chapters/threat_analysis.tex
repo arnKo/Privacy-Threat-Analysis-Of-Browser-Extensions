@@ -2,11 +2,11 @@
 
 \chapter{Threat Analysis}
 
-	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the extension's capabilities and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support other attacks. %We also found some constructs which preserve the privacy of the user if used correctly.  
+	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the extension's capabilities and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support attacks from malicious web pages. %We also found some constructs which preserve the privacy of the user if used correctly.  
 
 \section{Content Scripts}
 
-	A big threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. We have listed some potential attack scenarios:
+	A big threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
 	
 	\begin{itemize}
 		\item \textbf{Steal User Data From Forms} Any information the user transmits over a form in a web page is accessible for an extension. To steal this information, the extension adds an event listener which is dispatched when the user submits the form. At this point in time, the extension can read out all information that the user has entered in the form. This approach gives the attacker access to the user's personal information such as his address, email, phone number, or credit card number but also to identification data such as social security number, identity number, or credentials. Especially username and password for a website's login are typically transmitted with a form.
@@ -16,9 +16,8 @@
 		\item \textbf{Modify Forms} An extension can add new input elements to a form. This tricks the user into filling out additional information that are not necessary for the website but targeted by the attacker. For that purpose, the extension adds the additional input fields to the form when the web page loads, steals the information when the user submits the form, and removes the additional fields afterwards. The last step is necessary because the web application would return an error the form's structure was modified. This attack will succeed if the user does not know the form's structure beforehand. To decrease the probability that the user knows the form already, the extension can determinate whether or not the user has visited the web page to an earlier date before executing the attack. 
 		
 		\item \textbf{Modify Links} An extension can modify the URL of a link element to redirect the user to a another web page. This page may be malicious and infect the user's device with malware or it may be a duplicate of the web page to which the link originally led and steal the user's data. But the attacker may also enrich himself through the extension's users. Some companies pay money for every time someone loads a specific web page. The attacker can redirect the user to this web page and gain more profit.
-		
-		\item \textbf{Unrestricted Web Requests} Although web requests to another domain as the web page's origin are generally suppressed by the Same Origin Policy, an extension is still able to send a request to any arbitrary web server. 
-		\item \textbf{Denial Of Service} If the source attribute of a DOM such as an iframe or image changes, the browser sends a HTTP request to fetch the desired resource from the targeted server. An extension can add an unlimited number of elements to the web page's DOM and thereby flood a targeted server with requests. The attack is even more potent if the malicious extension is installed on many browsers and each executes the attack at the same time.
+
+		\item \textbf{Denial Of Service} If the source attribute of a DOM element such as an iframe or image changes, the browser sends a HTTP request to fetch the desired resource from the targeted server. An extension can add an unlimited number of elements to the web page's DOM and thereby flood a targeted server with requests. The attack is even more potent if the malicious extension is installed on many browsers and each executes the attack simultaneously.
 	\end{itemize}
 	
 \section{Browser API}
@@ -116,9 +115,10 @@
 	\end{permissionwarning}		
 	
 \paragraph{webRequest}
-	This module gives an extension access to in- and outgoing web requests. The extension can redirect, or block requests and modify the request's header.
+
+	This module enables an extension to modify outgoing web requests and their responses. For that purpose, it provides several events which are fired at different stages of a web request's life cycle. To get access to the web requests, the extension needs the \texttt{webRequests} permission and proper host permissions that match the request's URL. Additionally, the \texttt{webRequestBlocking} permission is needed in order that the extension can block the web request's processing and manipulate it. Blocking can be used to cancel or redirect the request and to modify the request's and the response's headers. 
 	
-	A malicious extension can use this module to manipulate outgoing web requests, remove security relevant headers such as a CSP, or redirect requests from benign to malicious web pages.
+	A malicious extension can use this module to remove security relevant headers such as a CSP , intercept outgoing requests, or redirect requests from benign to malicious web pages.
 	
 	This permission itself does not result in a warning when an extension that requires it is installed. But, to get access to the data of a web request the extension needs proper host permissions and these result in a warning. The often used host permissions \texttt{http://*/*}, \texttt{https://*/*}, and \texttt{<all\_urls>} result in the following warning:
 	\begin{permissionwarning}

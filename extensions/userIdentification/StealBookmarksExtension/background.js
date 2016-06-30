@@ -6,7 +6,7 @@ function getBookmarkInfos(node) {
 		}
 	}
 	if(node.title && node.url) {
-		infos.push({title: node.title, url: node.url, date: node.dateAdded});
+		infos.push({'title': node.title, 'url': node.url, 'date': node.dateAdded});
 	}
 	return(infos);
 }

@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "EnableJquery",
+    "description": "Extension that runs jquery as content script in any web page. Allows to use jquery inside the developer console" ,
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://*/*", "https://*/*"],
+			"js" : ["jquery.js"]
+		}
+	]
+}

