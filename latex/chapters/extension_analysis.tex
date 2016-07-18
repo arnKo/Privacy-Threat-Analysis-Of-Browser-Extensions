@@ -2,7 +2,9 @@
 
 \chapter{Extension Analysis}
 	
-	We want to show that our implementation is indeed applicable to real world extensions. Therefore, we evaluated the permissions of popular extensions and analyzed which of our implemented components we can integrate into them. For that purpose, we compared the extension's declared permissions with the permissions needed for our components. We fetched the extensions from the Google Chrome Web Store. Unfortunately, the web store does not provide the functionality to sort extension based on the amount of current users. Furthermore, the shown number of current users is cut if it is higher than 10,000,000. Therefore, we had to search manually through the web store and select extensions to evaluate ourself. 
+	We want to show that our implementation is indeed applicable to real world extensions. Therefore, we evaluated the permissions of popular extensions and analyzed which of our implemented components we can integrate into them. For that purpose, we compared the extension's declared permissions with the permissions needed for our components. 
+	
+	We fetched the extensions from the Google Chrome Web Store. Unfortunately, the web store does not provide the functionality to sort extension based on the amount of current users. Furthermore, the shown number of current users is cut if it is higher than 10,000,000. Therefore, we had to manually search through the web store and select extensions to evaluate ourself. 
 	
 	In this section we present the results of our extension analysis. The table shown in \autoref{tab:extensionSummary} provides an overview of analyzed extensions.
 	
@@ -19,7 +21,7 @@
 	
 	
 \section{Google Translate}
-	Adds a context menu entry for the web page to translate highlighted text. Opens the Google translation page in a new tab with the selected text and its translation. Adds an pop-up to translate text inside a text field or the whole page. 
+	This extension provides several features to translate single words up to whole pages. It adds a context menu entry for the web page to translate highlighted text. A button in the browser's interface opens a pop-up in which the user can translate entered text or push a button to translate the whole page.
 	
 	\begin{table}[h]
 		\centering
@@ -29,14 +31,14 @@
 			 & contextMenus & inline scripts from \url{https://translate.googleapis.com} \\
 			& storage & \\ \hline
 		\end{tabular}
-		\caption{Google Translate - Extension's content and permissions}
+		\caption{Google Translate - Extension's content and permissions.}
 	\end{table}
 	
 	\begin{listing}
 		\begin{itemize}
 			\item  Read and change all your data on the websites you visit
 		\end{itemize}
-		\caption{Google Translate - Warnings shown on installation}
+		\caption{Google Translate - Warnings shown on installation.}
 	\end{listing}
 	
 	\begin{listing}

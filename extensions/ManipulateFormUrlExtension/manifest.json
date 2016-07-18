@@ -3,7 +3,7 @@
     "version": "1.0",
 	
     "name": "ManipulateForm",
-    "description": "Extension that manipulates the values of a form if the user submits the it.",
+    "description": "Extension that manipulates the URL of a form.",
 
 	"content_scripts" : [
 		{

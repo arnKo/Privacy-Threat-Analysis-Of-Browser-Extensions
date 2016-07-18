@@ -6,10 +6,27 @@
   \url{https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/eval#dont-use-it}.
 \newblock [accessed 2015-12-29].
 
+\bibitem{edgeBrowserApiStatus}
+{M}icrosoft {E}dge extension {API} roadmap.
+\newblock
+  \url{https://developer.microsoft.com/en-us/microsoft-edge/platform/documentation/extensions/extension-api-roadmap/}.
+\newblock [acessed 2016-07-05].
+
+\bibitem{mozillaWebExtensionStatus}
+{Mozilla Wiki - WebExtensions}.
+\newblock \url{https://wiki.mozilla.org/WebExtensions}.
+\newblock [accessed 2015-12-30].
+
 \bibitem{mozillaWikiClearPrivacyAPI}
 {NPAPI}:{C}lear{S}ite{D}ata.
 \newblock \url{https://wiki.mozilla.org/NPAPI:ClearPrivacyData}.
 \newblock [accessed 2016-05-25].
+
+\bibitem{safariContentBlockingRules}
+{Safari Developer Library - Safari Content-Blocking Rules Reference}.
+\newblock
+  \url{https://developer.apple.com/library/safari/documentation/Extensions/Conceptual/ContentBlockingRules/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016265}.
+\newblock [accessed 2016-01-07].
 
 \bibitem{Bandhakavi:2011:VBE:1995376.1995398}
 S.~Bandhakavi, N.~Tiku, W.~Pittman, S.~T. King, P.~Madhusudan, and M.~Winslett.
@@ -23,11 +40,26 @@ A.~Barth, A.~P. Felt, P.~Saxena, A.~Boodman, A.~Barth, A.~P. Felt, P.~Saxena,
 \newblock In {\em in Proceedings of the 17th Network and Distributed System
   Security Symposium}, 2010.
 
+\bibitem{Barth:2009:CJC:1855768.1855780}
+A.~Barth, J.~Weinberger, and D.~Song.
+\newblock Cross-origin javascript capability leaks: Detection, exploitation,
+  and defense.
+\newblock In {\em Proceedings of the 18th Conference on USENIX Security
+  Symposium}, SSYM'09, pages 187--198, Berkeley, CA, USA, 2009. USENIX
+  Association.
+
 \bibitem{extensions:cns14}
 L.~Bauer, S.~Cai, L.~Jia, T.~Passaro, and Y.~Tian.
 \newblock Analyzing the dangers posed by {C}hrome extensions.
 \newblock In {\em Proceedings of the IEEE Conference on Communications and
   Network Security}, pages 184--192. IEEE, Oct. 2014.
+
+\bibitem{operaBlogSwitchToChromium}
+A.~Bovens.
+\newblock {Dev.Opera - Major Changes in Opera's Extensions Infrastructure}.
+\newblock
+  \url{https://dev.opera.com/articles/major-changes-in-operas-extensions-infrastructure/}.
+\newblock [accessed 2015-12-11].
 
 \bibitem{8chanHola}
 F.~Brennman.

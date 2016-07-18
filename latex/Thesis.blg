@@ -7,6 +7,9 @@ A level-1 auxiliary file: ./chapters/design.aux
 A level-1 auxiliary file: ./chapters/extension_analysis.aux
 The style file: abbrv.bst
 Database file #1: references.bib
+Warning--to sort, need author or key in mozillaWebExtensionStatus
+Warning--to sort, need author or key in edgeBrowserApiStatus
+Warning--to sort, need author or key in safariContentBlockingRules
 Warning--to sort, need author or key in mozillaWikiClearPrivacyAPI
 Warning--to sort, need author or key in mozillaDangerousEval
-(There were 2 warnings)
+(There were 5 warnings)

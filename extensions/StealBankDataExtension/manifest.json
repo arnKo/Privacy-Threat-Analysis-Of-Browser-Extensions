@@ -3,7 +3,7 @@
     "version": "1.0",
 	
     "name": "StealBankData",
-    "description": "Extension that steals the bank information from https://localhost:3001/bank. Sends data to https://localhost:3001/log without the need for any host permissions" ,
+    "description": "Extension that steals bank data" ,
 
 	"content_scripts" : [
 		{

