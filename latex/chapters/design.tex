@@ -194,16 +194,18 @@ chrome.bookmarks.getTree(function(root) {
 	
 	We have extracted three categories of web applications as worthwhile targets to collect user data:
 	\begin{itemize}
-		\item \textbf{Social Media} Many people use real names and other personal information for their social media account. If the user visits his account, we can read out his personal data. Furthermore, we can extract information such as the user's social or business environment while the user visits related web pages.
-		\item \textbf{Online Banking} We can identify the current user based on his account numbers if he uses his online banking account. Moreover, we can extract his financial status which gives us information whether or not an attack is worthwhile.
-		\item \textbf{Email Account} 
+		\item \textbf{Social Media} Many people use real names and other personal information for their social media account. If the user visits his account, we can read out his personal data. Furthermore, we can extract information such as the user's social or business environment while the user visits the social web pages of other people he interacts with.
+		\item \textbf{Online Banking} We can identify the current user based on his account numbers if he uses his online banking account. Moreover, we can extract his financial status which gives us information whether or not an attack on his finances is worthwhile.
+		\item \textbf{Email Account} If the user send and receives emails on his online email account, we can read those and collect probably valuable information that he shares with his acquaintance or other people.
 	\end{itemize}
 	
-	An extension whose purpose is to obtain particular data from a web page retrieves the targeted values directly from the web page's DOM and thus heavily depends on the DOM's structure. Due to strong differences between the structures of different web applications, we did not implement a general approach that collects the targeted information from multiple web pages. Instead, we developed a different implementations for different web pages and present a single implementation for each category of targets as an example.
+	An extension whose purpose is to obtain particular data from a web page retrieves the targeted values directly from the web page's DOM and thus heavily depends on the DOM's structure. Due to strong differences between the structures of different web applications, we did not implement a general approach that collects the targeted information from multiple applications. Instead, we developed different implementations for different web applications and present a single implementation for each category of targets as an example.
 	
 \subsubsection{Emails}
 		
-	Our implementation to read an outgoing mail from the user's email client uses a content script shown in \autoref{code:readOutgoingEmailContent} and a background script shown in \autoref{code:readOutgoingEmailBackground}. The extension needs host permissions for the email client's web page or simpler for all web pages. In our content script, we begin by determining if the current web page is our targeted web page and check its host name and URL for that purpose (line 1). Then, we query for the send button with a complex CSS selector and add a click event to it (line 2). If the user sends the mail by clicking the send button, we will send a message to the extension's background (line 3). The message contains all recipients (line 4), carbon copy recipients (line 5), blind carbon copy recipients (line 6), and the subject (line 7). Again, we query for each element with a complex CSS selector.
+	Our implementation to read an outgoing mail from the user's email client uses a content script shown in \autoref{code:readOutgoingEmailContent} and a background script shown in \autoref{code:readOutgoingEmailBackground}. The extension needs host permissions for the email client's web page or simpler for all web pages. 
+	
+	In the content script shown in \autoref{code:readOutgoingEmailContent}, we begin by determining if the current web page is our targeted web page and check its host name and URL for that purpose (line 1). Then, we query for the send button with a complex CSS selector and add a click event to it (line 2). If the user sends the mail by clicking the send button, we will send a message to the extension's background (line 3). The message contains all recipients (line 4), carbon copy recipients (line 5), blind carbon copy recipients (line 6), and the subject (line 7). Again, we query for each element with a complex CSS selector.
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -222,7 +224,7 @@ if(window.location.hostname === TARGETED_HOSTNAME && window.location.href.indexO
 		\label{code:readOutgoingEmailContent}
 	\end{code}
 	
-	In our background script, we await the message from our content script (line 1). Because the email's body is not stored in the same document as the rest of the email's data but in a separate iframe element, we execute a further script in the current tab to retrieve the missing information (line 2). The script checks for the correct id of the document's body element and returns the body's visible text (line 3). We specify that our script is executed in all of the web page's frames, especially the iframe with the email's body (line 4). Because multiple instances of our script are active and each returns some value, we iterate over all returned values and determine the correct one (lines 6-7). Finally, we forward the email's content to our send method (lines 9-10) 
+	In our background script shown in \autoref{code:readOutgoingEmailBackground}, we await the message from our content script (line 1). Because the email's body is not stored in the same document as the rest of the email's data but in a separate iframe element, we execute a further script in the current tab to retrieve the missing information (line 2). The script checks for the correct id of the document's body element and returns the body's visible text (line 3). We specify that our script is executed in all of the web page's frames, especially the iframe with the email's body (line 4). Because multiple instances of our script are active and each returns some value, we iterate over all returned values and determine the correct one (lines 6-7). Finally, we forward the email's content to our send method (lines 9-10) 
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -244,7 +246,9 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 		\label{code:readOutgoingEmailBackground}
 	\end{code}
 	
-	We also implemented an extension to read incoming emails respectively emails in the user's in-box. In the content script implementation shown in \autoref{code:readIncomingEmailContent}, we first determine whether the current web page is the user's in-box of his email client (line 1). Then we send a message to the extension's background if the page has loaded completely (lines 2-3). The content of the message consists of the email's subject (line 4), the sender (line 5), and the receiving date (line 6). We retrieve each value using a complex CSS selector. Because the email's body is stored inside an embedded iframe and only this iframe is reloaded if the user selects another email to view, we check if our script is currently active in the aforesaid iframe (line 10). If this case applies, we send a message to the extension's background to notify it that the user has opened another email (line 11).
+	We also implemented an extension to read incoming emails respectively emails in the user's in-box. Again, we use a content script which we show in \autoref{code:readIncomingEmailContent} and a script running in the extension's background which we show in \autoref{code:readIncomingEmailBackground}. Additionally, the extension needs host permissions to the targeted email client. 
+	
+	In the content script implementation shown in \autoref{code:readIncomingEmailContent}, we first determine whether the current web page is the user's in-box of his email client (line 1). Then we send a message to the extension's background if the page has loaded completely (lines 2-3). The content of the message consists of the email's subject (line 4), the sender (line 5), and the receiving date (line 6). We retrieve each value using a complex CSS selector. Because the email's body is stored inside an embedded iframe and only this iframe is reloaded if the user selects another email to view, we check if our script is currently active in the aforesaid iframe (line 10). If this case applies, we send a message to the extension's background to notify it that the user has opened another email (line 11).
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -295,7 +299,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 
 \subsubsection{Social Media}
 
-	We developed a content script that collects the user's personal information while he navigates through his Facebook account. We present our implementation as an example that retrieves the user's name, the URL of his main page, the names of his friends, locations that he has shared with Facebook, and other personal information from his main page such as his date of birth, home town, or salutation.
+	We developed a content script that collects the user's personal information while he navigates through his Facebook account. We present our implementation that retrieves the user's name, the URL of his main page, the names of his friends, locations that he has shared with Facebook, and other personal information from his main page such as his date of birth, home town, or salutation.
 	
 	We show our implementation in \autoref{code:readFacebook}. First, we check if the current web page belongs to Facebook (line 1). We wait until the web page has finished loading (line 2) and retrieve the user's name (line 3) and the URL of his main page (line 4) from the web page's DOM. Then we forward the collected data to our send method (line 5). Most of Facebook's content is loaded dynamically while the user navigates through the web page. To collect information from dynamic content, we retrieve the desired values periodically (line 7). To retrieve all locations which the user has shared with Facebook, we first select each entry of the list that holds these information (line 8). Each contains amongst others the location's name and an image which may be a map showing the location's coordinates. We retrieve the name (line 9) and the coordinates from the image's URL (line 10). The user's Personal information on his main page are stored inside a list with key value pairs. We first select all entries of the list (line 13), and then select each pair (lines 14-15). We retrieve the user's friends from the chat's list of active friends. For that purpose, we select each entry in the list and retrieve its text (lines 17-18). Finally, we forward the collected information to our send method (line 20).
 
@@ -331,9 +335,9 @@ if(window.location.host === 'www.facebook.com') {
 
 \subsubsection{Online Banking}
 
-	%TODO implement + write
+	We implemented a content script that retrieves the user's banking account information while he visits the corresponding web page. The extension does not need additional permissions to execute the script.
 
-	First, we check if the current web page's host equals the targeted banking portal (line 1). Then, we query for any second level heading element on the web page (line 2). We filter the returned list of headings and retrieve (line 3).
+	We show our implementation in \autoref{code:readBankingData}. First, we check if the current web page's host equals the targeted banking portal (line 1). Then, we query for a second level heading element on the web page whose text equals \textit{Financial status} (lines 2-4) and check if we found one in order to identify the current web page (line 5). In this case, we select each row of the table that holds the users banking accounts and iterate them (line 7). On each iteration, we collect the account's name (line 9), the account's identification number (line 10), and the account's current balance (line 11). Finally, we forward the collected information to our send method (line 14). 
 
 	\begin{code}
 		\begin{lstlisting}
@@ -377,6 +381,7 @@ if(window.location.hostname === TARGETED_HOSTNAME) {
 			\hline
 			Read emails & content script, \texttt{http://*/*, https://*/*} \\
 			Read facebook data & content script \\
+			Read online banking data & content script \\
 			\hline
 		\end{tabular}
 		\caption{Summary of extension implementations for user identification with needed permissions.}
@@ -396,13 +401,13 @@ if(window.location.hostname === TARGETED_HOSTNAME) {
 	In this section, we present different approaches to transfer information between the extension and a remote server and to fetch the source code for our explicit attacks. The \autoref{tab:summaryRemoteCommunication} and \autoref{tab:summaryFetchScript} at the end of this section show summaries of our implementations and what privileges an extension needs for each.
 	
 \subsection{Remote Communication}
-
-	We often arrive at a point where we have to transfer information from the active extension to our remote server or vice versa. For example, if we want to transfer collected information for identification or stolen personal user data or we want to give the extension the command to execute an attack. We implemented several partly interchangeable approaches for that purpose which need different permissions. 
+\label{sec:remoteCommunication}
+	We often arrive at a point where we have to transfer information from the active extension to our remote server or vice versa. For example, if we want to transfer collected information for identification or stolen personal user data or we want to give the extension the command to execute an attack. We implemented several partly interchangeable components for that purpose and present them in this section.
 
 \subsubsection{XMLHttpRequest}
 \label{sec:xhrCommunication}
 
-	Extensions are able to make a web request to a remote server with a XMLHttpRequest. If called from a content script, the XMLHttpRequest will be blocked by the Same Origin Policy if the target does not match the current web page's origin. However, the same restriction does not apply to the extension's background. If the XMLHttpRequest is executed from within the background process, any arbitrary host is allowed as target if a matching host permission is declared in the extension's manifest. Our implementation uses a host permission that matches any URL such as \texttt{http://*/*}, \texttt{https://*/*}, or \texttt{<all\_urls>}. This allows us to disguise the concrete URL of our remote server in the warnings on installation. The JavaScript extract in \autoref{code:xhr} shows a general implementation of a XMLHttpRequest. 
+	Extensions are able to make a web request to a remote server with a XMLHttpRequest. If called from a content script, the XMLHttpRequest will be blocked by the Same Origin Policy if the target does not match the current web page's origin. However, the same restriction does not apply to the extension's background. If the XMLHttpRequest is executed from within the background process, any arbitrary host is allowed as target if a matching host permission is declared in the extension's manifest. For this component, the extension needs a host permission that matches any URL such as \texttt{http://*/*}, \texttt{https://*/*}, or \texttt{<all\_urls>}. The JavaScript extract in \autoref{code:xhr} shows a general implementation of a XMLHttpRequest. 
 	
 	\begin{code}
 		\begin{lstlisting}
@@ -417,9 +422,9 @@ xhr.send(message);
 
 \subsubsection{Iframe}
 
-	Another strategy that we use to transfer information to a remote host was described by Liu et al. \cite{Liu12chromeextensions:}. They analyzed possible threats in Chrome's extension model through malicious behavior and conducted that an extension can executed HTTP requests to any arbitrary host without cross-site access privileges. For that purpose, they we use the mechanics of an \textit{iframe} element. Its task is to display a web page within another web page. The displayed web page is defined by the URL stored inside the iframe's \textit{src} attribute. If the URL changes, the iframe tries to fetch the web page by sending a request to the defined URL. Adding parameters to the URL allows us to send data to the targeted server. 
+	Another strategy that we use to transfer information to a remote host was described by Liu et al. \cite{Liu12chromeextensions:}. They analyzed possible threats in Chrome's extension model through malicious behavior and conducted that an extension can executed HTTP requests to any arbitrary host without cross-site access privileges such as host permissions. For that purpose, they use the mechanics of an \textit{iframe} element. Its task is to display a web page within another web page. The displayed web page is defined by the URL stored inside the iframe's \textit{src} attribute. If the URL changes, the iframe tries to fetch the web page by sending a request to the defined URL. Adding parameters to the URL allows to send data to the targeted server. 
 
-	We implemented the content script shown in \autoref{code:sendDataWithIframe}. First, it creates a new \texttt{iframe} element (line 1), hides it from the user by setting the iframe's CSS style property (line 2), and appends it to the web page's DOM (line 3). When the iframe's URL source property is changed, a subsequent URL request is initiated. This way, we can transmit data to the remote server by encoding it as URL parameter (lines 4-6).
+	We implemented this strategy and show our content script in \autoref{code:sendDataWithIframe}. First, we create a new \texttt{iframe} element (line 1), hide it from the user by setting the iframe's CSS style property (line 2), and append it to the web page's DOM (line 3). When the iframe's URL source property changes, a subsequent URL request is initiated. This way, we can transmit data to the remote server by encoding it as URL parameter (lines 4-6).
 
 \begin{code}
 	\begin{lstlisting}
@@ -434,7 +439,7 @@ function send(data) {
 	\label{code:sendDataWithIframe}
 \end{code}
 
-	The Same Origin Policy creates a boundary between the iframe and it's parent web page. It prevents scripts to access content that has another origin than the script itself. Therefore, if the web page inside the iframe was loaded from another domain as the parent web page, the iframe's JavaScript can not access the parent web page and vice versa. This boundary does not prevent an extension to access information in an iframe. The extension can execute a content script in every web page hence in the iframe's web page, too. For that purpose, it has to enable the \texttt{all\_frames} option for a content script either statically in the manifest or on a programmatically injection. This allows us to use the content script in \autoref{code:sendDataWithIframe} for a two way communication channel. Executing a second content script inside the iframe, allows us to read information that our server has embedded inside the fetched web page. 
+	The Same Origin Policy creates a boundary between the iframe and it's parent web page. It prevents scripts to access content that has another origin than the script itself. Therefore, if the web page inside the iframe was loaded from another domain as the parent web page, the iframe's JavaScript can not access the parent web page and vice versa. This boundary does not prevent an extension to access information in an iframe. The extension can execute a content script in every web page hence in the iframe's web page, too. For that purpose, it has to enable the \texttt{all\_frames} option for a content script either statically in the manifest or on a programmatically injection. This allows us to use the content script in \autoref{code:sendDataWithIframe} for a two way communication channel. Executing a second content script inside the iframe, allows us to read information that our server has embedded inside the fetched web page.
 
 \subsubsection{Automatic Extension Update}
 
@@ -442,8 +447,8 @@ function send(data) {
 
 
 \subsection{Remote Script Fetching}
-		
-	Fetching a script remotely from a server is a kind of communication. But because our implementation relies on fetching the source code for a particular attack from our remote server, we present our implemented approaches in this section.
+	
+	Because our implementation relies on fetching the source code for a particular attack from our remote server we present our implemented components in this section. Fetching a script remotely from a server is also some kind of communication. Therefore, some components that we present in this section use similar to same approaches like before presented components for communication in \autoref{sec:remoteCommunication}. 
 	
 \subsubsection{Script Element In Background}
 	
@@ -469,9 +474,9 @@ document.body.appendChild(script);
 
 	In \autoref{sec:xhrCommunication} we have shown that an extension can execute a web request to a remote server with the XMLHttpRequest API. This allows us not only to transfer information to our remote server, but also to receive any data especially the source code for our attacks. We receive the source code in text form and have to forward it to the browser's JavaScript interpreter to execute it.
 	
-	Before we can execute a remote loaded script, we have to consider what the scripts objectives are. Whether it should act in the extension's background or as a content script. If the first case applies, we can use the JavaScript method \texttt{eval} to execute the remote loaded code as a JavaScript application. The use of eval is frowned upon because it is a main source of XSS attacks if not used correctly \cite{mozillaDangerousEval}. On that account, the default CSP disables the use of eval in the extension's background process. We can relax the default policy and add the key \texttt{unsafe\_eval} to lift the restriction. 
+	Before we can execute a remote loaded script, we have to consider what the scripts objectives are. Whether it should act in the extension's background or as a content script. If the first case applies, we can use the JavaScript method \texttt{eval} to execute the remote loaded code as a JavaScript application. The use of eval is frowned upon because it is a main source of XSS attacks if not used correctly \cite{mozillaDangerousEval}. On that account, the default Content Security Policy disables the use of eval in the extension's background process. We can relax the default policy and add the key \texttt{unsafe\_eval} to lift the restriction. 
 	
-	If we want to execute the remote loaded script as a content script, we can programmatically inject it. The method \texttt{chrome.tabs.executeScript} executes a given string as a content script in a currently open tab. The use of this function is not restricted by a permission. But to access the web page in the tab, the extension needs a proper host permission that matches the web page's URL. Because we have fetched the script with an XHR, we already declared host permissions that match any URL to execute the request.
+	If we want to execute the remote loaded script as a content script, we can programmatically inject it. The method \texttt{chrome.tabs.executeScript} executes a given string as a content script in a currently open tab. The use of this function is not restricted by a permission. But to access the web page in the tab, the extension needs a proper host permission that matches the web page's URL. Because we have fetched the script with an XHR, we have already declared host permissions that match any URL to execute the request.
 	
 \subsubsection{Mutual Extension Communication}
 
@@ -540,10 +545,12 @@ window.addEventListener('message', function(event) {
 \clearpage
 \section{Execution}
 \label{sec:execution}
-	%TODO intro
 	
-	% state that content script equals host permission, interchangable depending on how the script was fetched, if executed with eval in content script extension needs content script, if executed with chrome.tabs.executeScript extension needs hos permission,
-	% refer to implementations in user identification section, have already shown that we can steal sensitive information
+	We have already shown how we collect information to identify the current user, transfer it to our remote server which is in charge to evaluate the data, and how we fetch the source code of an attack in the case that the identification was successful. In this section we finally, present our concrete attack implementations.
+	
+	Depending on how we have fetched the attack's source code, we need different permissions to execute the attack. In the case that the attack is executed in the scope of a web page, we need either an already active content script that executes the attack or host permissions to inject the attack as independent content script into the web page. In \autoref{tab:summaryAttacks} that shows the summary of our implemented components, we declare the needed permissions for an attack in this case with \textit{content script} which is interchangeable with proper host permissions.
+
+	In \autoref{sec:identification}, we have already shown that we are able to obtain personal user information by extraction them from the web pages that the user visits. Before, we collected these information to generate a fingerprint of the current user and identify him based on this fingerprint. Of course, if we have already obtained sensitive information, we are able to misuse them and harm the user. Therefore, we also use the components presented in \autoref{sec:identification} to steal sensitive user data.
 
 \subsection{Steal Form Data}
 
@@ -888,4 +895,6 @@ chrome.webRequest.onHeadersReceived.addListener(function(details) {
 			\hline
 		\end{tabular}
 		\caption{Summary of implemented attacks with needed permissions.}
+		The host permissions \texttt{http://*/*, https://*/*} are interchangeable with an already active content script when executing the attack.
+		\label{tab:summaryAttacks}
 	\end{table}

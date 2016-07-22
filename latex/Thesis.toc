@@ -5,11 +5,11 @@
 \contentsline {chapter}{\numberline {2}Related Works}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}Threat Analysis And Counter Measurement}{3}{section.2.1}
 \contentsline {section}{\numberline {2.2}Analysis Of Possible Extension Attacks}{4}{section.2.2}
-\contentsline {section}{\numberline {2.3}Extension Evaluation}{5}{section.2.3}
+\contentsline {section}{\numberline {2.3}Extension Evaluation}{4}{section.2.3}
 \contentsline {section}{\numberline {2.4}Information Flow Control In JavaScript}{6}{section.2.4}
 \contentsline {chapter}{\numberline {3}Background}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}Terminology}{7}{section.3.1}
-\contentsline {paragraph}{Browser}{7}{paragraph*.4}
+\contentsline {paragraph}{Web Browser}{7}{paragraph*.4}
 \contentsline {paragraph}{Browser Extension}{7}{paragraph*.5}
 \contentsline {paragraph}{Web Application}{7}{paragraph*.6}
 \contentsline {paragraph}{Web Page}{7}{paragraph*.7}
@@ -26,9 +26,9 @@
 \contentsline {paragraph}{Background}{9}{paragraph*.15}
 \contentsline {paragraph}{Content Scripts}{9}{paragraph*.16}
 \contentsline {subsubsection}{Firefox Add-ons}{9}{subsubsection*.17}
-\contentsline {paragraph}{Background}{9}{paragraph*.18}
-\contentsline {paragraph}{Content Scripts}{9}{paragraph*.19}
-\contentsline {subsubsection}{Safari Extensions}{9}{subsubsection*.20}
+\contentsline {paragraph}{Background}{10}{paragraph*.18}
+\contentsline {paragraph}{Content Scripts}{10}{paragraph*.19}
+\contentsline {subsubsection}{Safari Extensions}{10}{subsubsection*.20}
 \contentsline {paragraph}{Background}{10}{paragraph*.21}
 \contentsline {paragraph}{Content Scripts}{10}{paragraph*.22}
 \contentsline {chapter}{\numberline {4}Threat Analysis}{11}{chapter.4}
@@ -58,27 +58,27 @@
 \contentsline {subsubsection}{Emails}{21}{subsubsection*.43}
 \contentsline {subsubsection}{Social Media}{22}{subsubsection*.48}
 \contentsline {subsubsection}{Online Banking}{23}{subsubsection*.50}
-\contentsline {section}{\numberline {5.2}Communication}{25}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Remote Communication}{25}{subsection.5.2.1}
-\contentsline {subsubsection}{XMLHttpRequest}{25}{subsubsection*.52}
-\contentsline {subsubsection}{Iframe}{25}{subsubsection*.54}
-\contentsline {subsubsection}{Automatic Extension Update}{26}{subsubsection*.56}
-\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching}{26}{subsection.5.2.2}
-\contentsline {subsubsection}{Script Element In Background}{26}{subsubsection*.57}
-\contentsline {subsubsection}{Script Element In Content Script}{26}{subsubsection*.58}
-\contentsline {subsubsection}{XMLHttpRequest}{27}{subsubsection*.60}
-\contentsline {subsubsection}{Mutual Extension Communication}{27}{subsubsection*.61}
-\contentsline {section}{\numberline {5.3}Execution}{29}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Steal Form Data}{29}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Manipulate Web Requests}{30}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Execute Attack In Background}{30}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}Denial Of Service}{32}{subsection.5.3.4}
-\contentsline {subsection}{\numberline {5.3.5}Download Harmful Files}{32}{subsection.5.3.5}
-\contentsline {subsection}{\numberline {5.3.6}Steal Cookies}{34}{subsection.5.3.6}
-\contentsline {subsection}{\numberline {5.3.7}Disable Other Extension}{34}{subsection.5.3.7}
-\contentsline {subsection}{\numberline {5.3.8}Remove Security Headers}{34}{subsection.5.3.8}
-\contentsline {chapter}{\numberline {6}Extension Analysis}{37}{chapter.6}
-\contentsline {section}{\numberline {6.1}Google Translate}{37}{section.6.1}
-\contentsline {section}{\numberline {6.2}Unlimited Free VPN - Hola}{38}{section.6.2}
-\contentsline {section}{\numberline {6.3}Evernote Web Clipper}{39}{section.6.3}
+\contentsline {section}{\numberline {5.2}Communication}{26}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Remote Communication}{26}{subsection.5.2.1}
+\contentsline {subsubsection}{XMLHttpRequest}{26}{subsubsection*.53}
+\contentsline {subsubsection}{Iframe}{26}{subsubsection*.55}
+\contentsline {subsubsection}{Automatic Extension Update}{27}{subsubsection*.57}
+\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching}{27}{subsection.5.2.2}
+\contentsline {subsubsection}{Script Element In Background}{27}{subsubsection*.58}
+\contentsline {subsubsection}{Script Element In Content Script}{27}{subsubsection*.59}
+\contentsline {subsubsection}{XMLHttpRequest}{28}{subsubsection*.61}
+\contentsline {subsubsection}{Mutual Extension Communication}{28}{subsubsection*.62}
+\contentsline {section}{\numberline {5.3}Execution}{31}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Steal Form Data}{31}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Manipulate Web Requests}{32}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Execute Attack In Background}{33}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}Denial Of Service}{34}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}Download Harmful Files}{35}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}Steal Cookies}{36}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}Disable Other Extension}{37}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}Remove Security Headers}{37}{subsection.5.3.8}
+\contentsline {chapter}{\numberline {6}Extension Analysis}{39}{chapter.6}
+\contentsline {section}{\numberline {6.1}Google Translate}{39}{section.6.1}
+\contentsline {section}{\numberline {6.2}Unlimited Free VPN - Hola}{40}{section.6.2}
+\contentsline {section}{\numberline {6.3}Evernote Web Clipper}{41}{section.6.3}
 \contentsfinish 

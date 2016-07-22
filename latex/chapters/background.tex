@@ -5,14 +5,19 @@
 \section{Terminology}
 	% We explain therms we use in this paper
 
-\paragraph{Browser}
-	% Application to acces the Internet, shows web pages, allows to interact with web applications, sends HTTP/HTTPS requests to servers and processes HTTP-responses
+\paragraph{Web Browser}
+
+	A \textit{web browser} or simply \textit{browser} is an application that allows a user to interact with the Internet. Its main purpose is to display fetched web pages and to allow the user to interact with them. Internally, it communicates with remote servers by sending HTTP and HTTPS requests and processing the returned responses. Therewith, it fetches HTML web pages from and sends user information back to the servers.
+	
+	% Currently popular web browsers are Google's Chrome, Mozilla's Firefox, Microsoft's Internet Explorer which is replaced by their new Edge browser, Apple's Safari, and the Opera browser. 
 
 \paragraph{Browser Extension}
-	% Additional application that enhance browser, can use browser functions (API)
+
+	A \textit{browser extension} is an additional piece of software that extends the functionality of a browser. With an extension, it is possible to modify the visual style and behavior of a browser itself and displayed web pages. 
 
 \paragraph{Web Application}
-	% Application executed remotely over the network and implements client-server architecture
+
+	% Application executed remotely over the network and implements client-server architecture, similar funcitonaly to local desktop applications
 
 \paragraph{Web Page}
 	% Document fetched from a remote server and displayed by the browser, consists of HTML as structure, CSS as design, and JavaScript to manipulate content dynamically,
@@ -21,9 +26,15 @@
 	% Browser intern representation of a web page, standardized, accessible from JavaScript as document object, 
 
 \paragraph{Same Origin Policy (SOP)}
-	% Security policy, JavaScript has no access to any document with another origin than the JavaScript, 
-
+	
+	The \textit{Same Origin Policy} is a browser security policy that isolates web pages with different \textit{origins} from each other. The origin of a web page is defined by the scheme, host, and port of its URL \cite{w3cOriginSpecification}. The browser permits scripts to access the content of another web page only if both have the same origin. Whereas, the origin of a script is defined by the origin of the web page that it is embedded into and not the origin from where the script was fetched. This policy prevents malicious scripts to access sensitive information from another web page and to execute requests to cross-origins. 
+	
+	%TODO maybe example?
+	% If a user is authenticated to a web application such as an online banking platform, a cookie that contains a unique identifier is often stored inside the user's browser. The cookie is send along any request to the web application and authenticates the user. Without the SOP, a malicious script within another browser tab could send a valid request to the application because the authentication cookie is send along the request and probably harm the user.
+	
 \paragraph{Content Security Policy (CSP)}
+
+	The \textit{Content Security Policy} is another browser security policy that restricts the sources from which the web page is allowed to fetch its resources \cite{w3cContentSecurityPolicySpecification}. This policy is intended to mitigate potential cross-site scripting attacks where an attacker tries to access another origin either to fetch malicious content or to transfer before collected, sensitive data. 
 	% Security policy, 
 
 \paragraph{XMLHttpRequest (XHR)}
@@ -42,7 +53,7 @@
 	
 \subsubsection{Background}
 
-	The extension's background is a container for the extension's logic. For that purpose, any script inside the background has full access to the APIs provided by the browser such as the access to the browser's bookmark system, the web history, or the browser's user interface.
+	The extension's background is a container for the extension's logic. For that purpose, any script inside the background has full access to the APIs provided by the browser such as the access to the browser's bookmark system, the web history, or the browser's user interface. 
 	
 \subsubsection{Content Scripts}
 
@@ -54,13 +65,14 @@
 
 \subsection{Differences Between The Browsers}
 
-			
+	The different extension architectures provide different features to their extensions. The before described structure consists only of commonalities. In this section we present the characteristics of the analyzed architectures.
+	%TODO intro
 	
 \subsubsection{Multi-browser Extensions}
 
 	The extension model that we investigate in this paper is based on a research from 2010 \cite{Barth10protectingbrowsers}. The researchers examined the model of Firefox's Add-ons and revealed many vulnerabilities in connection to Add-ons running with the user's full privileges. This enables an attacker, in the case that he has compromised the Add-on, to access arbitrary files and launch new processes. To counter the found exploits, the researchers proposed a new model that should protect the user from unintentionally implemented vulnerabilities.
 	
-	The developers of Google's Chrome browser where the first to adapt the proposed model in 2010. Then in 2013, the developers of the Opera browser switched the browser's underlying framework to \textit{Chromium} that is also the framework for Chrome \cite{operaBlogSwitchToChromium}. With this change, they also adopted the same extension architecture that Chrome uses. In 2015, the developers of Mozilla's Firefox browser announced that they will support the extension model, too. They published a first version of their implementation in version 42 of Firefox. Currently, their implementation is still in development and therefore not all browser APIs are supported \cite{mozillaWebExtensionStatus}. Similar, Microsoft started in 2016 to implement the extension architecture for their Edge browser and many browser APIs are currently still in development \cite{edgeBrowserApiStatus}.
+	The developers of Google's Chrome browser where the first to adapt the proposed model in 2010. Then in 2013, the developers of the Opera browser switched the browser's underlying framework to \textit{Chromium} which is also the framework for Chrome \cite{operaBlogSwitchToChromium}. With this change, they adopted the same extension architecture that Chrome uses. In 2015, the developers of Mozilla's Firefox browser announced that they will support the extension model, too. They published a first version of their implementation in version 42 of Firefox. Currently, their implementation is still in development and therefore not all browser APIs are supported \cite{mozillaWebExtensionStatus}. Similar, Microsoft started in 2016 to implement the extension architecture for their Edge browser and the support for many browser APIs is currently still in development \cite{edgeBrowserApiStatus}.
 		
 	The extension's general architecture is divided into three components where each has its own unique set of privileges. Content scripts which have access to the web page, the background which has access to the browser API, and optionally included native binaries which have access to the host system with the user's full privileges. Unlike Firefox Add-ons, only one component of the extension is able to access the user's machine. Additionally, each component runs in its own process on the operating system. This creates an efficient boundary between the components because they do not share a common memory section and are therefore not able to invoke methods or access variables of each other. To be able to communicate, a JSON-based channel exists between a content script and the background and the native binary and the background. 
 		
@@ -75,7 +87,7 @@
 
 	Because content scripts are exposed to potential attacks from malicious web pages, they underly an additional security feature. Each content script and the JavaScript inside the web page runs in its own process on the operating system. Consequently, none of them is able to access methods or variables of another. Furthermore, each script has its own instance of the \texttt{document} object mirroring the web page's DOM that is natively stored inside the browser. If a script modifies the DOM, each instance is updated accordingly. But if a script overrides a DOM method or adds a non-standard property to its \texttt{document} object, the changes will not be transfered to the DOM and consequently not to other instances of the \texttt{document} object, too.	
 	
-	This mechanism effectively shields content script from \textit{cross-origin JavaScript capability leak} attacks that try to manipulate the behavior of JavaScript methods used by the content script \cite{Carlini:2012:EGC:2362793.2362800, Barth:2009:CJC:1855768.1855780}. Furthermore, if a content script inserts untrusted content as HTML into a web page's DOM for instance setting the \texttt{innerHTML} property, any code in the content will be executed inside the web page's separated process instead of the content script's process. Thus, the strict separation prevents potential XSS attacks against the extension that the developer may has added unintentionally.
+	This mechanism effectively shields content script from \textit{cross-origin JavaScript capability leak} attacks that try to manipulate the behavior of JavaScript methods used by the content script \cite{Carlini:2012:EGC:2362793.2362800, Barth:2009:CJC:1855768.1855780}. Furthermore, if a content script inserts untrusted content as HTML into a web page's DOM for instance setting the \texttt{innerHTML} property, any code inside the content will be executed inside the web page's separated process instead of the content script's process. Thus, the strict separation prevents potential XSS attacks against the extension that the developer may has added unintentionally.
 
 \subsubsection{Firefox Add-ons}
 
@@ -97,9 +109,9 @@
 
 \subsubsection{Safari Extensions}
 
-	Apple's Safari browser has a build-in user interface for extension development called \textit{Extension Builder}. It manages the extension's content such as meta information or source code files. To publish an extension, the developer needs a certificate provided by Apple. This ensures that only known developer are able to publish extensions and hampers the distribution of malicious extensions. If a certificate is invalid Safari will disable the extension.
+	Apple's Safari browser has a build-in user interface for extension development called \textit{Extension Builder}. It manages the extension's content such as meta information or source code files. To publish an extension, the developer needs a certificate provided by Apple. This ensures that only known developer are able to publish extensions and hampers the distribution of malicious extensions. If a certificate is invalid Safari will disable the developer's extensions.
 	
-	The Extension Builder provides an additional feature to block content in web pages. The developer can add rules to his extension that are compiled into a bytecode format and processed directly at runtime. Making the programmatically examination of content and determination of blocking unnecessary and therefore providing a better performance \cite{safariContentBlockingRules}.  
+	The Extension Builder provides an additional feature to block content in web pages. The developer can add rules to his extension that are compiled into a byte-code format and processed directly at runtime. This renders the programmatically examination of content and determination of blocking unnecessary and therefore provides a better performance \cite{safariContentBlockingRules}.
 
 \paragraph{Background}
 

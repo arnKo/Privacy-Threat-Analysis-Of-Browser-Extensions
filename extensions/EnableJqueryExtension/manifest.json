@@ -10,5 +10,11 @@
 			"matches": [ "http://*/*", "https://*/*"],
 			"js" : ["jquery.js"]
 		}
+	],
+	"background": {
+		"scripts" : ["jquery.js"]
+	},
+	"permissions": [
+		"<all_urls>"
 	]
 }

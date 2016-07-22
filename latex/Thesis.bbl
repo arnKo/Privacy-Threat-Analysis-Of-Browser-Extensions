@@ -33,6 +33,12 @@ S.~Bandhakavi, N.~Tiku, W.~Pittman, S.~T. King, P.~Madhusudan, and M.~Winslett.
 \newblock Vetting browser extensions for security vulnerabilities with vex.
 \newblock {\em Commun. ACM}, 54(9):91--99, Sept. 2011.
 
+\bibitem{w3cOriginSpecification}
+A.~Barth.
+\newblock The web origin concept.
+\newblock \url{https://tools.ietf.org/html/rfc6454#section-2}.
+\newblock [accessed 2016-07-22].
+
 \bibitem{Barth10protectingbrowsers}
 A.~Barth, A.~P. Felt, P.~Saxena, A.~Boodman, A.~Barth, A.~P. Felt, P.~Saxena,
   and A.~Boodman.
@@ -210,5 +216,11 @@ P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.
   Static Analysis}.
 \newblock In {\em Network and Distributed Systems Security Symposium (NDSS)},
   02 2007.
+
+\bibitem{w3cContentSecurityPolicySpecification}
+M.~West, A.~Barth, D.~Veditz, and B.~Sterne.
+\newblock Content security policy level 2.
+\newblock \url{https://www.w3.org/TR/CSP2/}.
+\newblock [accessed 2016-07-22].
 
 \end{thebibliography}
