@@ -4,7 +4,7 @@
 	
 	We want to show that our implementation is indeed applicable to real world extensions without the need to modify the extension's privileges. Therefore, we evaluated the privileges of popular extensions and analyzed which of our implemented components we can integrate into them. For that purpose, we compared the extension's declared permissions and content with the permissions and content needed for our components. 
 	
-	We fetched the extensions from the Google Chrome Web Store. Unfortunately, the web store does not provide the functionality to sort extension based on the amount of current users. Furthermore, the shown number of current users is cut if it is higher than 10,000,000. Therefore, we had to manually search through the web store and select extensions to evaluate ourself. 
+	We fetched the extensions from the Google Chrome Web Store \footnote{\url{https://chrome.google.com/webstore/category/extensions}}. Unfortunately, the web store does not provide the functionality to sort extension based on the amount of current users. Furthermore, the shown number of current users is cut if it is higher than 10,000,000. Therefore, we had to manually search through the web store and select extensions to evaluate ourself. 
 	
 	In this section we present the results of our extension analysis. The table shown in \autoref{tab:summaryEvaluatedExtensions} provides an overview of analyzed extensions.
 	
@@ -49,6 +49,8 @@
 	Hola provides a Virtual Private Network (VPN) as a free of charge extension. It routes the user's traffic through different countries to mask his true location. This allows to bypass regional restrictions on websites. A typical VPN network secures the web requests of its user's by routing the traffic to a few endpoints, masking the web request's origin. But Hola uses the devices of its unpaid customers to route traffic. It turns the user's computer into a VPN server and simultaneously to a VPN endpoint which means that the traffic of other users may exit through his Internet connection and take on his IP address. A Hola user's IP is therefore regularly exposed to the open Internet by traffic from other user's. The user himself has no possibility to control what content is loaded with his IP address as origin. The company makes money by providing the network to paying customers. Those are able to route their own traffic over the network to targeted endpoints. \\
 	
 	The paid functionality of Hola has strong similarities with a bot net which is used for denial of service or spmaming attacks. Actually, Hola recently received negative publicity as the owner of the web platform \textit{8chan} claimed that an attacker used the Hola network to perform a DDoS attack against his platform \cite{8chanHola}. Thereupon, researchers from the cyber security company \textit{Vectra}\footnote{Vectra Homepage: \url{http://www.vectranetworks.com/}} analyzed Hola's application and network. They discovered that Hola has - in addition to the public botnet-like functionality of routing huge amounts of targeted traffic - several features which may be used to perform further cyber attacks, such as download and execute any file while bypassing anti virus checking \cite{vectraHola}. \\ 
+
+
 	
 	\begin{table}[h]
 		\centering
@@ -101,3 +103,170 @@
 		\end{itemize}
 		\caption{Evernote Web Clipper - Warnings shown on installation}
 	\end{listing}
+
+
+
+\subsection{Google Translate}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP amd remotely loaded scripts enabled? & Yes \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & No \\ \hline
+	\end{tabular}
+	\caption{Google Translate (2.0.6) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{activeTab} \\
+		\texttt{contextMenus} \\
+		\texttt{storage} \\
+		\hline
+	\end{tabular}
+	\caption{Google Translate (2.0.6) - Declared API permissions.}
+\end{table}
+\newpage
+\subsection{AdBlock}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP and remotely loaded scripts enabled? & No \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & Yes \\ \hline
+	\end{tabular}
+	\caption{AdBlock (3.0.8) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{tabs} \\
+		\texttt{contextMenus} \\
+		\texttt{webRequest} \\
+		\texttt{webRequestBlocking} \\
+		\texttt{webNavigation} \\
+		\texttt{storage} \\
+		\texttt{unlimitedStorage} \\
+		\texttt{notifications} \\
+		\texttt{idle} \\
+		\texttt{alarms} \\
+		\texttt{management} \\
+		\hline
+	\end{tabular}
+	\caption{AdBlock (3.0.8) - Declared API permissions.}
+\end{table}
+\newpage
+\subsection{Unlimited Free VPN - Hola}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP amd remotely loaded scripts enabled? & Yes \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & Yes \\ \hline
+	\end{tabular}
+	\caption{Unlimited Free VPN - Hola (1.14.846) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{proxy} \\
+		\texttt{webRequest} \\
+		\texttt{webRequestBlocking} \\
+		\texttt{storage} \\
+		\texttt{tabs} \\
+		\texttt{webNavigation} \\
+		\texttt{cookies} \\
+		\hline
+	\end{tabular}
+	\caption{Unlimited Free VPN - Hola (1.14.846) - Declared API permissions.}
+\end{table}
+\newpage
+\subsection{LastPass: Free Password Manager}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP amd remotely loaded scripts enabled? & Yes \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & Yes \\ \hline
+	\end{tabular}
+	\caption{LastPass: Free Password Manager (4.1.20) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{tabs} \\
+		\texttt{idle} \\
+		\texttt{notifications} \\
+		\texttt{contextMenus} \\
+		\texttt{unlimitedStorage} \\
+		\texttt{webRequest} \\
+		\texttt{webRequestBlocking} \\
+		\texttt{nativeMessaging} \\
+		\texttt{privacy} \\
+		\texttt{history} \\
+		\hline
+	\end{tabular}
+	\caption{LastPass: Free Password Manager (4.1.20) - Declared API permissions.}
+\end{table}
+\newpage
+\subsection{ShadowCrypt}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP amd remotely loaded scripts enabled? & No \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & No \\ \hline
+	\end{tabular}
+	\caption{ShadowCrypt (0.3.3) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{storage} \\
+		\hline
+	\end{tabular}
+	\caption{ShadowCrypt (0.3.3) - Declared API permissions.}
+\end{table}
+\newpage
+\subsection{Evernote Web Clipper}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		Declares modified CSP and \texttt{unsafe\_eval} enabled? & No \\ \hline
+		Declares modified CSP amd remotely loaded scripts enabled? & Yes \\ \hline
+		Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
+		Declares host permissions for \textbf{all} web pages? & Yes \\ \hline
+	\end{tabular}
+	\caption{Evernote Web Clipper (6.9) - Declared content.}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|} \hline
+		\textbf{API Permissions} \\ \hline
+		\texttt{unlimitedStorage} \\
+		\texttt{contextMenus} \\
+		\texttt{cookies} \\
+		\texttt{tabs} \\
+		\texttt{notifications} \\
+		\texttt{activeTab} \\
+		\hline
+	\end{tabular}
+	\caption{Evernote Web Clipper (6.9) - Declared API permissions.}
+\end{table}
+\newpage

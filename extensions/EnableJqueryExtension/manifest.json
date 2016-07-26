@@ -4,17 +4,19 @@
 	
     "name": "EnableJquery",
     "description": "Extension that runs jquery as content script in any web page. Allows to use jquery inside the developer console" ,
-
-	"content_scripts" : [
-		{
-			"matches": [ "http://*/*", "https://*/*"],
-			"js" : ["jquery.js"]
-		}
-	],
-	"background": {
-		"scripts" : ["jquery.js"]
+	
+	"browser_action": {
+		"default_title": "Enable jQuery"
 	},
-	"permissions": [
+	"background" : {
+		"scripts": ["background.js"]
+	},
+	"optional_permissions": [
+		"tabs", 
 		"<all_urls>"
-	]
+	],
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	}
 }

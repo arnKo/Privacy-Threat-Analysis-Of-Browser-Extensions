@@ -22,22 +22,24 @@
 \paragraph{Web Page}
 	% Document fetched from a remote server and displayed by the browser, consists of HTML as structure, CSS as design, and JavaScript to manipulate content dynamically,
 
-\paragraph{Document Object Model (DOM)}
+\paragraph{Document Object Model (DOM)
+
+	The \textit{Document Object Model} is an API for representing HTML or XML documents as a tree. This allows scripting languages such as JavaScript to easily manipulate the document's content. It is used by browsers to internally store 
 	% Browser intern representation of a web page, standardized, accessible from JavaScript as document object, 
 
 \paragraph{Same Origin Policy (SOP)}
 	
 	The \textit{Same Origin Policy} is a browser security policy that isolates web pages with different \textit{origins} from each other. The origin of a web page is defined by the scheme, host, and port of its URL \cite{w3cOriginSpecification}. The browser permits scripts to access the content of another web page only if both have the same origin. Whereas, the origin of a script is defined by the origin of the web page that it is embedded into and not the origin from where the script was fetched. This policy prevents malicious scripts to access sensitive information from another web page and to execute requests to cross-origins. 
 	
-	%TODO maybe example?
-	% If a user is authenticated to a web application such as an online banking platform, a cookie that contains a unique identifier is often stored inside the user's browser. The cookie is send along any request to the web application and authenticates the user. Without the SOP, a malicious script within another browser tab could send a valid request to the application because the authentication cookie is send along the request and probably harm the user.
+	A simple scenario shows why this policy is an important and efficient tool to secure the user's privacy. If a user authenticates to a web application such as an online banking platform, a cookie that contains a unique identifier is often stored inside the user's browser. The cookie is send along any request to the web application and authenticates the user on each request. Without the SOP, a malicious script within another browser tab could send a valid request to the application because the authentication cookie is send along the request. The script could fetch a secured web page from the application and read out the user's sensitive information or perform a request to execute an action on behalf of the user such as to execute a banking transfer.  
 	
 \paragraph{Content Security Policy (CSP)}
 
-	The \textit{Content Security Policy} is another browser security policy that restricts the sources from which the web page is allowed to fetch its resources \cite{w3cContentSecurityPolicySpecification}. This policy is intended to mitigate potential cross-site scripting attacks where an attacker tries to access another origin either to fetch malicious content or to transfer before collected, sensitive data. 
-	% Security policy, 
+	The \textit{Content Security Policy} is another browser security policy that restricts the sources from which the web page is allowed to fetch its resources \cite{w3cContentSecurityPolicySpecification}. Unlike the SOP which restricts all web pages, the CSP has to be declared by the web page's author. It is intended to reduce the attack surface in the case that an attacker has successfully compromised the web page. By explicit declaring origins from which the web page is allows to fetch resources, the attacker is hampered because he is not able fetch additional malicious content from his server.
 
 \paragraph{XMLHttpRequest (XHR)}
+
+	The XMLHttpRequest 
 	% Allows to make HTTP/HTTPS requests with JavaScript, used to dynamically load content or transfer information, 
 
 
@@ -81,7 +83,8 @@
 	The extension's background consists of a single, for the user not visible HTML page which holds the scripts that execute the extension's logic. To reduce the threat of potential cross-site scripting attacks, the background page underlies a Content Security Policy. The default CSP consists of the values \texttt{script-src 'self'} and \texttt{object-src 'self'}. This limits the loading of scripts and other resources to files from within the extension's bundle. Additionally, it disables the use of \texttt{eval} and related functions such as \texttt{setTimeout(string, number)}, \texttt{setInterval(string, number)}, and \texttt{new Function(string)} and it disables inline JavaScript (\texttt{<script>...</script>}) and inline event handler (\texttt{<button onclick="...">}). \\
 	A developer may relax or tighten the policy for his extension by declaring a custom CSP in the extension's manifest which has to contain at least the \texttt{script-src} and \texttt{object-src} keys. Adding the URL of a remote origin to the CSP allows to fetch resources from the declared host. To ensure that remotely loaded resources have not been replaced or modified by an attacker, only origins that use the secured HTTPS protocol are allowed. If the developer wishes to use \texttt{eval} or related functions in his extension's background page, he has to add the value \texttt{'unsafe-eval'} to the \texttt{script-src} key. If he wishes to use inline scripts, he has to add the hash value of the script to the \texttt{script-src} key.
 	
-	To restrict the attacker's operating range if he has compromised an extension's background, the access to the browser's functionality is restricted. By default, an extension has no access to any API module at runtime. The developer has to explicit declare permissions in the extension's manifest that enable the access to associated API modules. The declared permissions are static and can not be changed at runtime. Neither by the extension itself, nor by an attacker.
+	To restrict the attacker's operating range if he has compromised an extension's background, the access to the browser's functionality is restricted. By default, an extension has no access to any API module at runtime. The developer has to explicit declare permissions in the extension's manifest that enable the access to associated API modules. The declared permissions are static and can not be changed at runtime. Neither by the extension itself, nor by an attacker. \\
+	Additionally, a developer can declare the access to API modules that are not required for his extension's basic functionality as optional permissions. If the extension requests access to an optional API module at runtime, the browser prompts the user to confirm the request. A confirmed optional permission stays active even after a browser restart until the extension itself removes it. Furthermore, host permission may also be declared as optional which gives the user a fine-grained tuning of websites to which an extension has access to.
 	
 \paragraph{Content Scripts}
 
@@ -92,6 +95,10 @@
 \subsubsection{Firefox Add-ons}
 
 	Firefox's support for the multi-browser extension model is currently still in development \cite{mozillaWebExtensionStatus}. Therefore, extensions implemented in the old Add-on model are still in use. 
+	
+	If the user downloads and installs a new Add-on from the official web store, a confirm dialog informs him that the Add-on was reviewed by Mozilla's security experts and they did not find malicious behavior. Firefox also allows to install Add-ons from other sources but then the confirm dialog warns the user that the Add-on may contain harmful implementations.
+	
+	% The user can download and install Add-ons from the official web store but also from any other source. Add-ons published over the web store are signed my Mozilla and were the target of a security review by Mozilla's developers. This should prevent the distribution of malicious extensions.
 	
 	Firefox Add-ons are developed with a JavaScript framework distributed by Mozilla. 
 
