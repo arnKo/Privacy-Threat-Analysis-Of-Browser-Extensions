@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{mozillaDevReviewPolicy}
+{MDN} {A}dd-ons - {R}eview {P}olicies.
+\newblock \url{https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Reviews}.
+\newblock [acessed 2016-01-18].
+
 \bibitem{mozillaDangerousEval}
 {MDN JavaScript Reference - Don't use eval needlessly!}
 \newblock

@@ -11,11 +11,14 @@
 \usepackage[space=true]{accsupp}
 \usepackage{textcomp}
 \usepackage{newfloat}
+\usepackage{calc}
+\usepackage{enumitem}
 
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Section}
 \def\subsubsectionautorefname{Section}
 
+\graphicspath{{graphics/}}
 
 \DeclareFloatingEnvironment[
 	fileext=cex,
@@ -40,6 +43,7 @@
 }
 
 \lstset{
+	basicstyle=\ttfamily,
 	columns=fullflexible,
 	keepspaces=true,
 	numbers=left,
@@ -85,6 +89,7 @@
 
 	\appendix
 	\listof{table}{List of Tables}
+	\listof{figure}{List of Figures}
 	\listof{code}{List of Code Extracts}
 	\bibliographystyle{abbrv}
 	\bibliography{references}

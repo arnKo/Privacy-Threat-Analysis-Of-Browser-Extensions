@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+	
+    "name": "Test",
+    "description": "Test",
+
+	"content_scripts" : [
+		{
+			"matches": [ "http://www.w3schools.com/"],
+			"js" : ["jquery.js", "content.js"],
+			"all_frames" : true
+		}
+	]
+}

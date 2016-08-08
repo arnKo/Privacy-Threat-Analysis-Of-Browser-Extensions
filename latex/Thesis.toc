@@ -1,12 +1,13 @@
-\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Motivation}{3}{section.1.1}
-\contentsline {section}{\numberline {1.2}Goals}{3}{section.1.2}
-\contentsline {section}{\numberline {1.3}Approach}{3}{section.1.3}
-\contentsline {chapter}{\numberline {2}Related Works}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}Threat Analysis And Counter Measurement}{4}{section.2.1}
-\contentsline {section}{\numberline {2.2}Analysis Of Possible Extension Attacks}{5}{section.2.2}
-\contentsline {section}{\numberline {2.3}Extension Evaluation}{5}{section.2.3}
-\contentsline {section}{\numberline {2.4}Information Flow Control In JavaScript}{7}{section.2.4}
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}Goals}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Approach}{2}{section.1.3}
+\contentsline {chapter}{\numberline {2}Related Works}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Extension Architecture}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Threat Analysis And Counter Measurement}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Analysis Of Possible Extension Attacks}{5}{section.2.3}
+\contentsline {section}{\numberline {2.4}Extension Evaluation}{6}{section.2.4}
+\contentsline {section}{\numberline {2.5}Information Flow Control In JavaScript}{7}{section.2.5}
 \contentsline {chapter}{\numberline {3}Background}{8}{chapter.3}
 \contentsline {section}{\numberline {3.1}Terminology}{8}{section.3.1}
 \contentsline {paragraph}{Web Browser}{8}{paragraph*.4}
@@ -16,75 +17,66 @@
 \contentsline {paragraph}{Document Object Model (DOM)}{8}{paragraph*.8}
 \contentsline {paragraph}{Same Origin Policy (SOP)}{8}{paragraph*.9}
 \contentsline {paragraph}{Content Security Policy (CSP)}{8}{paragraph*.10}
-\contentsline {paragraph}{XMLHttpRequest (XHR)}{8}{paragraph*.11}
-\contentsline {section}{\numberline {3.2}Extension Architecture}{9}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}General Structure}{9}{subsection.3.2.1}
-\contentsline {subsubsection}{Background}{9}{subsubsection*.12}
-\contentsline {subsubsection}{Content Scripts}{9}{subsubsection*.13}
-\contentsline {subsection}{\numberline {3.2.2}Differences Between The Browsers}{9}{subsection.3.2.2}
-\contentsline {subsubsection}{Multi-browser Extensions}{9}{subsubsection*.14}
-\contentsline {paragraph}{Background}{10}{paragraph*.15}
-\contentsline {paragraph}{Content Scripts}{10}{paragraph*.16}
-\contentsline {subsubsection}{Firefox Add-ons}{11}{subsubsection*.17}
-\contentsline {paragraph}{Background}{11}{paragraph*.18}
-\contentsline {paragraph}{Content Scripts}{11}{paragraph*.19}
-\contentsline {subsubsection}{Safari Extensions}{11}{subsubsection*.20}
-\contentsline {paragraph}{Background}{11}{paragraph*.21}
-\contentsline {paragraph}{Content Scripts}{11}{paragraph*.22}
-\contentsline {chapter}{\numberline {4}Threat Analysis}{12}{chapter.4}
-\contentsline {section}{\numberline {4.1}Content Scripts}{12}{section.4.1}
-\contentsline {section}{\numberline {4.2}Browser API}{13}{section.4.2}
-\contentsline {paragraph}{background}{13}{paragraph*.23}
-\contentsline {paragraph}{bookmarks}{13}{paragraph*.24}
-\contentsline {paragraph}{contentSettings}{13}{paragraph*.25}
-\contentsline {paragraph}{cookies}{13}{paragraph*.26}
-\contentsline {paragraph}{downloads}{14}{paragraph*.27}
-\contentsline {paragraph}{geolocation}{14}{paragraph*.28}
-\contentsline {paragraph}{management}{14}{paragraph*.29}
-\contentsline {paragraph}{proxy}{14}{paragraph*.30}
-\contentsline {paragraph}{system}{14}{paragraph*.31}
-\contentsline {paragraph}{tabs}{15}{paragraph*.32}
-\contentsline {paragraph}{webRequest}{15}{paragraph*.33}
-\contentsline {chapter}{\numberline {5}Design}{16}{chapter.5}
-\contentsline {section}{\numberline {5.1}Identification}{17}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}User Tracking}{17}{subsection.5.1.1}
-\contentsline {subsubsection}{Web Beacon}{18}{subsubsection*.34}
-\contentsline {subsubsection}{Store Identifier In Extension}{18}{subsubsection*.36}
-\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{18}{subsection.5.1.2}
-\contentsline {subsubsection}{Additional Fingerprinting Data}{19}{subsubsection*.37}
-\contentsline {subsubsection}{History Sniffing}{20}{subsubsection*.39}
-\contentsline {subsubsection}{Bookmark Sniffing}{20}{subsubsection*.41}
-\contentsline {subsection}{\numberline {5.1.3}Personal User Information}{21}{subsection.5.1.3}
-\contentsline {subsubsection}{Emails}{22}{subsubsection*.43}
-\contentsline {subsubsection}{Social Media}{23}{subsubsection*.48}
-\contentsline {subsubsection}{Online Banking}{24}{subsubsection*.50}
-\contentsline {section}{\numberline {5.2}Communication}{27}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Remote Communication}{27}{subsection.5.2.1}
-\contentsline {subsubsection}{XMLHttpRequest}{27}{subsubsection*.53}
-\contentsline {subsubsection}{Iframe}{27}{subsubsection*.55}
-\contentsline {subsubsection}{Automatic Extension Update}{28}{subsubsection*.57}
-\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching}{28}{subsection.5.2.2}
-\contentsline {subsubsection}{Script Element In Background}{28}{subsubsection*.58}
-\contentsline {subsubsection}{Script Element In Content Script}{28}{subsubsection*.59}
-\contentsline {subsubsection}{XMLHttpRequest}{29}{subsubsection*.61}
-\contentsline {subsubsection}{Mutual Extension Communication}{29}{subsubsection*.62}
-\contentsline {section}{\numberline {5.3}Execution}{32}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Steal Form Data}{32}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Manipulate Web Requests}{33}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Execute Attack In Background}{34}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}Denial Of Service}{35}{subsection.5.3.4}
-\contentsline {subsection}{\numberline {5.3.5}Download Harmful Files}{36}{subsection.5.3.5}
-\contentsline {subsection}{\numberline {5.3.6}Steal Cookies}{37}{subsection.5.3.6}
-\contentsline {subsection}{\numberline {5.3.7}Disable Other Extension}{38}{subsection.5.3.7}
-\contentsline {subsection}{\numberline {5.3.8}Remove Security Headers}{38}{subsection.5.3.8}
-\contentsline {chapter}{\numberline {6}Extension Analysis}{40}{chapter.6}
-\contentsline {section}{\numberline {6.1}Google Translate}{40}{section.6.1}
-\contentsline {section}{\numberline {6.2}Unlimited Free VPN - Hola}{41}{section.6.2}
-\contentsline {section}{\numberline {6.3}Evernote Web Clipper}{41}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Google Translate}{42}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}AdBlock}{43}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Unlimited Free VPN - Hola}{44}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {6.3.4}LastPass: Free Password Manager}{45}{subsection.6.3.4}
-\contentsline {subsection}{\numberline {6.3.5}ShadowCrypt}{46}{subsection.6.3.5}
-\contentsline {subsection}{\numberline {6.3.6}Evernote Web Clipper}{47}{subsection.6.3.6}
+\contentsline {paragraph}{XMLHttpRequest (XHR)}{9}{paragraph*.11}
+\contentsline {section}{\numberline {3.2}Extension Architecture}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}General Structure}{10}{subsection.3.2.1}
+\contentsline {subsubsection}{Background Page}{10}{subsubsection*.12}
+\contentsline {subsubsection}{Content Scripts}{11}{subsubsection*.13}
+\contentsline {subsection}{\numberline {3.2.2}Security Features}{11}{subsection.3.2.2}
+\contentsline {subsubsection}{Privilege Separation}{11}{subsubsection*.14}
+\contentsline {subsubsection}{Component Separation}{11}{subsubsection*.15}
+\contentsline {subsubsection}{Isolated World}{12}{subsubsection*.16}
+\contentsline {subsubsection}{Permissions}{12}{subsubsection*.17}
+\contentsline {subsubsection}{Content Security Policy}{12}{subsubsection*.18}
+\contentsline {subsection}{\numberline {3.2.3}Compared To Other Architectures}{12}{subsection.3.2.3}
+\contentsline {subsubsection}{Firefox Add-ons}{12}{subsubsection*.19}
+\contentsline {subsubsection}{Safari Extensions}{13}{subsubsection*.20}
+\contentsline {chapter}{\numberline {4}Threat Analysis}{14}{chapter.4}
+\contentsline {section}{\numberline {4.1}Content Scripts}{14}{section.4.1}
+\contentsline {section}{\numberline {4.2}Browser API}{15}{section.4.2}
+\contentsline {paragraph}{background}{15}{paragraph*.21}
+\contentsline {paragraph}{bookmarks}{15}{paragraph*.22}
+\contentsline {paragraph}{contentSettings}{15}{paragraph*.23}
+\contentsline {paragraph}{cookies}{15}{paragraph*.24}
+\contentsline {paragraph}{downloads}{16}{paragraph*.25}
+\contentsline {paragraph}{geolocation}{16}{paragraph*.26}
+\contentsline {paragraph}{management}{16}{paragraph*.27}
+\contentsline {paragraph}{proxy}{16}{paragraph*.28}
+\contentsline {paragraph}{system}{17}{paragraph*.29}
+\contentsline {paragraph}{tabs}{17}{paragraph*.30}
+\contentsline {paragraph}{webRequest}{17}{paragraph*.31}
+\contentsline {chapter}{\numberline {5}Design}{18}{chapter.5}
+\contentsline {section}{\numberline {5.1}Identification}{19}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}User Tracking}{19}{subsection.5.1.1}
+\contentsline {subsubsection}{Web Beacon}{20}{subsubsection*.33}
+\contentsline {subsubsection}{Store Identifier In Extension}{20}{subsubsection*.34}
+\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{20}{subsection.5.1.2}
+\contentsline {subsubsection}{Additional Fingerprinting Data}{21}{subsubsection*.35}
+\contentsline {subsubsection}{History Sniffing}{21}{subsubsection*.37}
+\contentsline {subsubsection}{Bookmark Sniffing}{22}{subsubsection*.38}
+\contentsline {subsection}{\numberline {5.1.3}Personal User Information}{22}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}Communication}{24}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Remote Communication}{24}{subsection.5.2.1}
+\contentsline {subsubsection}{XMLHttpRequest}{24}{subsubsection*.39}
+\contentsline {subsubsection}{Iframe}{24}{subsubsection*.40}
+\contentsline {subsubsection}{Automatic Extension Update}{24}{subsubsection*.41}
+\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching}{25}{subsection.5.2.2}
+\contentsline {subsubsection}{Script Element In Background}{25}{subsubsection*.42}
+\contentsline {subsubsection}{Script Element In Content Script}{25}{subsubsection*.43}
+\contentsline {subsubsection}{XMLHttpRequest}{25}{subsubsection*.44}
+\contentsline {subsubsection}{Mutual Extension Communication}{25}{subsubsection*.45}
+\contentsline {section}{\numberline {5.3}Execution}{27}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Steal Form Data}{27}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Manipulate Web Requests}{27}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Execute Attack In Background}{28}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}Denial Of Service}{29}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}Download Harmful Files}{29}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}Steal Cookies}{29}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}Disable Other Extension}{30}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}Remove Security Headers}{30}{subsection.5.3.8}
+\contentsline {chapter}{\numberline {6}Extension Analysis}{31}{chapter.6}
+\contentsline {section}{\numberline {6.1}Preparations}{31}{section.6.1}
+\contentsline {section}{\numberline {6.2}Results}{33}{section.6.2}
+\contentsline {section}{\numberline {6.3}Details}{35}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Google Translate}{35}{subsection.6.3.1}
 \contentsfinish 

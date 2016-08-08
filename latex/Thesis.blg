@@ -9,7 +9,8 @@ The style file: abbrv.bst
 Database file #1: references.bib
 Warning--to sort, need author or key in mozillaWebExtensionStatus
 Warning--to sort, need author or key in edgeBrowserApiStatus
+Warning--to sort, need author or key in mozillaDevReviewPolicy
 Warning--to sort, need author or key in safariContentBlockingRules
 Warning--to sort, need author or key in mozillaWikiClearPrivacyAPI
 Warning--to sort, need author or key in mozillaDangerousEval
-(There were 5 warnings)
+(There were 6 warnings)
