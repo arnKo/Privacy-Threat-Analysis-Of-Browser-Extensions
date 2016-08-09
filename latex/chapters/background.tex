@@ -2,30 +2,24 @@
 
 \chapter{Background}
 
+
 \section{Terminology}
 	% We explain therms we use in this paper
 
-\paragraph{Web Browser}
-
-	A \textit{web browser} or simply \textit{browser} is an application that allows a user to interact with the Internet. Its main purpose is to display fetched web pages and to allow the user to interact with them. Internally, it communicates with remote servers by sending HTTP and HTTPS requests and processing the returned responses. Therewith, it fetches HTML web pages from and sends user information back to the servers.
-	
-	% Currently popular web browsers are Google's Chrome, Mozilla's Firefox, Microsoft's Internet Explorer which is replaced by their new Edge browser, Apple's Safari, and the Opera browser. 
-
-\paragraph{Browser Extension}
-
-	A \textit{browser extension} is an additional piece of software that extends the functionality of a browser. With an extension, it is possible to modify the visual style and behavior of a browser itself and displayed web pages. 
-
-\paragraph{Web Application}
-
-	% Application executed remotely over the network and implements client-server architecture, similar funcitonaly to local desktop applications
-
-\paragraph{Web Page}
-	% Document fetched from a remote server and displayed by the browser, consists of HTML as structure, CSS as design, and JavaScript to manipulate content dynamically,
-
 \paragraph{Document Object Model (DOM)}
 
-	The \textit{Document Object Model} is an API for representing HTML or XML documents as a tree. This allows scripting languages such as JavaScript to easily manipulate the document's content. It is used by browsers to internally store 
-	% Browser intern representation of a web page, standardized, accessible from JavaScript as document object, 
+	The \textit{Document Object Model} is an API for representing HTML or XML documents as a tree. This allows scripting languages such as JavaScript to easily manipulate the document's content. It is used by browsers to internally store web pages and can be access by JavaScript through the \texttt{document} object. 
+
+\paragraph{XMLHttpRequest (XHR)}
+
+	The XMLHttpRequest API allows JavaScript to programmatically execute HTTP and HTTPS requests. It is often used to load dynamic content or to transfer information to a server. The following code example shows the general use of an XHR:
+	
+	\begin{lstlisting}
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() { handleResponse(); };
+xhr.open('POST', REMOTE_URL);
+xhr.send(message);
+\end{lstlisting}
 
 \paragraph{Same Origin Policy (SOP)}
 	
@@ -43,22 +37,16 @@
 	\begin{center}
 		\texttt{default-src 'self'; script-src 'self' https://trusted.server.com/* 'unsafe-eval';}
 	\end{center}
-	First we set the default directive and therewith restrict all other directives to the web page's origin. Then, we lighten the restriction to load scripts from a trusted server and allow the user of eval in loaded scripts.
+	First we set the default directive and therewith restrict all other directives to the origin of the underlying web page. Then, we lighten the restriction to load scripts from a trusted server and allow the use of eval in loaded scripts.
 
-\paragraph{XMLHttpRequest (XHR)}
-
-	The XMLHttpRequest 
-	% Allows to make HTTP/HTTPS requests with JavaScript, used to dynamically load content or transfer information, 
 
 
 \newpage
 \section{Extension Architecture}
-%TODO
+
 	In the past, each browser had its own architecture for extensions. This lead to an additional workload for a developer, if he wanted his extension to be compatible with multiple browsers. He had to implement an extension for each browser although each provides equal functionality. Nowadays, the browsers' developers seem to address this unhandy situation and started to use a cross-browser extension architecture. In our paper, we focus this architecture which is supported by Google's \textit{Chrome} browser, Mozilla's \textit{Firefox} browser, Microsoft's \textit{Edge} browser, and the \textit{Opera} browser. We have analyzed the extension's structure in-depth and provide our results in this section.
 
-	In this paper, we focus on an extension architecture that is compatible with multiple browsers. We have analyzed its structure and present and overview in this section. Furthermore, we compare it to other existing extension architectures.
-
-	The extension architecture that we investigate in this paper is based on a research from 2010 \cite{Barth10protectingbrowsers}. The researchers examined the model of Firefox's Add-ons and revealed many vulnerabilities in connection to Add-ons running with the user's full privileges. This enables an attacker, in the case that he has compromised the Add-on, to access arbitrary files and launch new processes. To counter the found exploits, the researchers proposed a new model that should protect the user from unintentionally implemented vulnerabilities.
+	The cross-browser extension architecture is based on a research from 2010 \cite{Barth10protectingbrowsers}. The researchers examined the model of Firefox's Add-ons and revealed many vulnerabilities in connection to Add-ons running with the user's full privileges. This enables an attacker, in the case that he has compromised the Add-on, to access arbitrary files and launch new processes. To counter the found exploits, the researchers proposed a new model that should protect the user from unintentionally implemented vulnerabilities.
 
 	The developers of Google's Chrome browser where the first to adapt the proposed model in 2010. Then in 2013, the developers of the Opera browser switched the browser's underlying framework to \textit{Chromium} which is also the framework for Chrome \cite{operaBlogSwitchToChromium}. With this change, they adopted the same extension architecture that Chrome uses. In 2015, the developers of Mozilla's Firefox browser announced that they will support the extension model, too. They published a first version of their implementation in version 42 of Firefox. Currently, their implementation is still in development and therefore not all browser APIs are supported \cite{mozillaWebExtensionStatus}. Similar, Microsoft started in 2016 to implement the extension architecture for their new Edge browser and the support for many browser APIs is currently still in development \cite{edgeBrowserApiStatus}.
 
@@ -108,29 +96,31 @@
 	To reduce the threat of potential cross-site scripting attacks, the background page underlies a Content Security Policy. The default CSP consists of the directives \texttt{script-src 'self'} and \texttt{object-src 'self'}. This limits the loading of scripts and other resources to files from within the extension's bundle. Additionally, it disables the use of \texttt{eval} and inline scripts.  \\
 	A developer may relax or tighten the policy for his extension by declaring a custom CSP in the extension's manifest which has to contain at least the \textit{script} and \textit{object} directives. Adding the URL of a remote origin to the CSP allows to fetch resources from the declared host. Again, an URL pattern may be used to match several hosts at once, but wildcards are only allowed for the subdomain. To ensure that remotely loaded resources have not been replaced or modified by a network attacker, only origins that use a secured connection such as HTTPS are allowed. If the developer wishes to use \texttt{eval} or related functions in his extension's background page, he has to add the value \texttt{'unsafe-eval'} to the \textit{script} directive. If he wishes to use inline scripts, he has to add the hash value of the script to the script directive. The \texttt{'unsafe-inline'} key is not allowed and therefore the execution of inline event handler can not be enabled.
 
+\subsubsection{Privacy Preserving Measures}
+
+	The before described security features aim to protect the user from an attacker who tries to compromise the extension. They do not protect the user from intentionally implemented malicious behavior. But there exists some features that if used correctly preserve the user's privacy. These features reduce the privileges an extension has by default and give the user the possibility to explicit grant the extension further privileges. 
+	
+	The \texttt{activeTab} permission gives an extension temporary access to the currently active web page if the user explicitly invokes the extension. This occurs if the user clicks an interface element that belongs to the extension such as a button in the browser's toolbar or an entry in the web page's context menu. The extension will lose the access to the web page as soon as the tab loads another web page or is closed. This feature is intended to reduce the amount of needed permissions for extensions that only interact with the current web page and only on the users demand. Otherwise, those extensions would need full and persistent access to any web page to be able to act if the user invokes them.
+	
+	Similar to the \texttt{activeTab} permission, the extension's developer can declare permissions as optional. This states that the permissions are not necessary for the extension's base functionalities but provide additional features on the user's demand. If the extension requests an optional permission, the browser prompts the user to confirm. Even host permissions may be declared as optional, allowing the user to fine-grained control the extension's access to web pages. However, the extension has to remove the requested permission itself. If not, the permission stays active until the extension is uninstalled. The user can not remove an accepted permission by himself if the extension does not provide a proper interface. 
+
 \subsection{Compared To Other Architectures}
 
-	
+
 
 \subsubsection{Firefox Add-ons}
 	
 	%TODO
 	Firefox's support for the multi-browser extension model is currently still in development \cite{mozillaWebExtensionStatus}. Therefore, extensions implemented in the old Add-on model are still in use. 
 	
-	Mozilla distributes Add-ons through their own web store\footnote{Firefox Web Store: \url{https://addons.mozilla.org/en-US/firefox/}} but also allows the installation from other sources. Add-ons published through the web store are target of a review by Mozilla's security experts \cite{mozillaDevReviewPolicy}. After passing the review, the Add-on is signed by Mozilla what is shown on installation to the user. Similarly, if an Add-on is published private and was not the target of a successful review, it is labeled as untrusted on installation. 
+	Mozilla distributes Add-ons through their own web store\footnote{\url{https://addons.mozilla.org/en-US/firefox/}} but also allows the installation from other sources. Add-ons published through the web store are the target of a review by Mozilla's security experts \cite{mozillaDevReviewPolicy}. After passing the review, the Add-on is signed by Mozilla what is shown on installation to the user. If an Add-on is published private and was not the target of a successful review, it is labeled as untrusted on installation. 
 	
+	Mozilla distributes a JavaScript framework to develop Add-ons. The framework provides the browser's functionality as several core modules. Additionally, the developer may declare modules himself to encapsulate behavior. To use a module, the Add-on has to explicit request access in its source code using the global function \texttt{require} that takes the module's name as parameter. Firefox uses a security mechanism to prevent an attacker that has compromised an Add-on to access modules that are not explicit requested. On compiling the Add-on, a scanner retrieves all calls of \texttt{require} from the Add-on's source code and lists all requested modules. The runtime loader will actually prevent the loading of modules that are not listed which prevents an attacker to use further modules.
 	
-	% The user can download and install Add-ons from the official web store but also from any other source. Add-ons published over the web store are signed my Mozilla and were the target of a security review by Mozilla's developers. This should prevent the distribution of malicious extensions.
+	A certain module called \textit{chrome} grants full access to browser-internal functionality. This include the access to the host system with the user's privileges.  
 	
-	Firefox Add-ons are developed with a JavaScript framework distributed by Mozilla. 
-	
-	
-	% direct access to web page, developer may unintentionally implement XSS vulnerability that gives attacker access to the extension's core, 
-	
-	
-	Firefox uses a security mechanism to prevent an attacker that has compromised an Add-on to access modules that are not explicit requested inside the add-on. On compiling the add-on, a scanner lists all requests to modules inside the add-on's code. The runtime loader will actually prevent the loading of modules that are not listed. This prevents an attacker to use further modules and more privileged functions at runtime.
-	
-	
+	In their framework, Firefox's developers have adapted the separation between the extension's core and content scripts. A particular module provides the functionality to execute scripts in the scope of a web page. However, this separation is not completed because another module still provides a function to directly access the web page's \texttt{window} object. Furthermore, Add-ons 	
+	the Add-ons components are not as strictly separated as the components of a cross-browser extension. Where each content script and the extension's background run in its own process on the operating system, Firefox uses a programmatically solution to separate the Add-ons content. They wrap untrusted content such as web pages and provide to the Add-on only a filtered object. 
 
 \subsubsection{Safari Extensions}
 

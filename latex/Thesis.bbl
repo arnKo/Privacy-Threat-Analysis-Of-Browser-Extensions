@@ -22,16 +22,18 @@
 \newblock \url{https://wiki.mozilla.org/WebExtensions}.
 \newblock [accessed 2015-12-30].
 
-\bibitem{mozillaWikiClearPrivacyAPI}
-{NPAPI}:{C}lear{S}ite{D}ata.
-\newblock \url{https://wiki.mozilla.org/NPAPI:ClearPrivacyData}.
-\newblock [accessed 2016-05-25].
-
 \bibitem{safariContentBlockingRules}
 {Safari Developer Library - Safari Content-Blocking Rules Reference}.
 \newblock
   \url{https://developer.apple.com/library/safari/documentation/Extensions/Conceptual/ContentBlockingRules/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016265}.
 \newblock [accessed 2016-01-07].
+
+\bibitem{180371}
+D.~Akhawe and A.~P. Felt.
+\newblock Alice in warningland: A large-scale field study of browser security
+  warning effectiveness.
+\newblock In {\em Presented as part of the 22nd USENIX Security Symposium
+  (USENIX Security 13)}, pages 257--272, Washington, D.C., 2013. USENIX.
 
 \bibitem{Bandhakavi:2011:VBE:1995376.1995398}
 S.~Bandhakavi, N.~Tiku, W.~Pittman, S.~T. King, P.~Madhusudan, and M.~Winslett.
@@ -43,6 +45,14 @@ A.~Barth.
 \newblock The web origin concept.
 \newblock \url{https://tools.ietf.org/html/rfc6454#section-2}.
 \newblock [accessed 2016-07-22].
+
+\bibitem{chromiumBlogCSP}
+A.~Barth.
+\newblock More secure extensions, by default.
+\newblock
+  \url{http://blog.chromium.org/2012/02/more-secure-extensions-by-default.html},
+  February 2012.
+\newblock [accessed 2016-08-08].
 
 \bibitem{Barth10protectingbrowsers}
 A.~Barth, A.~P. Felt, P.~Saxena, A.~Boodman, A.~Barth, A.~P. Felt, P.~Saxena,
@@ -202,6 +212,11 @@ P.~Stone.
 \newblock Pixel perfect timing attacks with {HTML}5.
 \newblock Technical report, Context Information Security Ltd, 2013.
 
+\bibitem{sunshine2009crying}
+J.~Sunshine, S.~Egelman, H.~Almuhimedi, N.~Atri, and L.~F. Cranor.
+\newblock Crying wolf: An empirical study of ssl warning effectiveness.
+\newblock In {\em USENIX Security Symposium}, pages 399--416, 2009.
+
 \bibitem{TerLouw:2007:EWB:1420581.1420583}
 M.~Ter~Louw, J.~S. Lim, and V.~N. Venkatakrishnan.
 \newblock Extensible web browser security.
@@ -213,7 +228,7 @@ M.~Ter~Louw, J.~S. Lim, and V.~N. Venkatakrishnan.
 vabr@chromium.org.
 \newblock Chromium blog issue 378419.
 \newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
-\newblock [accessed 2016-03-18].
+\newblock [accessed 2016-07-18].
 
 \bibitem{ndss2007xss}
 P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.

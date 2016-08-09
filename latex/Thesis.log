@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  8 AUG 2016 12:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.29)  9 AUG 2016 16:08
 entering extended mode
 **./Thesis.tex
 (Thesis.tex
@@ -1201,7 +1201,8 @@ LaTeX Warning: Unused global option(s):
 
 (Thesis.aux (chapters/introduction.aux) (chapters/related_works.aux)
 (chapters/background.aux) (chapters/threat_analysis.aux) (chapters/design.aux)
-(chapters/extension_analysis.aux))
+(chapters/extension_analysis.aux) (chapters/countermeasures.aux)
+(chapters/conclusion.aux))
 \openout1 = `Thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
@@ -1444,7 +1445,7 @@ LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
 (Font)              scaled to size 5.546pt on input line 64.
 \@TUD@titlelines=\count135
 
-<tud_logo.pdf, id=168, 157.58875pt x 63.23625pt>
+<tud_logo.pdf, id=192, 157.58875pt x 63.23625pt>
 File: tud_logo.pdf Graphic file (type pdf)
  <use tud_logo.pdf>
 Package pdftex.def Info: tud_logo.pdf used on input line 64.
@@ -1496,17 +1497,19 @@ Overfull \hbox (9.5pt too wide) in paragraph at lines 64--64
 
 [0
 
-] (Thesis.toc)
+] (Thesis.toc [1
+
+
+])
 \tf@toc=\write4
 \openout4 = `Thesis.toc'.
 
- [1
-
-
-]
+ [2]
 \openout2 = `./chapters/introduction.aux'.
 
- (chapters/introduction.tex
+ (chapters/introduction.tex [3
+
+]
 chapter 1.
 
 Class scrreprt Warning: \float@addtolists detected!
@@ -1523,166 +1526,115 @@ Class scrreprt Warning: \float@addtolists detected!
 (scrreprt)              a package that still implements the
 (scrreprt)              deprecated \float@addtolist interface .
 
-) [2
 
+LaTeX Warning: Reference `c' on page 4 undefined on input line 27.
+
+) [4
 
 ]
 \openout2 = `./chapters/related_works.aux'.
 
  (chapters/related_works.tex
 chapter 2.
-LaTeX Font Info:    Try loading font information for TS1+5ch on input line 19.
+LaTeX Font Info:    Try loading font information for TS1+5ch on input line 16.
 (D:\LatexTUDesign\texmf\tex\latex\tex-tudfonts\softmake\charter\ts15ch.fd
 File: ts15ch.fd 2008/06/23 Fontinst v1.927 font definitions for TS1/5ch.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 25--26
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 18.
 
- []
-
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 28.
 (D:\Programme\MiKTeX2.9\tex\latex\txfonts\t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
-)
-Underfull \hbox (badness 10000) in paragraph at lines 28--30
-
- []
-
-[3
+) [5
 
 
 
-] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 60--63
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 64--67
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 68--69
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
-Underfull \hbox (badness 10000) in paragraph at lines 77--79
-
- []
-
-)
-Underfull \hbox (badness 10000) in paragraph at lines 80--72
-
- []
-
-[7]
+] [6] [7]) [8]
 \openout2 = `./chapters/background.aux'.
 
- (chapters/background.tex
+
+(chapters/background.tex
 chapter 3.
-[8
+LaTeX Font Info:    Try loading font information for TS1+txtt on input line 20.
+
+(D:\Programme\MiKTeX2.9\tex\latex\txfonts\ts1txtt.fd
+File: ts1txtt.fd 2000/12/15 v3.1
+) [9
 
 
 
-] [9]
+] [10]
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 7.87204pt on input line 71.
+(Font)              scaled to size 7.87204pt on input line 59.
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 5.56804pt on input line 71.
+(Font)              scaled to size 5.56804pt on input line 59.
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 4.70403pt on input line 71.
+(Font)              scaled to size 4.70403pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 7.70801pt on input line 71.
+(Font)              scaled to size 7.70801pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 5.45201pt on input line 71.
+(Font)              scaled to size 5.45201pt on input line 59.
 LaTeX Font Info:    Font shape `OML/mdput/m/it' will be
-(Font)              scaled to size 4.606pt on input line 71.
- [10]
+(Font)              scaled to size 4.606pt on input line 59.
+ [11]
 Underfull \vbox (badness 1314) has occurred while \output is active []
 
- [11]
-[12]) [13]
+ [12]
+[13]) [14]
 \openout2 = `./chapters/threat_analysis.aux'.
 
  (chapters/threat_analysis.tex
 chapter 4.
-[14
+[15
 
 
 
-]
-Underfull \vbox (badness 1048) has occurred while \output is active []
+] [16]
+Underfull \vbox (badness 3482) has occurred while \output is active []
 
- [15]
-Underfull \hbox (badness 10000) in paragraph at lines 92--92
-[][][]\T1/5ch/m/n/7.9 Avira Browser Safety on the Chrome Web Store: []$\T1/txtt
-/m/n/7.9 https : / / chrome . google . com / webstore / detail / avira-[]browse
-r-[]safety /$
- []
-
-
-Underfull \hbox (badness 6188) in paragraph at lines 93--93
-[][][]\T1/5ch/m/n/7.9 Avast On-line Se-cu-rity on the Chrome Web Store: []$\T1/
-txtt/m/n/7.9 https : / / chrome . google . com / webstore / detail / avast-[]on
-line-[]security /$
- []
-
-
-Underfull \vbox (badness 2426) has occurred while \output is active []
-
- [16])
-[17]
+ [17])
+[18]
 \openout2 = `./chapters/design.aux'.
 
  (chapters/design.tex
 chapter 5.
 (graphics/design_overview.pdf_tex
-<graphics/design_overview.pdf, id=419, page=1, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=452, page=1, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 1>
@@ -1690,7 +1642,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page1 used on input line
  52.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=420, page=2, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=453, page=2, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 2>
@@ -1698,7 +1650,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page2 used on input line
  55.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=421, page=3, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=454, page=3, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 3>
@@ -1706,7 +1658,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page3 used on input line
  58.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=422, page=4, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=455, page=4, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 4>
@@ -1714,7 +1666,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page4 used on input line
  61.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=423, page=5, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=456, page=5, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 5>
@@ -1722,7 +1674,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page5 used on input line
  63.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=424, page=6, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=457, page=6, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 6>
@@ -1730,7 +1682,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page6 used on input line
  65.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=425, page=7, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=458, page=7, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 7>
@@ -1738,7 +1690,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page7 used on input line
  67.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=426, page=8, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=459, page=8, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 8>
@@ -1746,7 +1698,7 @@ Package pdftex.def Info: graphics/design_overview.pdf, page8 used on input line
  70.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=427, page=9, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=460, page=9, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 9>
@@ -1754,14 +1706,14 @@ Package pdftex.def Info: graphics/design_overview.pdf, page9 used on input line
  73.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
 
-<graphics/design_overview.pdf, id=428, page=10, 428.30249pt x 265.98267pt>
+<graphics/design_overview.pdf, id=461, page=10, 428.30249pt x 265.98267pt>
 File: graphics/design_overview.pdf Graphic file (type pdf)
 
 <use graphics/design_overview.pdf, page 10>
 Package pdftex.def Info: graphics/design_overview.pdf, page10 used on input lin
 e 76.
 (pdftex.def)             Requested size: 342.6433pt x 212.79453pt.
-) [18
+) [19
 
 
 
@@ -1801,29 +1753,16 @@ on: multiple pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex.exe (file ./graphics/design_overview.pdf): PDF inclusi
 on: multiple pdfs with page group included in a single page
->] [19]
-Underfull \vbox (badness 1454) has occurred while \output is active []
+>] [20] [21] [22] [23] [24] [25
 
- [20]
+] [26] [27] [28
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[21] [22] [23] [24
-
-] [25] [26]
-LaTeX Font Info:    Try loading font information for TS1+txtt on input line 230
-.
-
-(D:\Programme\MiKTeX2.9\tex\latex\txfonts\ts1txtt.fd
-File: ts1txtt.fd 2000/12/15 v3.1
-) [27
-
-] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 284--285
+] [29]
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
 
  []
 
-[29]) [30]
+[30]) [31]
 \openout2 = `./chapters/extension_analysis.aux'.
 
  (chapters/extension_analysis.tex
@@ -1831,29 +1770,39 @@ chapter 6.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[31
+[32
 
 
 
-] [32]
+] [33]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[33
+[34
 
-] [34]
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+] [35] [36
 
- []
+]) [37
+
+]
+\openout2 = `./chapters/countermeasures.aux'.
+
+ (chapters/countermeasures.tex
+chapter 7.
+) [38
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
 
- []
+]
+\openout2 = `./chapters/conclusion.aux'.
 
-[35
+ (chapters/conclusion.tex
+chapter 8.
+) [39
 
-]) [36]
+
+
+]
 
 Class scrreprt Warning: \float@listhead detected!
 (scrreprt)              Implementation of \float@listhead became
@@ -1865,7 +1814,7 @@ Class scrreprt Warning: \float@listhead detected!
 (scrreprt)              Loading of package `scrhack' may help to
 (scrreprt)              avoid this warning, if you are using a
 (scrreprt)              a package that still implements the
-(scrreprt)              deprecated \float@listhead interface  on input line 91.
+(scrreprt)              deprecated \float@listhead interface  on input line 95.
 
 
 (Thesis.lot)
@@ -1884,10 +1833,10 @@ Class scrreprt Warning: \float@listhead detected!
 (scrreprt)              Loading of package `scrhack' may help to
 (scrreprt)              avoid this warning, if you are using a
 (scrreprt)              a package that still implements the
-(scrreprt)              deprecated \float@listhead interface  on input line 92.
+(scrreprt)              deprecated \float@listhead interface  on input line 96.
 
 
-[37
+[40
 
 
 ] (Thesis.lof)
@@ -1906,69 +1855,74 @@ Class scrreprt Warning: \float@listhead detected!
 (scrreprt)              Loading of package `scrhack' may help to
 (scrreprt)              avoid this warning, if you are using a
 (scrreprt)              a package that still implements the
-(scrreprt)              deprecated \float@listhead interface  on input line 93.
+(scrreprt)              deprecated \float@listhead interface  on input line 97.
 
 
-[38
+[41
 
 ] (Thesis.cex)
 \tf@cex=\write7
 \openout7 = `Thesis.cex'.
 
- (Thesis.bbl [39
+ (Thesis.bbl [42
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 31--35
+Underfull \hbox (badness 10000) in paragraph at lines 26--30
 $\T1/txtt/m/n/9.5 safari / documentation / Extensions / Conceptual / ContentBlo
 ckingRules / Introduction / Introduction . html #$
  []
 
-[40
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--56
+[]\T1/5ch/m/n/9.5 A. Barth.  More se-cure ex-ten-sions, by de-fault.  []$\T1/tx
+tt/m/n/9.5 http : / / blog . chromium . org / 2012 / 02 /$
+ []
+
+[43
 
 ]
-Underfull \hbox (badness 1748) in paragraph at lines 155--160
+Underfull \hbox (badness 1748) in paragraph at lines 165--170
 []\T1/5ch/m/n/9.5 MDN.  The x-frame-options re-sponse header.  []$\T1/txtt/m/n/
 9.5 https : / / developer . mozilla . org / en-[]US / docs / Web / HTTP /$
  []
 
-[41])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 97.
- [42]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 97.
+[44])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 101.
+ [45]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 101.
  (Thesis.aux (chapters/introduction.aux) (chapters/related_works.aux) (chapters
 /background.aux) (chapters/threat_analysis.aux) (chapters/design.aux) (chapters
-/extension_analysis.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 97.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 97.
+/extension_analysis.aux) (chapters/countermeasures.aux)
+(chapters/conclusion.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 101.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 101.
+Package rerunfilecheck Info: File `Thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 7F8E9441F43A82E50B71FD16B152D695;2965.
 
 
-Package rerunfilecheck Warning: File `Thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: Checksums for `Thesis.out':
-(rerunfilecheck)             Before: 64C87F8544AA7E864D0208DB31547FAF;2664
-(rerunfilecheck)             After:  9A1E6315216AE33BB8BBF1612996F8A4;2726.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 97.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 101.
  ) 
 Here is how much of TeX's memory you used:
- 15605 strings out of 493634
- 241742 string characters out of 3145797
- 406137 words of memory out of 3000000
- 18365 multiletter control sequences out of 15000+200000
- 120205 words of font info for 102 fonts, out of 3000000 for 9000
+ 15654 strings out of 493634
+ 242639 string characters out of 3145797
+ 406212 words of memory out of 3000000
+ 18384 multiletter control sequences out of 15000+200000
+ 121359 words of font info for 103 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 65i,13n,102p,2101b,1280s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,13n,102p,1477b,1252s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/Programme/MiKTeX2.9/fonts/enc/dvips/fontname/8r.enc}<D:/LatexTUDesign/tex
 mf/fonts/type1/softmake/charter/5chb8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/
 softmake/charter/5chr8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/softmake/charte
 r/5chri8a.pfb><D:/LatexTUDesign/texmf/fonts/type1/softmake/frontpage/5fpm8a.pfb
 ><D:/LatexTUDesign/texmf/fonts/type1/softmake/frontpage/5fpr8a.pfb><D:/Programm
 e/MiKTeX2.9/fonts/type1/public/txfonts/t1xtt.pfb><D:/Programme/MiKTeX2.9/fonts/
-type1/public/txfonts/tcxtt.pfb>
-Output written on Thesis.pdf (44 pages, 334806 bytes).
+type1/public/txfonts/tcxtt.pfb><D:/Programme/MiKTeX2.9/fonts/type1/urw/helvetic
+/uhvr8a.pfb>
+Output written on Thesis.pdf (47 pages, 348111 bytes).
 PDF statistics:
- 766 PDF objects out of 1000 (max. 8388607)
- 191 named destinations out of 1000 (max. 500000)
- 408 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 822 PDF objects out of 1000 (max. 8388607)
+ 206 named destinations out of 1000 (max. 500000)
+ 456 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2,12 +2,12 @@
 \BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 2
 \BOOKMARK [1][-]{section.1.2}{Goals}{chapter.1}% 3
 \BOOKMARK [1][-]{section.1.3}{Approach}{chapter.1}% 4
-\BOOKMARK [0][-]{chapter.2}{Related Works}{}% 5
-\BOOKMARK [1][-]{section.2.1}{Extension Architecture}{chapter.2}% 6
-\BOOKMARK [1][-]{section.2.2}{Threat Analysis And Counter Measurement}{chapter.2}% 7
-\BOOKMARK [1][-]{section.2.3}{Analysis Of Possible Extension Attacks}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.4}{Extension Evaluation}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.5}{Information Flow Control In JavaScript}{chapter.2}% 10
+\BOOKMARK [1][-]{section.1.4}{Contribution}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{Outline}{chapter.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Related Works}{}% 7
+\BOOKMARK [1][-]{section.2.1}{Extension Architecture}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.2}{Threat Analysis}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.3}{Extension Evaluation}{chapter.2}% 10
 \BOOKMARK [0][-]{chapter.3}{Background}{}% 11
 \BOOKMARK [1][-]{section.3.1}{Terminology}{chapter.3}% 12
 \BOOKMARK [1][-]{section.3.2}{Extension Architecture}{chapter.3}% 13
@@ -39,3 +39,8 @@
 \BOOKMARK [1][-]{section.6.2}{Results}{chapter.6}% 39
 \BOOKMARK [1][-]{section.6.3}{Details}{chapter.6}% 40
 \BOOKMARK [2][-]{subsection.6.3.1}{Google Translate}{section.6.3}% 41
+\BOOKMARK [2][-]{subsection.6.3.2}{Unlimited Free VPN - Hola}{section.6.3}% 42
+\BOOKMARK [0][-]{chapter.7}{Countermeasures}{}% 43
+\BOOKMARK [1][-]{section.7.1}{Detect Malicious Behavior}{chapter.7}% 44
+\BOOKMARK [1][-]{section.7.2}{Improved Permissions}{chapter.7}% 45
+\BOOKMARK [0][-]{chapter.8}{Conclusion}{}% 46

@@ -1,12 +1,17 @@
 % !TeX spellcheck = en_US
+
+
+Browser extensions are widely used today to enhance the way end users interact with the Internet. They can access data from the user by using interfaces provided by the browser. This can be misused to violate their privacy or manipulate the content of a web page in a malicious way. In this work we analyze the possibilities to integrate malicious behavior in extensions. First, we take a look which interfaces the browser provides to the extensions and whether and, if so, how the access is restricted. Using this knowledge, we develop and implement extensions with malicious behavior that uses the provided functionality. We examine popular extensions and what parts of the interfaces they use. Then, show that we can integrate parts of our previously implemented behavior into them. Finally we describe ways to improve the privacy of those susceptible extensions by limiting the possibilities to integrate malicious behavior.
+
 \chapter{Introduction}
 
 \section{Motivation}
 	% statistics (browser usage, extension amount, extension usage)
 	% real world examples of malicious extensions
+	
 \section{Goals}
 	% give an overview of what threats an extension poses for its user
-
+	With out work, we want to show that intentionally implemented malicious extension posse a threat for the user's privacy and we want to give the reader an overview of explicit attacking scenarios. Furthremore
 
 \section{Approach}
 	% work steps / paper draft
@@ -14,3 +19,9 @@
 	In this thesis, we first provide an overview of commonalities and differences of current browser extension models. We present the general structure of an extension and highlight the differences that exist between the architectures of different browsers. Our focal point of this thesis lies on a cross-browser extension model which is applicable to the popular browsers Chrome, Firefox, Edge, and Opera. 
 	
 	Next, we present the results of our analysis of the multi-browser extension architecture to find potential threats for a user. As a proof-of-concept for our theoretical analysis, we show our design an implementation which creates a malicious extension based on 
+	
+	
+\section{Contribution}
+\section{Outline}
+
+	We present our design that consists of three steps with interchangeable components in \autoref{c}. We present common methods to identify the current user of a web page and our implemented components for that task in \autoref{sec:identification}, our components to transfer collected user information to a remote server and fetch the source code for our attack components in \autoref{sec:communication}, and finally our explicit attack components in \autoref{sec:execution}.
