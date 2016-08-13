@@ -2,14 +2,13 @@
 
 \chapter{Countermeasures}
 
-	
 
 \section{Detect Malicious Behavior}
 	
-	Mozilla reviews Add-ons that they publish on the official web store by their security experts to reject malicious implementations. This could also be done for the cross-browser extensions. Indeed, a research team already developed a system called \textit{WebEval} to identify malicious extensions. For three yeas, they collected each version of all extensions published to the Chrome Web Store and fed them to their system. They detected about 9,000 malicious extensions which were nearly 10\% of all analyzed extensions. Furthermore, WebEval uses a machine learning algorithm to evaluate each extension and potential malicious findings are verified by human experts. The researchers measured the overall accuracy of their system which increased over time although they experienced drops in the accuracy when new threats emerged. \\
+	Mozilla reviews Add-ons that they publish on the official web store by their security experts to reject malicious implementations. This could also be done for the cross-browser extensions. Indeed, a research team already developed a system called \textit{WebEval} to identify malicious extensions. For three yeas, they collected each version of all extensions published to the Chrome Web Store and fed them into their system. They detected about 9,000 malicious extensions which were nearly 10\% of all analyzed extensions. Furthermore, WebEval uses a machine learning algorithm to evaluate each extension and potential malicious findings are verified by human experts. The researchers measured the overall accuracy of their system which increased over time although they experienced drops in the accuracy when new threats emerged. \\
 	A disadvantage of WebEval is that it executes the extensions in a sandboxed environment. Therefore, not all malicious interactions with web content can be monitored. For example, the system has no account creation on-the-fly and is therefore not able to analyze the extension's behavior on account-restricted web pages.
 	
-	Other researchers developed systems to monitor the flow of sensitive information \cite{Dhawan:2009:AIF:1723192.1723250, Hallaraker:2005:DMJ:1078029.1078861, cs2015sentinel,ndss2007xss} in JavaScript-base applications such as extensions. They blocked the flow if sensitive information are transfered to untrusted target such as remote servers. All approaches modified the browser's JavaScript interpreter to enable the tracking.
+	Other researchers developed systems to monitor the flow of sensitive information in JavaScript-base applications such as extensions \cite{Dhawan:2009:AIF:1723192.1723250, Hallaraker:2005:DMJ:1078029.1078861, cs2015sentinel,ndss2007xss}. They blocked the flow if sensitive information are transfered to untrusted targets such as remote servers. All approaches modify the browser's JavaScript interpreter to enable the tracking.
 
 \section{Improved Permissions}
 

@@ -2,17 +2,37 @@
 
 \chapter{Background}
 
+%TODO
+	In this chapter, we provide background information for our paper to give the reader a better understanding of our work. We explain technical elements that are not commonly known and give an overview of the extension architecture that we analyze in this paper.
 
 \section{Terminology}
-	% We explain therms we use in this paper
+
+	To provide a better understanding, we explain several terms that we user in our work in this section.
+
+\paragraph{Browser}
+
+%TODO
+	A browser is a desktop application whose main purpose is to display web pages and to allow the user to interact with them. It fetches the web page's source code that commonly consists of a HTML document with included JavaScript and CSS from a remote server. For that purpose, it executes and handles HTTP requests. The address of each web page is defined by its URL \cite{w3cUrlSpecifications}.
+	
+\paragraph{Browser Extension}
+	
+	A browser extension is an additionally piece of software that enhances a browser's functionality or user interface. Unlike browser plugins, it is considered as a part of the browser itself. Therefore, it has access to some provided features of the browser such as cookies or bookmarks and can modify displayed web pages. 
+	
+\paragraph{Browser Plugin}
+
+	A browser plugin is an external application that runs on the hosting system. It commonly provides an API or user interface that is embedded into a web page on demand. We do \textbf{not} cover plugins in this paper.
+
+\paragraph{Web Application}
+
+	A web application is a server-client software application hosted on a remote server and accessible for the user through a web page. This allows a company to provide an application without the need for the user to install it locally.
 
 \paragraph{Document Object Model (DOM)}
 
-	The \textit{Document Object Model} is an API for representing HTML or XML documents as a tree. This allows scripting languages such as JavaScript to easily manipulate the document's content. It is used by browsers to internally store web pages and can be access by JavaScript through the \texttt{document} object. 
+	The \textit{Document Object Model} is a standardized API for representing HTML or XML documents as a tree \cite{w3cDOMSpecification}. This allows scripting languages such as JavaScript to easily manipulate the document's content. It is used by browsers to internally store web pages and can be access by JavaScript through the \texttt{document} object. 
 
 \paragraph{XMLHttpRequest (XHR)}
 
-	The XMLHttpRequest API allows JavaScript to programmatically execute HTTP and HTTPS requests. It is often used to load dynamic content or to transfer information to a server. The following code example shows the general use of an XHR:
+	The XMLHttpRequest API allows JavaScript to programmatically execute HTTP and HTTPS requests. It is often used to load dynamic content or to transfer information to a server. The following code example shows a general implementation of an XHR:
 	
 	\begin{lstlisting}
 var xhr = new XMLHttpRequest();
@@ -39,8 +59,6 @@ xhr.send(message);
 	\end{center}
 	First we set the default directive and therewith restrict all other directives to the origin of the underlying web page. Then, we lighten the restriction to load scripts from a trusted server and allow the use of eval in loaded scripts.
 
-
-
 \newpage
 \section{Extension Architecture}
 
@@ -48,24 +66,49 @@ xhr.send(message);
 
 	The cross-browser extension architecture is based on a research from 2010 \cite{Barth10protectingbrowsers}. The researchers examined the model of Firefox's Add-ons and revealed many vulnerabilities in connection to Add-ons running with the user's full privileges. This enables an attacker, in the case that he has compromised the Add-on, to access arbitrary files and launch new processes. To counter the found exploits, the researchers proposed a new model that should protect the user from unintentionally implemented vulnerabilities.
 
-	The developers of Google's Chrome browser where the first to adapt the proposed model in 2010. Then in 2013, the developers of the Opera browser switched the browser's underlying framework to \textit{Chromium} which is also the framework for Chrome \cite{operaBlogSwitchToChromium}. With this change, they adopted the same extension architecture that Chrome uses. In 2015, the developers of Mozilla's Firefox browser announced that they will support the extension model, too. They published a first version of their implementation in version 42 of Firefox. Currently, their implementation is still in development and therefore not all browser APIs are supported \cite{mozillaWebExtensionStatus}. Similar, Microsoft started in 2016 to implement the extension architecture for their new Edge browser and the support for many browser APIs is currently still in development \cite{edgeBrowserApiStatus}.
+	The developers of Google's Chrome browser where the first to adapt the proposed model in 2010. Then in 2013, the developers of the Opera browser switched the browser's underlying framework to \textit{Chromium} which is also the framework for Chrome \cite{operaBlogSwitchToChromium}. With this change, they adopted the same extension architecture that Chrome uses. In 2015, the developers of Mozilla's Firefox browser announced that they will support the extension model, too. They published a first version of their implementation in version 42 of Firefox. Currently, their implementation is still in development and therefore not all browser APIs are supported \cite{mozillaWebExtensionStatus}. Similar, Microsoft started in 2016 to implement the same architecture for their new Edge browser and the support for many browser APIs is currently still in development \cite{edgeBrowserApiStatus}.
 
 \subsection{General Structure}
 
 	Extensions implemented in the cross-browser architecture use only web technologies such as JavaScript, HTML, and CSS. All included files are declared in a mandatory manifest which also holds the extension's meta information such as its name, version, and author. The extension's general structure is divided into a background page that holds the extension's main logic and content scripts that are used to interact with web pages.
 	
+	\begin{code}
+		\begin{lstlisting}
+{
+	"manifest_version": 2,
+	"name": "Extension Name",
+	"version": "1.1.2",
+	"background": {
+		"scripts": [ "background.js" ]
+	},
+	"content_scripts": [ {
+		{ 	"js": [ "content.js" ],
+			"matches": [ "http://*/*", "https://*/*" ] }
+	],
+	"permissions": [ "cookies", "tabs", "http://*/*", "https://*/*" ],
+	"content_security_policy": 
+		"script-src 'self' https://*.example.com/ 'unsafe-eval'; object-src 'self'"
+}
+\end{lstlisting}
+		\caption{Example \texttt{manifest.json} file.}
+		\label{code:manifest}
+	\end{code}
+	
 \subsubsection{Background Page}
 
-	The \textit{background page} is a for the user invisible HTML document which includes JavaScript code that controls the extension's behavior. From within the background page, the extension has access to additional functionality provided by a browser API such as access to the browser's tab-system, the possibility to observe and intercept web requests, or the access to the user's bookmarks. The full list of provided modules is available at the developer platform\footnote{\url{https://developer.chrome.com/extensions/api_index}}. \\
-	To use some of the browser API modules, the extension has to declare a corresponding permission in its manifest. Similar, to access a remote server using a web request or a tab that contains a web page, the extension has to declare a host permission that matches the target's URL. A host permission is a URL pattern that may contain wildecards for the scheme, domain, or path to match several web pages at once. For example, the URL pattern \texttt{http://*.example.com/*} matches \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not \texttt{https://www.example.com/} and \texttt{http://www.example.org/}. \\
-	Additionally, a developer can declare the access to API modules that are not required for his extension's basic functionality as optional permissions. If the extension requests access to an optional API module at runtime, the browser prompts the user to confirm the request. A confirmed optional permission stays active even after a browser restart until the extension itself removes it. Furthermore, host permission may also be declared as optional which gives the user a fine-grained tuning of websites to which an extension has access to.
+	The \textit{background page} is a for the user invisible HTML document which includes JavaScript code that controls the extension's behavior. The extension that uses the manifest shown in \autoref{code:manifest} declares a single JavaScript file that is added to its background page on line 4. From within the background page, the extension has access to additional functionality provided by a browser API such as access to the browser's tab-system, the possibility to observe and intercept web requests, or the access to the user's bookmarks. The full list of provided modules is available at the developer platform\footnote{\url{https://developer.chrome.com/extensions/api_index}}. 
+	
+	To use some of the browser API modules, the extension has to declare a corresponding permission in its manifest. Similar, to access a remote server using a web request or a tab that contains a web page, the extension has to declare a host permission that matches the target's URL. A host permission is a URL pattern that may contain wildecards for the scheme, domain, or path to match several web pages at once. For example, the URL pattern \texttt{http://*.example.com/*} matches \texttt{http://api.example.com/} and \texttt{http://www.example.com/foo} but not \texttt{https://www.example.com/} and \texttt{http://www.example.org/}. The example manifest file shown in \autoref{code:manifest} declares the \texttt{cookies} and \texttt{tabs} permissions and host permissions for all web pages using the two URL pattern \texttt{http://*/*} and \texttt{https://*/*}.	
+	
+	Additionally, a developer can declare the access to API modules that are not required for his extension's basic functionality as optional permissions. If the extension requests access to an optional API module at runtime, the browser prompts the user to confirm the request. A confirmed optional permission stays active even after a browser restart until the extension itself removes it. Furthermore, host permission may also be declared as optional which gives the user a fine-grained tuning of websites to which an extension has access to. 
+	
 	An extension may include additional user interface elements such as pop-up or option pages. JavaScript inside a user interface has direct access to the background page which allows it to invoke methods and access variables of it and vice versa. 
 	
 \subsubsection{Content Scripts}
 	
 	A extension can not directly access a web page or its DOM from within its background. For that purpose, it uses content scripts which have full access to the DOM of a single web page in whose context they are active. This allows the extension to extract values from the web page or to modify its content. Content scripts are very limited in their access to the browser's API. They can only use a small subset of modules such as the internationalization or the storage module. Furthermore, the background and a content script can not directly interact with each other. They can only use a JSON-based communication channel to transfer commands or data between each other. 
 	
-	Besides the programmatically injection of a content script into a tab from within the extension's background, the developer can also register the content script in the extension's manifest. Using a URL pattern like for host permissions in combination allows to determine the web pages in that the content script will be active. In contrast to the programmatically injection which needs a valid host permission to access the tab, the statically registered content scripts do not need additional permissions. 
+	Besides the programmatically injection of a content script into a tab from within the extension's background, the developer can also register the content script in the extension's manifest. Using a URL pattern like for host permissions in combination allows to determine the web pages in that the content script will be active. In contrast to the programmatically injection which needs a valid host permission to access the tab, the statically registered content scripts do not need additional permissions. In the manifest shown in \autoref{code:manifest}, the extension registers a single JavaScript file on line 7. It will be active in any web page whose URL matches \texttt{http://*/*} and \texttt{https://*/*}.
 	
 	A content script underlies almost the same restriction as a web page. The Same Origin Policy that restricts a script to access another origin than its own applies partly to a content script. If the web page contains an iframe element from a cross-origin, the content script that runs in the main web page can not access the iframe's content. The iframe is handled as separate web page which means that another content script may be active in its context. To allow the execution of a content script in iframes, the \texttt{all\_frames} option has to be declared either in the manifest or for a programmatically injection. The SOP also restricts web requests to cross-origins. But here exists a exception for content scripts because they are allowed to execute programmatically executed web requests using a XMLHttpRequest. The request is only restricted by the extension's host permissions but not by the SOP. 
 
@@ -83,7 +126,7 @@ xhr.send(message);
 	
 \subsubsection{Isolated World}
 	
-	Because content scripts are exposed to potential attacks from malicious web pages, they underly an additional security feature called \textit{Isolated World}. Each content script and the JavaScript inside the web page runs in its own process on the operating system. Consequently, none of them is able to access methods or variables of another. Furthermore, each script has its own instance of the \texttt{document} object mirroring the web page's DOM that is natively stored inside the browser. If a script modifies the DOM, each instance is updated accordingly. But if a script overrides a DOM method or adds a non-standard property to its \texttt{document} object, the changes will not be transfered to the internally stored DOM and consequently not to other instances of the \texttt{document} object, too.	
+	Because content scripts are exposed to potential attacks from malicious web pages, they underly an additional security feature called \textit{Isolated World}. Content scripts and the JavaScript inside the web page run in their own process on the operating system. Consequently, they are not able to access methods or variables of each other. Furthermore, content scripts have their own instance of the \texttt{document} object mirroring the web page's DOM that is natively stored inside the browser. If a script modifies the DOM, each instance is updated accordingly. But if a script overrides a DOM method or adds a non-standard property to its \texttt{document} object, the changes will not be transfered to the internally stored DOM and consequently not to other instances of the \texttt{document} object, too.	
 	
 	This mechanism effectively shields content script from \textit{cross-origin JavaScript capability leak} attacks that try to manipulate the behavior of JavaScript methods used by the content script \cite{Carlini:2012:EGC:2362793.2362800, Barth:2009:CJC:1855768.1855780}. Furthermore, if a content script inserts untrusted HTML code into a web page's DOM for instance setting the \texttt{innerHTML} property of a DOM element, any code inside the content will be executed inside the web page's separated process instead of the content script's process. Thus, the strict separation prevents potential XSS attacks against the extension that the developer may has added unintentionally.
 
@@ -93,8 +136,11 @@ xhr.send(message);
 	
 \subsubsection{Content Security Policy}
 
-	To reduce the threat of potential cross-site scripting attacks, the background page underlies a Content Security Policy. The default CSP consists of the directives \texttt{script-src 'self'} and \texttt{object-src 'self'}. This limits the loading of scripts and other resources to files from within the extension's bundle. Additionally, it disables the use of \texttt{eval} and inline scripts.  \\
-	A developer may relax or tighten the policy for his extension by declaring a custom CSP in the extension's manifest which has to contain at least the \textit{script} and \textit{object} directives. Adding the URL of a remote origin to the CSP allows to fetch resources from the declared host. Again, an URL pattern may be used to match several hosts at once, but wildcards are only allowed for the subdomain. To ensure that remotely loaded resources have not been replaced or modified by a network attacker, only origins that use a secured connection such as HTTPS are allowed. If the developer wishes to use \texttt{eval} or related functions in his extension's background page, he has to add the value \texttt{'unsafe-eval'} to the \textit{script} directive. If he wishes to use inline scripts, he has to add the hash value of the script to the script directive. The \texttt{'unsafe-inline'} key is not allowed and therefore the execution of inline event handler can not be enabled.
+	To reduce the threat of potential cross-site scripting attacks, the background page underlies a Content Security Policy. The default CSP consists of the directives \texttt{script-src 'self'} and \texttt{object-src 'self'}. This limits the loading of scripts and other resources to files from within the extension's bundle. Additionally, it disables the use of \texttt{eval} and inline scripts.  
+	
+	A developer may relax or tighten the policy for his extension by declaring a custom CSP in the extension's manifest which has to contain at least the \textit{script} and \textit{object} directives. Adding the URL of a remote origin to the CSP allows to fetch resources from the declared host. Again, an URL pattern may be used to match several hosts at once, but wildcards are only allowed for the subdomain. To ensure that remotely loaded resources have not been replaced or modified by a network attacker, only origins that use a secured connection such as HTTPS are allowed. If the developer wishes to use \texttt{eval} or related functions in his extension's background page, he has to add the value \texttt{'unsafe-eval'} to the \textit{script} directive. If he wishes to use inline scripts, he has to add the hash value of the script to the script directive. The \texttt{'unsafe-inline'} key is not allowed and therefore the execution of inline event handler can not be enabled. 
+	
+	The manifest shown in \autoref{code:manifest}, declares a custom CSP on line 12. It enables the loading of remote scripts from any URL that matches \texttt{https://*.example.com/} and enables the user of \texttt{eval} in the background page.
 
 \subsubsection{Privacy Preserving Measures}
 
@@ -106,24 +152,30 @@ xhr.send(message);
 
 \subsection{Compared To Other Architectures}
 
-
+	We compared the cross-browser extension architecture and its security features to the old extension architecture of Firefox and the architecture of Apple's Safari browser. Unfortunately, Apple has published only a developer guide and no documentation about implementation details such as implemented security features. Therefore, we could only compare its structure.
 
 \subsubsection{Firefox Add-ons}
 	
-	%TODO
 	Firefox's support for the multi-browser extension model is currently still in development \cite{mozillaWebExtensionStatus}. Therefore, extensions implemented in the old Add-on model are still in use. 
 	
 	Mozilla distributes Add-ons through their own web store\footnote{\url{https://addons.mozilla.org/en-US/firefox/}} but also allows the installation from other sources. Add-ons published through the web store are the target of a review by Mozilla's security experts \cite{mozillaDevReviewPolicy}. After passing the review, the Add-on is signed by Mozilla what is shown on installation to the user. If an Add-on is published private and was not the target of a successful review, it is labeled as untrusted on installation. 
 	
-	Mozilla distributes a JavaScript framework to develop Add-ons. The framework provides the browser's functionality as several core modules. Additionally, the developer may declare modules himself to encapsulate behavior. To use a module, the Add-on has to explicit request access in its source code using the global function \texttt{require} that takes the module's name as parameter. Firefox uses a security mechanism to prevent an attacker that has compromised an Add-on to access modules that are not explicit requested. On compiling the Add-on, a scanner retrieves all calls of \texttt{require} from the Add-on's source code and lists all requested modules. The runtime loader will actually prevent the loading of modules that are not listed which prevents an attacker to use further modules.
+	To develop an Add-on, an additional JavaScript framework distributed by Mozilla is necessary. It contains several core modules that encapsulate the functionality that the browser provides to the Add-ons similar to the browser's API of cross-browser extensions. Additionally, the \texttt{chrome} module even provides full access to browser-internal functionality including the access to the underlying host system. To use a module, the Add-on has to explicit include it in its source code using the global function \texttt{require} that takes the module's name as parameter. 
 	
-	A certain module called \textit{chrome} grants full access to browser-internal functionality. This include the access to the host system with the user's privileges.  
+	Firefox uses a security mechanism that is comparable with the cross-browser extensions' permission system. It serves the same purpose to reduce an attackers scope of action if he managed to compromise the extension. On compiling the Add-on, a scanner retrieves all calls of \texttt{require} from the Add-on's source code and lists all requested modules. The runtime loader will actually prevent the loading of modules that are not listed. Furthermore, the list of requested module is primarily used by Mozilla's reviewers to get a hint of the extension's purpose and capabilities. If an Add-on requires for example the \texttt{chrome} module that gives access to the browser's internal functionality which includes, among others, full access to the host system, the Add-on is subject to an extra in-depth security review. But in contrast to cross-browser extensions, the user does not get notified if the Add-on requests a particular module.
 	
-	In their framework, Firefox's developers have adapted the separation between the extension's core and content scripts. A particular module provides the functionality to execute scripts in the scope of a web page. However, this separation is not completed because another module still provides a function to directly access the web page's \texttt{window} object. Furthermore, Add-ons 	
-	the Add-ons components are not as strictly separated as the components of a cross-browser extension. Where each content script and the extension's background run in its own process on the operating system, Firefox uses a programmatically solution to separate the Add-ons content. They wrap untrusted content such as web pages and provide to the Add-on only a filtered object. 
-
+	In their framework, Firefox's developers have adapted the separation between the extension's core and content scripts.The \texttt{page-mod} module provides the functionality to execute scripts in the scope of a web page. However, this separation is not complete because the \texttt{window/utils} module still provides a function to directly access the web page's \texttt{window} object. Furthermore, 
+	
+	Furthermore, the Add-ons components are not as strictly separated as the components of a cross-browser extension. Where each content script and the extension's background run in its own process on the operating system, Firefox uses a programmatically solution to separate the Add-ons content. They wrap untrusted content such as web pages and provide only a filtered view to the Add-on. An attacker is more likely to expose a vulnerability in the wrapping implementation than he is able to bypass the process border between the contents of a cross-browser extension because he has no access to the hosting system.
+	
+	In summary, the Add-on architecture has less build in security features and provides more functionality than the cross-browser extension architecture. This increases the danger of compromised Add-ons because an attacker is less restricted in his actions and is able to harm the user more than with a compromised cross-browser extension. The fact that each Add-on published over the web store is targeted by a security review decreases the danger from malicious and vulnerable implemented Add-ons,  but user are still able to install not-reviewed Add-ons from other sources. 
+	
 \subsubsection{Safari Extensions}
 
-	Safari extensions are very limited in their capabilities. The browser provides almost no functionality and therefore extension's are restricted to the interaction with web pages. This increases the user's privacy at least partly because an extension can not access information stored inside the browser such as bookmarks or the browsing history, but most sensitive information are stored inside web pages. To publish an extension, the developer needs a certificate provided by Apple. This ensures that only registered developer are able to publish extensions and hampers the distribution of malicious extensions. If a certificate is invalid Safari will disable the developer's extensions.
+	Compared to other extension models, Safari extensions are very limited in their capabilities. The browser provides almost no functionality and therefore extension's are restricted to the interaction with web pages. This increases the user's privacy at least partly because an extension can not access information stored inside the browser such as bookmarks or the browsing history. But still, most sensitive information are stored inside web pages. 
 	
-	The browser provides a build-in user interface for extension development called \textit{Extension Builder}. It manages the extension's content such as meta information or source code files.	An additional feature facilitates to block content in web pages. The extension's developer can add content-blocking rules to his extension that are compiled into a byte-code format and processed directly at runtime. This renders the programmatically examination of a web page's content and determination of blocking unnecessary and therefore provides a better performance \cite{safariContentBlockingRules}.  
+	To publish an extension, the developer needs a certificate provided by Apple. This ensures that only registered developer are able to publish extensions and hampers the distribution of malicious extensions. If a certificate is invalid Safari will disable the developer's extensions.
+	
+	The browser facilitates the extension development by providing a build-in user interface. It manages the extension's content such as meta information or source code files.	An additional feature allows to define content that will be blocked in web pages. The extension's developer can add content-blocking rules to his extension that are compiled into a byte-code format and processed directly at runtime. This renders the programmatically examination of a web page's content and determination of blocking unnecessary and therefore provides a better performance \cite{safariContentBlockingRules}.
+	
+	In summary, Safari extensions compared to the other extension can do the least harm to the user because of their limited capabilities. Furthermore, the developers of malicious extensions are hampered enormous by the needed certificate. 

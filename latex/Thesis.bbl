@@ -116,6 +116,13 @@ O.~Hallaraker and G.~Vigna.
   Engineering of Complex Computer Systems}, ICECCS '05, pages 85--94,
   Washington, DC, USA, 2005. IEEE Computer Society.
 
+\bibitem{w3cDOMSpecification}
+A.~L. Hors, P.~L. Hégaret, L.~Wood, G.~Nicol, J.~Robie, M.~Champion, and
+  S.~Byrne.
+\newblock Document object model (dom) level 3 core specification.
+\newblock \url{https://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/}.
+\newblock [accessed 2016-08-12].
+
 \bibitem{flashPlayerGetFonts}
 A.~S. Incorporated.
 \newblock Actionscript® 3.0 reference for the adobe® flash® platform.
@@ -229,6 +236,12 @@ vabr@chromium.org.
 \newblock Chromium blog issue 378419.
 \newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
 \newblock [accessed 2016-07-18].
+
+\bibitem{w3cUrlSpecifications}
+A.~van Kesteren.
+\newblock {URL} {L}iving {S}tandard.
+\newblock https://url.spec.whatwg.org/.
+\newblock [accessed 2016-04-25].
 
 \bibitem{ndss2007xss}
 P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.

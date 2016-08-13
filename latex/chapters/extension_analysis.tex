@@ -84,14 +84,13 @@
 	
 	In this section, we present the results of our extension analysis. We extracted needed information for our analysis from the extensions' manifests. \autoref{tab:analysisSummaryContent} and \autoref{tab:analysisSummaryPermissions} show a summary of our analysis.
 	
-	
 	Our analysis revealed that we can integrate all components from group A into 13 (86\%) and all components from group B into 12 (80\%) of the 15 analyzed extensions. This allows us to execute the uppermost part of our implementations, especially from the identification section where the general fingerprinting techniques (\autoref{sec:additionalFingerprintingData}) and reading out personal user information (\autoref{sec:personalUserInformation}) are the most efficient ways to identify the current user. Furthermore, we can integrate our component to store an unique identifier (\autoref{sec:storeIdentifier}) into 5 (33\%), our component that executes history sniffing (\autoref{sec:historySniffing}) into 3 (20\%), our component that remove security relevant HTTP response headers (\autoref{sec:removeSecurityHeaders}) into 7 (46\%), and our component that manipulates web requests using the \texttt{webRequests} module (\autoref{sec:manipulateWebRequests}) into 7 (46\%) of the analyzed extensions.
 	
 	Only 3 (20\%) analyzed extensions have enabled the use of \texttt{eval} and related functions in their background pages. This hampers our attack components that run in the extension's background process because we can not execute the fetched source code using \texttt{eval} in most extensions. But, we can use our second component for this task that fetches and executes a remote script using a script element in the extension's background page. To use this component, the extension needs a modified CSP with the targeted server's URL. We found out that 8 of the 15 analyzed extensions declare an additional origin in their CSP to remotely fetch scripts. 
 	
 	We found one extension that declares neither a content script, nor host permissions to all web pages, nor a modified CSP to fetch scripts remotely using script elements. The extension only requests host permissions for \texttt{*://*.google.com/}. This restricts our components from group A and B to only access web pages and remote server that match the declared host permission. Furthermore, the extension declares the API permissions \texttt{alarms}, \texttt{tabs}, and \texttt{webNavigation} which none of our components use. %TODO maybe prise this extension JAY JAY 
 
-	2 of the 15 analyzed extensions declare the \texttt{downloads} permission but neither the \texttt{downloads.open} nor the \texttt{downloads.shelf} permissions. Therefore, we can not integrate our component that downloads and opens an arbitrary file in any of the analyzed extensions (\autoref{sec:downloads}). Our other two components that use the \textit{downloads} module can not hide their actions by disabling the browser bar that shows active downloads without the \texttt{downloads.shelf} permission. The user may notices that his genuine download was interrupted respectively removed and the extension has initiated another download itself. This reduces the success rate, but does not make the attack impossible.
+	2 of the 15 analyzed extensions declare the \texttt{downloads} permission but neither the \texttt{downloads.open} nor the \texttt{downloads.shelf} permissions. Therefore, we can not integrate our component that downloads and opens an arbitrary file in any of the analyzed extensions (\autoref{sec:downloads}). Our other two components that use the \textit{downloads} module to exchange a downloaded file can not hide their actions by disabling the browser bar that shows active downloads without the \texttt{downloads.shelf} permission. The user may notices that his genuine download was interrupted respectively removed and the extension has initiated another download itself. This reduces the success rate, but does not make the attack impossible.
 	
 	Only one of the analyzed extensions has declared the \texttt{management} permission. Thereby, we are able to integrate our attack component that disables another extension into it (\autoref{sec:disableOtherExtension}). The extension uses the permission to disable another extension that is known to be malicious. Because it declares the management permission as optional, the user has to explicitly allow the extension to disable other extensions. As soon as the user has granted the permission, our component can also use it to disable other extensions. % (Adblock even removes the permission if it has finished deactivating other extensions)
 
@@ -144,70 +143,13 @@
 		\label{tab:analysisSummaryPermissions}
 	\end{table}
 	
-\clearpage
-\section{Details}
-	
-	In this section, we go into detail about our analysis results of selected extensions. We show that some of them use privacy preserving measures such as the \texttt{activeTab} permission or optional permissions and others are over-privileged in terms of permissions they do not need for their legal purpose.
 
-\subsection{Google Translate}
+	%This extension provides several features to translate single words up to whole pages. It adds a context menu entry for the web page to translate highlighted text. A button in the browser's interface opens a pop-up in which the user can translate entered text or push a button to translate the whole page.
+	
+	%The extension uses the \texttt{activeTab} permission to inject a content script in the current web page if the user clicks the extension's context menu entry. However, the extension still injects the same content script in every web page rendering the privacy preserving functionality of the activeTab permission useless. This increases the scope of application of our implementation because we are able to integrate all components from group A. If the extension would inject the content script only with the activeTab functionality, our components were  
 
-	This extension provides several features to translate single words up to whole pages. It adds a context menu entry for the web page to translate highlighted text. A button in the browser's interface opens a pop-up in which the user can translate entered text or push a button to translate the whole page.
+	%Hola provides a Virtual Private Network (VPN) as a free of charge extension. It routes the user's traffic through different countries to mask his true location. This allows to bypass regional restrictions on websites. A typical VPN network secures the web requests of its user's by routing the traffic to a few endpoints, masking the web request's origin. But Hola uses the devices of its unpaid customers to route traffic. It turns the user's computer into a VPN server and simultaneously to a VPN endpoint which means that the traffic of other users may exit through his Internet connection and take on his IP address. A Hola user's IP is therefore regularly exposed to the open Internet by traffic from other user's. The user himself has no possibility to control what content is loaded with his IP address as origin. The company makes money by providing the network to paying customers. Those are able to route their own traffic over the network to targeted endpoints. 
 	
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|l|l|} \hline
-			Declares modified CSP and \texttt{unsafe\_eval} enabled? & Yes \\ \hline
-			Declares modified CSP and remotely loaded scripts enabled? & Yes \\ \hline
-			Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
-			Declares host permissions for \textbf{all} web pages? & No \\ \hline
-		\end{tabular}
-		\caption{Google Translate (2.0.6) - Declared content.}
-	\end{table}
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|l|} \hline
-			\textbf{API Permissions} \\ \hline
-			\texttt{activeTab} \\
-			\texttt{contextMenus} \\
-			\texttt{storage} \\
-			\hline
-		\end{tabular}
-		\caption{Google Translate (2.0.6) - Declared API permissions.}
-	\end{table}
+	%The paid functionality of Hola has strong similarities with a bot net which is used for denial of service or spmaming attacks. Actually, Hola recently received negative publicity as the owner of the web platform \textit{8chan} claimed that an attacker used the Hola network to perform a DDoS attack against his platform \cite{8chanHola}. Thereupon, researchers from the cyber security company \textit{Vectra}\footnote{Vectra Homepage: \url{http://www.vectranetworks.com/}} analyzed Hola's application and network. They discovered that Hola has - in addition to the public botnet-like functionality of routing huge amounts of targeted traffic - several features which may be used to perform further cyber attacks, such as download and execute any file while bypassing anti virus checking \cite{vectraHola}. 
 	
-	The extension uses the \texttt{activeTab} permission to inject a content script if the user clicks the extension's context menu entry. However, the extension still injects the same content script in every web page rendering the privacy preserving functionality of the activeTab permission useless. We found the function \texttt{eval} used in a way to parse a JSON string to a JavaScript object: \texttt{eval("("+a+")")}. 
-	
-	\textbf{Proposals} To improve the security of the extension itself and its users we propose to remove the unnecessary automatic injection of the content script. The use of the activeTab permission increases the security for the user, because the extension is only active when the user invokes it. Furthermore, we propose to remove the eval function because it is a common source of Cross-Site-Scripting attacks. The parameter given to eval may either be a simple JSON object or a whole JavaScript as a string. If only JSON objects are used, we propose the use of \texttt{JSON.parse()} as an alternative without the danger of possible Cross-Site-Scripting attacks. If the other case applies, the developers should consider if it is necessary for the extension's purpose to load remote scripts. If the loaded scripts are static, they should be placed inside the extension's installation bundle. 
-	
-\clearpage
-\subsection{Unlimited Free VPN - Hola}
-	Hola provides a Virtual Private Network (VPN) as a free of charge extension. It routes the user's traffic through different countries to mask his true location. This allows to bypass regional restrictions on websites. A typical VPN network secures the web requests of its user's by routing the traffic to a few endpoints, masking the web request's origin. But Hola uses the devices of its unpaid customers to route traffic. It turns the user's computer into a VPN server and simultaneously to a VPN endpoint which means that the traffic of other users may exit through his Internet connection and take on his IP address. A Hola user's IP is therefore regularly exposed to the open Internet by traffic from other user's. The user himself has no possibility to control what content is loaded with his IP address as origin. The company makes money by providing the network to paying customers. Those are able to route their own traffic over the network to targeted endpoints. 
-	
-	The paid functionality of Hola has strong similarities with a bot net which is used for denial of service or spmaming attacks. Actually, Hola recently received negative publicity as the owner of the web platform \textit{8chan} claimed that an attacker used the Hola network to perform a DDoS attack against his platform \cite{8chanHola}. Thereupon, researchers from the cyber security company \textit{Vectra}\footnote{Vectra Homepage: \url{http://www.vectranetworks.com/}} analyzed Hola's application and network. They discovered that Hola has - in addition to the public botnet-like functionality of routing huge amounts of targeted traffic - several features which may be used to perform further cyber attacks, such as download and execute any file while bypassing anti virus checking \cite{vectraHola}. 
-	
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|l|l|} \hline
-			Declares modified CSP and \texttt{unsafe\_eval} enabled? & Yes \\ \hline
-			Declares modified CSP amd remotely loaded scripts enabled? & Yes \\ \hline
-			Uses a content script that matches \textbf{all} web pages? & Yes \\ \hline
-			Declares host permissions for \textbf{all} web pages? & Yes \\ \hline
-		\end{tabular}
-		\caption{Unlimited Free VPN - Hola (1.15.403) - Declared content.}
-	\end{table}
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|l|} \hline
-			\textbf{API Permissions} \\ \hline
-			\texttt{proxy} \\
-			\texttt{webRequest} \\
-			\texttt{webRequestBlocking} \\
-			\texttt{storage} \\
-			\texttt{tabs} \\
-			\texttt{webNavigation} \\
-			\texttt{cookies} \\
-			\hline
-		\end{tabular}
-		\caption{Unlimited Free VPN - Hola (1.15.403) - Declared API permissions.}
-	\end{table}
 
