@@ -1,0 +1,9 @@
+% !TeX spellcheck = en_US
+
+\chapter{Further Work}
+
+	For this paper, we implemented the different components of our designed system and presented a brief description. Furthermore, we showed that real-world extensions exists with the privileges needed for our components. The next step would be to implement a system that takes an extension as input, analyses its privileges, and automatically integrates matching components. 
+
+	We designed our system in a way that most of the malicious components are not present at the extension's implementation to prevent their detection. But the core components that collect the user information can still be detected by an analysis tool or similar. To mitigate this risk, a strategy should be implemented that handles the order in which the components are used. It should first try to detect analysis tools such as \textit{Hulk}\cite{184485} or \textit{WebEval}\cite{190984} and then fetch components to identify the current user.
+	
+	We implemented several attack components for our system as a proof that we can misuse functionality provided by the browser's API modules. There are still modules that pose threats and for which we did not implement components. Therefore, a further step would be to implement additional components with the target to cover all possible threats. 

@@ -1,22 +1,20 @@
 % !TeX spellcheck = en_US
 
 \chapter{Background}
+\label{chp:background}
 
-%TODO
-	In this chapter, we provide background information for our paper to give the reader a better understanding of our work. We explain technical elements that are not commonly known and give an overview of the extension architecture that we analyze in this paper.
+	In this chapter, we provide background information for our paper to give the reader a better understanding of our work. We explain technical elements in \autoref{sec:terminology} that are probably not commonly known and give an overview of the extension architecture that we focus in \autoref{sec:extensionArchitecture}.
 
 \section{Terminology}
-
-	To provide a better understanding, we explain several terms that we user in our work in this section.
+\label{sec:terminology}
 
 \paragraph{Browser}
 
-%TODO
-	A browser is a desktop application whose main purpose is to display web pages and to allow the user to interact with them. It fetches the web page's source code that commonly consists of a HTML document with included JavaScript and CSS from a remote server. For that purpose, it executes and handles HTTP requests. The address of each web page is defined by its URL \cite{w3cUrlSpecifications}.
+	A browser is a desktop application to display web pages. It executes HTTP requests to fetch web pages from remote hosts and allows the user to interact with them. Furthermore, the browser executes JavaScript embedded into a web page which allows a dynamic interaction and changes the web pages look according to Cascading Style Sheets (CSS).
 	
 \paragraph{Browser Extension}
 	
-	A browser extension is an additionally piece of software that enhances a browser's functionality or user interface. Unlike browser plugins, it is considered as a part of the browser itself. Therefore, it has access to some provided features of the browser such as cookies or bookmarks and can modify displayed web pages. 
+	A browser extension is an additionally piece of software that enhances a browser's functionality or user interface. Unlike browser plugins, it is considered as a part of the browser itself. Therefore, it has access to some features of the browser such as cookies or bookmarks and can modify displayed web pages. 
 	
 \paragraph{Browser Plugin}
 
@@ -32,14 +30,7 @@
 
 \paragraph{XMLHttpRequest (XHR)}
 
-	The XMLHttpRequest API allows JavaScript to programmatically execute HTTP and HTTPS requests. It is often used to load dynamic content or to transfer information to a server. The following code example shows a general implementation of an XHR:
-	
-	\begin{lstlisting}
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function() { handleResponse(); };
-xhr.open('POST', REMOTE_URL);
-xhr.send(message);
-\end{lstlisting}
+	The XMLHttpRequest API allows JavaScript to programmatically execute HTTP and HTTPS requests. It is often used to load dynamic content or to transfer information to a server. 
 
 \paragraph{Same Origin Policy (SOP)}
 	
@@ -61,6 +52,7 @@ xhr.send(message);
 
 \newpage
 \section{Extension Architecture}
+\label{sec:extensionArchitecture}
 
 	In the past, each browser had its own architecture for extensions. This lead to an additional workload for a developer, if he wanted his extension to be compatible with multiple browsers. He had to implement an extension for each browser although each provides equal functionality. Nowadays, the browsers' developers seem to address this unhandy situation and started to use a cross-browser extension architecture. In our paper, we focus this architecture which is supported by Google's \textit{Chrome} browser, Mozilla's \textit{Firefox} browser, Microsoft's \textit{Edge} browser, and the \textit{Opera} browser. We have analyzed the extension's structure in-depth and provide our results in this section.
 
@@ -72,7 +64,7 @@ xhr.send(message);
 
 	Extensions implemented in the cross-browser architecture use only web technologies such as JavaScript, HTML, and CSS. All included files are declared in a mandatory manifest which also holds the extension's meta information such as its name, version, and author. The extension's general structure is divided into a background page that holds the extension's main logic and content scripts that are used to interact with web pages.
 	
-	\begin{code}
+	\begin{figure}
 		\begin{lstlisting}
 {
 	"manifest_version": 2,
@@ -92,7 +84,7 @@ xhr.send(message);
 \end{lstlisting}
 		\caption{Example \texttt{manifest.json} file.}
 		\label{code:manifest}
-	\end{code}
+	\end{figure}
 	
 \subsubsection{Background Page}
 
@@ -164,11 +156,10 @@ xhr.send(message);
 	
 	Firefox uses a security mechanism that is comparable with the cross-browser extensions' permission system. It serves the same purpose to reduce an attackers scope of action if he managed to compromise the extension. On compiling the Add-on, a scanner retrieves all calls of \texttt{require} from the Add-on's source code and lists all requested modules. The runtime loader will actually prevent the loading of modules that are not listed. Furthermore, the list of requested module is primarily used by Mozilla's reviewers to get a hint of the extension's purpose and capabilities. If an Add-on requires for example the \texttt{chrome} module that gives access to the browser's internal functionality which includes, among others, full access to the host system, the Add-on is subject to an extra in-depth security review. But in contrast to cross-browser extensions, the user does not get notified if the Add-on requests a particular module.
 	
-	In their framework, Firefox's developers have adapted the separation between the extension's core and content scripts.The \texttt{page-mod} module provides the functionality to execute scripts in the scope of a web page. However, this separation is not complete because the \texttt{window/utils} module still provides a function to directly access the web page's \texttt{window} object. Furthermore, 
+	In their framework, Firefox's developers have adapted the separation between the extension's core and content scripts like the cross-browser extensions use it. The \texttt{page-mod} module provides the functionality to execute scripts in the scope of a web page. However, this separation is not complete because the \texttt{window/utils} module still provides a function to directly access the web page's \texttt{window} object.  \\
+	Furthermore, the Add-ons components are not as strictly separated as the components of a cross-browser extension. Where each content script and the extension's background run in its own process on the operating system, Firefox uses a programmatically solution to separate the Add-ons content. They wrap untrusted content such as web pages and provide only a filtered view to the Add-on. An attacker is more likely to expose a vulnerability in the wrapping implementation than he is able to bypass the process boundary between the contents of a cross-browser extension because he has no access to the hosting system.
 	
-	Furthermore, the Add-ons components are not as strictly separated as the components of a cross-browser extension. Where each content script and the extension's background run in its own process on the operating system, Firefox uses a programmatically solution to separate the Add-ons content. They wrap untrusted content such as web pages and provide only a filtered view to the Add-on. An attacker is more likely to expose a vulnerability in the wrapping implementation than he is able to bypass the process border between the contents of a cross-browser extension because he has no access to the hosting system.
-	
-	In summary, the Add-on architecture has less build in security features and provides more functionality than the cross-browser extension architecture. This increases the danger of compromised Add-ons because an attacker is less restricted in his actions and is able to harm the user more than with a compromised cross-browser extension. The fact that each Add-on published over the web store is targeted by a security review decreases the danger from malicious and vulnerable implemented Add-ons,  but user are still able to install not-reviewed Add-ons from other sources. 
+	In conclusion, the Add-on architecture has less build in security features and provides more functionality than the cross-browser extension architecture. This increases the danger of compromised Add-ons because an attacker is less restricted in his actions and is able to harm the user more than with a compromised cross-browser extension. The fact that each Add-on published over the web store is targeted by a security review decreases the danger from malicious and vulnerable implemented Add-ons, but user are still able to install not-reviewed Add-ons from other sources. 
 	
 \subsubsection{Safari Extensions}
 
@@ -178,4 +169,4 @@ xhr.send(message);
 	
 	The browser facilitates the extension development by providing a build-in user interface. It manages the extension's content such as meta information or source code files.	An additional feature allows to define content that will be blocked in web pages. The extension's developer can add content-blocking rules to his extension that are compiled into a byte-code format and processed directly at runtime. This renders the programmatically examination of a web page's content and determination of blocking unnecessary and therefore provides a better performance \cite{safariContentBlockingRules}.
 	
-	In summary, Safari extensions compared to the other extension can do the least harm to the user because of their limited capabilities. Furthermore, the developers of malicious extensions are hampered enormous by the needed certificate. 
+	In conclusion, Safari extensions compared to the other extensions can do the least harm to the user because of their limited capabilities. Furthermore, the developers of malicious extensions are hampered enormous by the registration. 

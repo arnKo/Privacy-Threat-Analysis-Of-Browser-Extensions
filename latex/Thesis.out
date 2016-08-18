@@ -1,46 +1,42 @@
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Goals}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{Approach}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.4}{Contribution}{chapter.1}% 5
-\BOOKMARK [1][-]{section.1.5}{Outline}{chapter.1}% 6
-\BOOKMARK [0][-]{chapter.2}{Related Works}{}% 7
-\BOOKMARK [1][-]{section.2.1}{Extension Architecture}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.2}{Threat Analysis}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.3}{Extension Evaluation}{chapter.2}% 10
-\BOOKMARK [0][-]{chapter.3}{Background}{}% 11
-\BOOKMARK [1][-]{section.3.1}{Terminology}{chapter.3}% 12
-\BOOKMARK [1][-]{section.3.2}{Extension Architecture}{chapter.3}% 13
-\BOOKMARK [2][-]{subsection.3.2.1}{General Structure}{section.3.2}% 14
-\BOOKMARK [2][-]{subsection.3.2.2}{Security Features}{section.3.2}% 15
-\BOOKMARK [2][-]{subsection.3.2.3}{Compared To Other Architectures}{section.3.2}% 16
-\BOOKMARK [0][-]{chapter.4}{Threat Analysis}{}% 17
-\BOOKMARK [1][-]{section.4.1}{Content Scripts}{chapter.4}% 18
-\BOOKMARK [1][-]{section.4.2}{Browser API}{chapter.4}% 19
-\BOOKMARK [0][-]{chapter.5}{Design}{}% 20
-\BOOKMARK [1][-]{section.5.1}{Identification}{chapter.5}% 21
-\BOOKMARK [2][-]{subsection.5.1.1}{User Tracking}{section.5.1}% 22
-\BOOKMARK [2][-]{subsection.5.1.2}{Fingerprinting}{section.5.1}% 23
-\BOOKMARK [2][-]{subsection.5.1.3}{Personal User Information}{section.5.1}% 24
-\BOOKMARK [1][-]{section.5.2}{Communication}{chapter.5}% 25
-\BOOKMARK [2][-]{subsection.5.2.1}{Remote Communication}{section.5.2}% 26
-\BOOKMARK [2][-]{subsection.5.2.2}{Remote Script Fetching}{section.5.2}% 27
-\BOOKMARK [1][-]{section.5.3}{Execution}{chapter.5}% 28
-\BOOKMARK [2][-]{subsection.5.3.1}{Steal Form Data}{section.5.3}% 29
-\BOOKMARK [2][-]{subsection.5.3.2}{Manipulate Web Requests}{section.5.3}% 30
-\BOOKMARK [2][-]{subsection.5.3.3}{Execute Attack In Background}{section.5.3}% 31
-\BOOKMARK [2][-]{subsection.5.3.4}{Denial Of Service}{section.5.3}% 32
-\BOOKMARK [2][-]{subsection.5.3.5}{Download Harmful Files}{section.5.3}% 33
-\BOOKMARK [2][-]{subsection.5.3.6}{Steal Cookies}{section.5.3}% 34
-\BOOKMARK [2][-]{subsection.5.3.7}{Disable Other Extension}{section.5.3}% 35
-\BOOKMARK [2][-]{subsection.5.3.8}{Remove Security Headers}{section.5.3}% 36
-\BOOKMARK [0][-]{chapter.6}{Extension Analysis}{}% 37
-\BOOKMARK [1][-]{section.6.1}{Preparations}{chapter.6}% 38
-\BOOKMARK [1][-]{section.6.2}{Results}{chapter.6}% 39
-\BOOKMARK [1][-]{section.6.3}{Over-privileged Extensions}{chapter.6}% 40
-\BOOKMARK [2][-]{subsection.6.3.1}{Google Translate}{section.6.3}% 41
-\BOOKMARK [2][-]{subsection.6.3.2}{Unlimited Free VPN - Hola}{section.6.3}% 42
-\BOOKMARK [0][-]{chapter.7}{Countermeasures}{}% 43
-\BOOKMARK [1][-]{section.7.1}{Detect Malicious Behavior}{chapter.7}% 44
-\BOOKMARK [1][-]{section.7.2}{Improved Permissions}{chapter.7}% 45
-\BOOKMARK [0][-]{chapter.8}{Conclusion}{}% 46
+\BOOKMARK [1][-]{section.1.1}{Contribution}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Outline}{chapter.1}% 3
+\BOOKMARK [0][-]{chapter.2}{Related Works}{}% 4
+\BOOKMARK [1][-]{section.2.1}{Extension Architecture}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.2}{Threat Analysis of Malicious Extensions}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Detection Of Malicious Extensions}{chapter.2}% 7
+\BOOKMARK [0][-]{chapter.3}{Background}{}% 8
+\BOOKMARK [1][-]{section.3.1}{Terminology}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.2}{Extension Architecture}{chapter.3}% 10
+\BOOKMARK [2][-]{subsection.3.2.1}{General Structure}{section.3.2}% 11
+\BOOKMARK [2][-]{subsection.3.2.2}{Security Features}{section.3.2}% 12
+\BOOKMARK [2][-]{subsection.3.2.3}{Compared To Other Architectures}{section.3.2}% 13
+\BOOKMARK [0][-]{chapter.4}{Threat Analysis}{}% 14
+\BOOKMARK [1][-]{section.4.1}{Content Scripts}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.2}{Browser API}{chapter.4}% 16
+\BOOKMARK [0][-]{chapter.5}{Design}{}% 17
+\BOOKMARK [1][-]{section.5.1}{Identification}{chapter.5}% 18
+\BOOKMARK [2][-]{subsection.5.1.1}{User Tracking}{section.5.1}% 19
+\BOOKMARK [2][-]{subsection.5.1.2}{Fingerprinting}{section.5.1}% 20
+\BOOKMARK [2][-]{subsection.5.1.3}{Personal User Information}{section.5.1}% 21
+\BOOKMARK [1][-]{section.5.2}{Communication}{chapter.5}% 22
+\BOOKMARK [2][-]{subsection.5.2.1}{Remote Communication}{section.5.2}% 23
+\BOOKMARK [2][-]{subsection.5.2.2}{Remote Script Fetching}{section.5.2}% 24
+\BOOKMARK [1][-]{section.5.3}{Execution}{chapter.5}% 25
+\BOOKMARK [2][-]{subsection.5.3.1}{Steal Form Data}{section.5.3}% 26
+\BOOKMARK [2][-]{subsection.5.3.2}{Manipulate Web Requests}{section.5.3}% 27
+\BOOKMARK [2][-]{subsection.5.3.3}{Execute Attack In Background}{section.5.3}% 28
+\BOOKMARK [2][-]{subsection.5.3.4}{Denial Of Service}{section.5.3}% 29
+\BOOKMARK [2][-]{subsection.5.3.5}{Download Harmful Files}{section.5.3}% 30
+\BOOKMARK [2][-]{subsection.5.3.6}{Steal Cookies}{section.5.3}% 31
+\BOOKMARK [2][-]{subsection.5.3.7}{Disable Other Extension}{section.5.3}% 32
+\BOOKMARK [2][-]{subsection.5.3.8}{Remove Security Headers}{section.5.3}% 33
+\BOOKMARK [0][-]{chapter.6}{Extension Analysis}{}% 34
+\BOOKMARK [1][-]{section.6.1}{Preparations}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.2}{Results}{chapter.6}% 36
+\BOOKMARK [0][-]{chapter.7}{Countermeasures}{}% 37
+\BOOKMARK [1][-]{section.7.1}{Detect Malicious Behavior}{chapter.7}% 38
+\BOOKMARK [1][-]{section.7.2}{Improved Permissions}{chapter.7}% 39
+\BOOKMARK [1][-]{section.7.3}{Conclusion}{chapter.7}% 40
+\BOOKMARK [0][-]{chapter.8}{Further Work}{}% 41
+\BOOKMARK [0][-]{chapter.9}{Conclusion}{}% 42

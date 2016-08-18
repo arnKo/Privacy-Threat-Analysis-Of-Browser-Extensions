@@ -1,5 +1,20 @@
 \begin{thebibliography}{10}
 
+\bibitem{holaFaqRewrite}
+Adios, hola! or: Why you should immediately uninstall hola.
+\newblock \url{http://adios-hola.org/index.html#problem_rewriting_history}.
+\newblock [accessed 2016-08-16].
+
+\bibitem{w3browserStats}
+Browser {\&} platform market share.
+\newblock \url{https://www.w3counter.com/globalstats.php}.
+\newblock [accessed 2016-08-18].
+
+\bibitem{netmarketshare}
+Market share reports.
+\newblock \url{https://www.netmarketshare.com/}.
+\newblock [accessed 2016-08-18].
+
 \bibitem{mozillaDevReviewPolicy}
 {MDN} {A}dd-ons - {R}eview {P}olicies.
 \newblock \url{https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Reviews}.
@@ -27,6 +42,23 @@
 \newblock
   \url{https://developer.apple.com/library/safari/documentation/Extensions/Conceptual/ContentBlockingRules/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016265}.
 \newblock [accessed 2016-01-07].
+
+\bibitem{statcounter}
+Statcounter global stats.
+\newblock \url{http://gs.statcounter.com/}.
+\newblock [accessed 2016-08-18].
+
+\bibitem{febipos}
+Trojan: Js/febipos.a.
+\newblock
+  \url{https://www.microsoft.com/security/portal/threat/encyclopedia/Entry.aspx?Name=Trojan:JS/Febipos.A}.
+\newblock [accessed 2016-08-16].
+
+\bibitem{kilim}
+Trojan: Js/kilim.a.
+\newblock
+  \url{https://www.microsoft.com/security/portal/threat/encyclopedia/entry.aspx?Name=Trojan%3aJS%2fKilim.A}.
+\newblock [accessed 2016-08-16].
 
 \bibitem{180371}
 D.~Akhawe and A.~P. Felt.
@@ -236,12 +268,6 @@ vabr@chromium.org.
 \newblock Chromium blog issue 378419.
 \newblock \url{https://bugs.chromium.org/p/chromium/issues/detail?id=378419}.
 \newblock [accessed 2016-07-18].
-
-\bibitem{w3cUrlSpecifications}
-A.~van Kesteren.
-\newblock {URL} {L}iving {S}tandard.
-\newblock https://url.spec.whatwg.org/.
-\newblock [accessed 2016-04-25].
 
 \bibitem{ndss2007xss}
 P.~Vogt, F.~Nentwich, N.~Jovanovic, C.~Kruegel, E.~Kirda, and G.~Vigna.

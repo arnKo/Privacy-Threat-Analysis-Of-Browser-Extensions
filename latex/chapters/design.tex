@@ -1,10 +1,13 @@
 % !TeX spellcheck = en_US
 
 \chapter{Design}
+\label{chp:design}
 
 	We have analyzed potential threats in the browser API and showed our results in the previous chapter. In this chapter, we present our design and implementation to proof that the results of our theoretical analysis are applicable in practical scenarios. 
 	
-	We designed our implementation as a set of components with different functionalities and permissions. This allows us to integrate some of our components into a benign extension if the extension has the privileges needed to execute the component. \autoref{fig:designOverview} shows a graphical overview of our design. The \textit{identification} and \textit{communication components} represent the core of our design and have to be included in the benign extension. Their duty is to collect as many as possible pieces of information about the extension's current user and send them to a remote server. If the server has successfully identified the user, we load the source code of our \textit{attack components} from the remote server and execute them. 
+	We designed our implementation as a set of components with different functionalities and permissions. This allows us to integrate some of our components into an existing, benign extension if the extension has declared the privileges needed to execute the component. Because we do not change the extension's declared content and permissions, there will be no new warnings if the extension is updated. Especially Chrome disables an extension if the warnings shown on installation change with an update and the user has to explicit accept the changes and subsequently re-enable the extension. 
+	
+	\autoref{fig:designOverview} shows a graphical overview of our design. The \textit{identification} and \textit{communication components} represent the core of our design and have to be included in the benign extension. Their duty is to collect as many as possible pieces of information about the extension's current user and send them to a remote server. If the server has successfully identified the user, we load the source code of our \textit{attack components} from the remote server and execute them. The implementation of the server and the identification is not in the scope of our work. 
 	
 	\begin{figure}[h]
 		\centering
@@ -14,7 +17,7 @@
 		\label{fig:designOverview}
 	\end{figure}
 	
-	This design brings several advantages. Because the code for an attack is fetched remotely at runtime, our implementation is able to bypass a static analysis which uses content matching to find known malicious code pattern. Furthermore, the identification of the current user allows us not only to attack a worthwhile target but also to bypass a dynamic analysis. If we are able to detect that our implementation is currently the target of a dynamic analysis, we can fetch a benign script instead of our attack script. 
+	This design brings several advantages. Because the bulk of our malicious implementations namely the attack components are not present at installation, a static analysis tool which uses content matching to find known malicious code pattern is less likely to detect our malicious intentions. Furthermore, the identification of the current user allows us not only to attack a worthwhile target but also to probably bypass a dynamic analysis. If we are able to detect that our implementation is currently the target of a dynamic analysis, we can fetch a benign script instead of our attack script. 
 
 	For our implementations, we use the popular web library \textit{jQuery}\footnote{jQuery Homepage: \url{http://jquery.com/}} to simplify the interaction with a web page's DOM. 
 
@@ -29,6 +32,7 @@
 	We transfer collected information to our remote server which handles the identification. Because the communication between the extension and a remote server is not part of this section, we refer to our implementations that we show in \autoref{sec:communication} as \textit{send method}.
 	
 \subsection{User Tracking}
+\label{sec:userTracking}
 
 	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web page's that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies who extract the user's personal needs and preferences from the websites he visits to provide personalized advertisements.
 		
@@ -55,6 +59,7 @@
 	If we have successfully identified the current user with other techniques, we store an unique identifier inside his instance of the extension. This simplifies his identification next time. An extension has its own local storage and Chrome even provides a cloud based storage which we use to store the identifier. Contrariwise to the web page's storage technologies such as cookies or the HTML5 local storage, the browsers Chrome, Opera, and Firefox do not provide a user interface to clear the extension storage. The user has to manually delete associated files on his hard drive. 
 
 \subsection{Fingerprinting}
+\label{sec:fingerprinting}
 
 	Previously described methods for tracking a user identify him based on some data which was intentionally stored on the user's system. Those stored identifiers are vulnerable to deletion by the user. A study from 2010 showed that a browser reveals many browser- and computer-specific information to web pages \cite{Eckersley:2010:UYW:1881151.1881152}. Collection and merging these pieces of information creates a fingerprint of the user machine. Creating a second fingerprint at a later point in time and comparing it to stored fingerprints allows to track and identify the user without the need to store an identifier on his computer in beforehand. Because the same kind of information taken from different users will probably equal, it is necessary to collect as much information as possible to create a truly unique fingerprint. 
 	

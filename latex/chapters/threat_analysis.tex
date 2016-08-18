@@ -1,10 +1,12 @@
 % !TeX spellcheck = en_US
 
 \chapter{Threat Analysis}
+\label{chp:threatAnalysis}
 
 	An extension can use a wide range of different features to enhance the user's interaction with a web page. We want to show that these features may be used by a developer of a malicious extension to harm the user. For that purpose, we have analyzed the extension's capabilities and found potential threats. We have found several permissions and modules that an attacker may use to harm the user's privacy, use his device to launch attacks against others, or remove privacy preserving measures and therefore support attacks from malicious web pages.  
 
 \section{Content Scripts}
+\label{sec:threatAnalysis:contentScripts}
 
 	A big threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
 	
@@ -21,6 +23,7 @@
 	\end{itemize}
 	
 \section{Browser API}
+\label{sec:threatAnalysis:api}
 	
 	In this section, we present found threats that arise from API modules and are unlocked by a declared permission. Most of the permissions give access to an API module whose features may be misused in some form. 
 	
