@@ -42,7 +42,7 @@
 
 	To increase the security of Chrome extensions, Carlini et al. proposed to ban the loading of remote scripts over HTTP and inline scripts inside the extension's background. They did not propose to ban the use of eval in light of the facts that eval itself was mostly not the reason for a vulnerability and banning it would break several extensions. Google's developers were responsive to the exposed vulnerabilities and added a default Content Security Policy to the extension's background \cite{chromiumBlogCSP}. Furthermore, they disabled the fetching of remote scripts with HTTP using script elements inside the extension's background script. 
  
- 	In our work, we contribute an analysis of the extension architecture with the focus on intentionally implemented attacks to harm the extension's current user and his privacy. Our research shows that although the extension architecture holds many security features, it does not shield the user from intentionally implemented malicious behavior.
+ 	In our work, we contribute an analysis of the extension architecture with the focus on intentionally implemented attacks to harm the extension's current user and violate his privacy. Our research shows that although the extension architecture holds many security features, it does not shield the user from intentionally implemented malicious behavior.
  
  \section{Threat Analysis of Malicious Extensions}
  \label{sec:relatedWorks:threatAnalysis}

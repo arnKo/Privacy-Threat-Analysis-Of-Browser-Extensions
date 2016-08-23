@@ -217,14 +217,36 @@
 \clearpage
 \section{Execution}
 \label{sec:execution}
+
+	We have already shown how we collect information to identify the current user, transfer it to our remote server which is in charge to evaluate the data, and how we fetch the source code of an attack in the case that the identification was successful. In this section we finally, present our concrete attack implementations. For that purpose, we first present known attack scenarios that make use of an extension's capabilities and then we present our implemented attack components.
 	
-	We have already shown how we collect information to identify the current user, transfer it to our remote server which is in charge to evaluate the data, and how we fetch the source code of an attack in the case that the identification was successful. In this section we finally, present our concrete attack implementations.
+\subsection{Attack Scenarios}
+
+	In this section, we present two attack scenarios that an extension facilitates. The \textit{Man-in-the-browser} attack manipulates web requests and targets the user's online banking account and a \textit{botnet} of browser extension allows to execute wide scaled web attacks.
+
+\subsubsection{Man in the Browser}
 	
-	Depending on how we have fetched the attack's source code, we need different permissions to execute the attack. In the case that the attack is executed in the scope of a web page, we need either an already active content script that executes the attack or host permissions to inject the attack as independent content script into the web page.
+	The Man-in-the-browser (MITB) is a browser based attack related to man-in-the-middle attack (MITM) \cite{Curran:2012:MBA:2433195.2433198}. The MITM is an attack scenario in computer cryptography against the communication between two parties who directly communicate with each other. The attacker secretly either intercepts and alters the traffic or he impersonates one party and deceives the other party who still thinks he communicates with the impersonated party. MITM has to bypass security layers such as encryption or mutual authentication to gain access to the communication channel. The attacker uses either vulnerabilities in obsolete cryptography algorithm or exploits in buggy implemented soft- or hardware. An MITB attack is located inside the browser from where it intercepts in- and outgoing web requests. The attack will be successful irrespective of security mechanisms because it takes place before any encryption or authentication is applied. 
+	
+	An MITB attack often aims to manipulate the traffic between the user and a trusted third party. A common target of an MITB attack is an online banking portal. An attack my look like the following example. The user logs into his account at the targeted banking website. He initiates a transaction and sends the data to the bank's server. The MITB code reads the outgoing request and changes the target account or the transfer amount. The bank's sever is not able to recognize the manipulated request because it receives the information with a valid authentication from the user. It executes the transfer and sends back a receipt. The MITB code reads the response's HTML code and changes the manipulated data back to its original state. To mitigate these attacks, modern banking systems use further security features such as a TAN generator that calculates an additional token from the targeted account's identification number, the transaction amount, and some secrete stored inside the user's banking card. Even if the MITB attack would know the calculation for the token, he has no access to the externally stored secret.
+	 
+	An MITB often comes in the form of a Trojan Horse that infects the browser with its code. An extension facilitates this attack, because it has full access to the displayed web pages and can modify web requests. 
+	
+\subsubsection{Botnet}
+
+	A botnet is a network consisting of multiple compromised clients that can be controlled to execute large scaled web attacks such as Distributed Denial of Service (DDoS) or spamming attacks. DDoS is a web based attack targeted to make an web service unavailable by overwhelming it with requests. A botnet can be used to call the web service from different sources multiple times per second. The attack either targets the network and flood its bandwidth or the application itself using up the computer's resources. This results in the web service being unavailable for the general public. \cite{liu2011botnet}
+	
+	Browser extensions in a botnet were previously researched by Liu et al. \cite{liu2011botnet}. As a proof-of-concept, they developed two extension that act as bots, one for Chrome and one for Internet Explorer. Their extension's can execute DDoS attacks, email spamming, and steal the user's credentials. To send an email, the extension uses the user's email account. If the user logs into his account, the extension executes a web request to send an email with the spamming content. The email server will actually execute the request because the user's credentials are send along. 
+	
+	A botnet needs a communication channel that allows the attacker to control the bots. For their extensions, the researchers use the automatic update and modify the content of a configuration file. The extension reads the file and acts accordingly. After the attacker publishes a new update which will start a new attack, the update will be installed as soon as the browser is active. Because the installation of the update is distributed in time, so is the attack which hampers the detection of the botnet.
+	
+\subsection{Implementations}
+	
+	In this section we present our attack components that the extension fetches from a remote server after a successful identification of the current user. Depending on how we have fetched the attack's source code, we need different permissions to execute the attack. In the case that the attack is executed in the scope of a web page, we need either an already active content script that executes the attack or host permissions to inject the attack as independent content script into the web page.
 
 	In \autoref{sec:identification}, we have already shown that we are able to obtain personal user information by extraction them from the web pages that the user visits. Before, we collected these information to generate a fingerprint of the current user and identify him based on this fingerprint. Of course, if we have already obtained sensitive information, we are able to misuse them and harm the user. Therefore, we also use the components presented in \autoref{sec:identification} as attack components to steal sensitive user data.
 
-\subsection{Steal Form Data}
+\subsubsection{Steal Form Data}
 \label{sec:stealFormData}
 
 	The user often transmits sensitive information to a web server using a web form. We can intercept and steal these transmitted data using the simple code snippet \lstinline|$('form').submit(function() { send($(this).serialize()); })|. The \textit{jQuery} library allows us to simply register an event on each form elements of the current web page that is dispatched if the form is submitted by the user. In this case, we again use jQuery to serialize the form's content and forward it to our send method. This attack is a very general approach that targets any form element in all web pages.
@@ -233,7 +255,7 @@
 
 	The browser provides a storage for entered credentials to the user. If the user has stored his credentials for a particular web page and opens this page on a later occasion, the browser will fill in the stored credentials. We implemented a further component that steals the credentials from an authentication form after the browser has filled in the desired values. Again, we use a similar implementation than the before described attack. We first search for an input element of type password to identify the authentication form. Then, we use the function \texttt{setTimeout} and wait for 500 milliseconds to give the password manager the time to fill in the credentials. Finally, we extract the desired values and send them to our remote server.
 		
-\subsection{Manipulate Web Requests}
+\subsubsection{Manipulate Web Requests}
 \label{sec:manipulateWebRequests}
 
 	An extension is able to manipulate any outgoing web request. We can redirect a GET request to load a malicious lookalike of the original web page, redirect a POST request to obtain probably sensitive values, or manipulate the values of a request's body to harm the user. Most requests initiates the user from within a web page. Therefore, we use a content script to manipulate URLs and form values inside a particular web page. Additionally, we use the \texttt{webRequest} module to intercept and manipulate outgoing web requests.
@@ -243,7 +265,7 @@
 	We can change the target to which the values of a form are transmitted by manipulating the forms \texttt{action} attribute. For that purpose, we use the following code snippet: \lstinline|$('form').attr('action', TARGET_URL);|. First, we query for a form element and then we set its action attribute to our targeted URL. Similar, we can change the target web page of a link element. For that purpose, we change the value of the link's \texttt{href} attribute. Again, we us a small code snippet: \lstinline|$('a[href~=' + TARGETED_URL + ']').attr('href', TARGET_URL);|. This time, we query for a link element whose current URL belongs to our targeted web page and exchange the URL with the one of our malicious server. We implemented an equal attack which uses the \texttt{webRequst} module instead of a content script. This allows us to redirect any web request. To execute this attack, the extension needs the \texttt{webRequest} and \texttt{webRequestBlocking} permissions and proper host permissions for the targeted web page such as \texttt{http://*/*} and \texttt{https://*/*}. 
 	
 	
-\subsection{Execute Attack In Background}
+\subsubsection{Execute Attack In Background}
 \label{sec:executeAttackInBackground}
 
 	We implemented several components that open predefined web pages to execute particular attacks such as to steal probably stored credentials from the browser's password manager. Different strategies to hide the loading of a new web page were previously discussed by Bauer et al. \cite{extensions:cns14}. We implemented three described approaches:
@@ -267,12 +289,12 @@
 	We tested our implementations in Chrome, Opera, and Firefox with our attack implementation to steal probably stored credentials from the browser's password manager which we have described in \autoref{sec:stealFormData}. To our surprise, the attack was only successful in Firefox. The reason that the attack does not work in Chrome and Opera is that JavaScript has no access to the value of a password input field before any user interaction with the web page occurred. What first seems like a bug is an intended security feature to prevent exactly this kind of attack \cite{chromiumBlogPasswordInput}.
 
 
-\subsection{Denial Of Service}
+\subsubsection{Denial Of Service}
 \label{sec:DoS}
 	
 	An extension can execute unrestricted web requests from within a content script using an iframe element. We use this fact to implement a component that executes a Denial of Service attack. Our component uses a single content script that repeatedly creates a new iframe element and loads the targeted web page. To prevent that the browser fetches the web page from its cache, we add a random number as parameter to the target URL. This attack is especially effective if the extension is active in multiple browsers. We can the command to execute the attack to all active extensions, using a communication technique that we have described in \autoref{sec:communication}.
 
-\subsection{Download Harmful Files}
+\subsubsection{Download Harmful Files}
 \label{sec:downloads}
 
 	Using the \textit{download} module, an extension is able to monitor and cancel the user's downloads or to initiate a download itself and even to open a downloaded file. We misuse this feature to get access to the user's machine which the extension itself does not have. For that purpose, we download a harmful file which contains malware or similar malicious content on the user's computer and execute it. 
@@ -283,20 +305,20 @@
 	
 	We implemented another component that cancels a download which the user has initiated and then initiate a download ourself of a harmful file. Our goal is that the user does not notices that we cancel his download and initiate a second one and then opens the harmful file. For that purpose, we extract the name and mime-type of the file that the user wants to download and send it along the request to download the harmful file. This allows us to set the mime-type and filename of the harmful file. To further hide our attack, we may deactivate the status bar while we exchange the downloads if the extension has the \texttt{downloads.shelf} permission. \\
 
-\subsection{Steal Cookies}
+\subsubsection{Steal Cookies}
 \label{sec:stealCookies}
 
 	We implemented two components for our design, that follow different strategies to steal currently stored cookies from the user's browser. Cookies often contain a session id that authenticates the current user to a web application. If we obtain this information, we are able to impersonate the user on this particular web application. 
 	
 	JavaScript in a displayed web page has access to cookies that belong to the same domain as the web page with exception to cookies with the \texttt{httpOnly} key set. We use this in our first implementation that uses a single content script in any web page. The cookies are stored inside the DOM and we access them with with \texttt{document.cookie}. Obviously, this implementation is restricted to web page's that the user visits while the extension is active and without access to \texttt{httpOnly} cookies. Therefore, we implemented the second approach that uses the \texttt{cookies} module. Using this module, we have access to all cookies that are currently stored inside the browser without restrictions besides the extension's permissions. To use it, the extension needs the \texttt{cookies} permission and host permissions for any web page such as \texttt{http://*/*} and \texttt{https://*/*}. We use the method \lstinline|{chrome.cookies.getAll| which accepts an object to filter retrieved cookies based on the cookie's values such as the URL, domain, or its secured state.
 
-\subsection{Disable Other Extension}
+\subsubsection{Disable Other Extension}
 \label{sec:disableOtherExtension}
 
 	In order that other, security relevant extensions do not block our attack implementations, we implemented a component that disables another extension. For that purpose, the extension needs the \texttt{management} permission which gives access to the correspondent module. To disable another extension, we need the targeted extension's name or id.
 	The method \lstinline|chrome.management.getAll| returns a list of currently installed extensions. We iterate the list and compare the name or id of each extension to determine the targeted one. If we find the matching extension, we use the method \lstinline|chrome.management.setEnabled| to deactivate it.
 
-\subsection{Remove Security Headers}
+\subsubsection{Remove Security Headers}
 \label{sec:removeSecurityHeaders}
 	
 	We implemented a component that removes security relevant response headers. We use this implementation to support our component that opens a particular web page in an iframe which we have shown in \autoref{sec:executeAttackInBackground}. This attack is hampered by web pages that use the \texttt{X-Frame-Option} header, because the browser disallows displaying the web page inside an iframe. By removing this header from the web request's response, we improve the attacks' success rate. Similar, we can support any content script that executes web requests to fetch content. If the web page uses a Content Security Policy that blocks the loading of scripts or other web pages, we can remove the CSP and allow our content script to execute its task.

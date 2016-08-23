@@ -48,7 +48,7 @@
 	\begin{center}
 		\texttt{default-src 'self'; script-src 'self' https://trusted.server.com/* 'unsafe-eval';}
 	\end{center}
-	First we set the default directive and therewith restrict all other directives to the origin of the underlying web page. Then, we lighten the restriction to load scripts from a trusted server and allow the use of eval in loaded scripts.
+	First, we set the default directive and therewith restrict all other directives to the origin of the underlying web page. Then, we lighten the restriction to load scripts from a trusted server and allow the use of eval in loaded scripts.
 
 \newpage
 \section{Extension Architecture}
@@ -62,9 +62,9 @@
 
 \subsection{General Structure}
 
-	Extensions implemented in the cross-browser architecture use only web technologies such as JavaScript, HTML, and CSS. All included files are declared in a mandatory manifest which also holds the extension's meta information such as its name, version, and author. The extension's general structure is divided into a background page that holds the extension's main logic and content scripts that are used to interact with web pages.
+	Extensions implemented in the cross-browser architecture use only web technologies such as JavaScript, HTML, and CSS. All included files are declared in a mandatory manifest which also holds the extension's meta information such as its name, version, and author. \autoref{code:manifest} shows an example of a manifest file. 
 	
-	\begin{figure}
+	\begin{figure}[h]
 		\begin{lstlisting}
 {
 	"manifest_version": 2,
@@ -85,6 +85,8 @@
 		\caption{Example \texttt{manifest.json} file.}
 		\label{code:manifest}
 	\end{figure}
+	
+	The extension's general structure is divided into a background page that holds the extension's main logic and content scripts that are used to interact with web pages.
 	
 \subsubsection{Background Page}
 
@@ -114,7 +116,7 @@
 		
 \subsubsection{Component Separation}
 
-	To hamper an attacker that has compromised one component of an extension, the extension's components are strictly separated from each other. The extension's background and each content script runs in its own process on the host's operating system. This creates an efficient boundary between the components because they do not share a common memory section and are therefore not able to invoke methods or access variables of each other. If an attacker has compromised one component of the extension, he can only access the other through the JSON-based message channel. If the extension's developer did not implement an attack vector at the other side of the communication channel, the attacker is not able to compromise the rest of the extension. 
+	To hamper an attacker that has compromised one component of an extension, the extension's components are strictly separated from each other. The extension's background and content scripts run in their own process on the host's operating system. This creates an efficient boundary between the components because they do not share a common memory section and are therefore not able to invoke methods or access variables of each other. If an attacker has compromised one component of the extension, he can only access the other through the JSON-based message channel. If the extension's developer did not implement an attack vector at the other side of the communication channel, the attacker is not able to compromise the rest of the extension. 
 	
 \subsubsection{Isolated World}
 	
@@ -132,7 +134,7 @@
 	
 	A developer may relax or tighten the policy for his extension by declaring a custom CSP in the extension's manifest which has to contain at least the \textit{script} and \textit{object} directives. Adding the URL of a remote origin to the CSP allows to fetch resources from the declared host. Again, an URL pattern may be used to match several hosts at once, but wildcards are only allowed for the subdomain. To ensure that remotely loaded resources have not been replaced or modified by a network attacker, only origins that use a secured connection such as HTTPS are allowed. If the developer wishes to use \texttt{eval} or related functions in his extension's background page, he has to add the value \texttt{'unsafe-eval'} to the \textit{script} directive. If he wishes to use inline scripts, he has to add the hash value of the script to the script directive. The \texttt{'unsafe-inline'} key is not allowed and therefore the execution of inline event handler can not be enabled. 
 	
-	The manifest shown in \autoref{code:manifest}, declares a custom CSP on line 12. It enables the loading of remote scripts from any URL that matches \texttt{https://*.example.com/} and enables the user of \texttt{eval} in the background page.
+	The manifest shown in \autoref{code:manifest}, declares a custom CSP on line 13. It enables the loading of remote scripts from any URL that matches \texttt{https://*.example.com/} and enables the user of \texttt{eval} in the background page.
 
 \subsubsection{Privacy Preserving Measures}
 
@@ -142,9 +144,9 @@
 	
 	Similar to the \texttt{activeTab} permission, the extension's developer can declare permissions as optional. This states that the permissions are not necessary for the extension's base functionalities but provide additional features on the user's demand. If the extension requests an optional permission, the browser prompts the user to confirm. Even host permissions may be declared as optional, allowing the user to fine-grained control the extension's access to web pages. However, the extension has to remove the requested permission itself. If not, the permission stays active until the extension is uninstalled. The user can not remove an accepted permission by himself if the extension does not provide a proper interface. 
 
-\subsection{Compared To Other Architectures}
-
-	We compared the cross-browser extension architecture and its security features to the old extension architecture of Firefox and the architecture of Apple's Safari browser. Unfortunately, Apple has published only a developer guide and no documentation about implementation details such as implemented security features. Therefore, we could only compare its structure.
+\subsection{Comparison}
+	
+	We have analyzed the extension architectures of Firefox Add-ons and Safari extensions. In this section, we present their structure and some of their security features and compare them with the cross-browser extension architecture.
 
 \subsubsection{Firefox Add-ons}
 	

@@ -127,6 +127,11 @@ N.~Carlini, A.~P. Felt, and D.~Wagner.
   Symposium}, Security'12, pages 7--7, Berkeley, CA, USA, 2012. USENIX
   Association.
 
+\bibitem{Curran:2012:MBA:2433195.2433198}
+K.~Curran and T.~Dougan.
+\newblock Man in the browser attacks.
+\newblock {\em Int. J. Ambient Comput. Intell.}, 4(1):29--39, Jan. 2012.
+
 \bibitem{Dhawan:2009:AIF:1723192.1723250}
 M.~Dhawan and V.~Ganapathy.
 \newblock Analyzing information flow in javascript-based browser extensions.

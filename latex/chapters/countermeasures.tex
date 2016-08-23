@@ -3,7 +3,7 @@
 \chapter{Countermeasures}
 \label{chp:countermeasures}
 
-%TODO
+	In this chapter, we present two approaches to counter malicious extension. First, we briefly present existing analysis tools to detect malicious code in extension. And then, we describe proposed improvements of the cross-extension's permission system which restricts the extension's privileges by default even more and therefore hampers the integration of our malicious components.
 
 \section{Detect Malicious Behavior}
 \label{sec:detectMaliciousBehavior}
@@ -13,7 +13,9 @@
 	Furthermore, WebEval uses a machine learning algorithm to evaluate each extension and potential malicious findings are verified by human experts. The researchers measured the overall accuracy of their system which increased over time although they experienced drops in the accuracy when new threats emerged. \\
 	A disadvantage of WebEval is that it executes the extensions in a sandboxed environment. Therefore, not all malicious interactions with web content can be monitored. For example, the system has no account creation on-the-fly and is therefore not able to analyze the extension's behavior on account-restricted web pages.
 	
-	Other researchers developed systems to monitor the flow of information in JavaScript-base applications such as extensions \cite{Dhawan:2009:AIF:1723192.1723250, Hallaraker:2005:DMJ:1078029.1078861, cs2015sentinel,ndss2007xss}. They blocked the flow if sensitive information are transfered to untrusted targets such as remote servers. However, all approaches modify the browser's JavaScript interpreter to enable the tracking and produce a not unrelevant overhead.
+	Other researchers developed systems to monitor the flow of information in JavaScript-base applications such as extensions \cite{Dhawan:2009:AIF:1723192.1723250, Hallaraker:2005:DMJ:1078029.1078861, cs2015sentinel,ndss2007xss}. They blocked the flow if sensitive information are transfered to untrusted targets such as remote servers. However, all approaches modify the browser's JavaScript interpreter to enable the tracking and produce a not irrelevant overhead.
+	
+	We designed our system to be difficult to detect by an analysis. For that purpose, we first identify the current user and only if it was successful we fetch the source code for explicit attacks. This allows us to bypass detection tools that work in sandboxed environments. If the browser itself would analyze extension while the user navigates through the world wide web and detect malicious behavior, we were not able to execute attacks.
 
 \section{Improved Permissions}
 \label{sec:improvedPermissions}
@@ -24,4 +26,4 @@
 	
 	An extension's content script has unrestricted access to the web page and its content. This allows a malicious extension to extract sensitive information. Liu et al. proposed a categorization of DOM elements to identify container of sensitive information and restricted access to these elements by default. \textit{High level} elements such as input elements of type password or hidden contain inherently sensitive information. \textit{Medium level} elements may contain sensitive information. To identify these elements, the researchers proposed a catalog with regular expressions that match code words such as \textit{username}. Finally, every element else is categorized as \textit{low level}. By default, an extension should have only access to low level elements and the extension may request access to the other levels by a proper permission.
 	
-	The proposed improvements of the permission systems would indeed hamper our design. If developers request only necessary permissions for their extensions, the amount of components that we can integrate into their implementation would decrease. But still, many extensions need permissions for their legal purpose that also our components need. This is a general problem that most functionality can be used in a benign or malicious way. Therefore, a permission system can not protect a user from a malicious extension because the permissions alone do not provide an accurate statement about a malicious implementation. 
+	The proposed improvements of the permission systems would indeed hamper our design. If developers request only necessary permissions for their extensions, the amount of components that we can integrate into their implementation would decrease. But still, many extensions need permissions for their legal purpose that also our components need. This is a general problem that most functionality can be used in a benign or malicious way. Therefore, a permission system can not protect a user from a malicious extension because the permissions alone do not provide an accurate statement whether or not an extension is indeed malicious. 
