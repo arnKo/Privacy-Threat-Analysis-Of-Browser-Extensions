@@ -5,7 +5,7 @@
 
 	We have analyzed potential threats in the browser API and showed our results in the previous chapter. In this chapter, we present our design and implementation to proof that the results of our theoretical analysis are applicable in practical scenarios. 
 	
-	We designed our implementation as a set of components with different functionalities and permissions. This allows us to integrate some of our components into an existing, benign extension if the extension has declared the privileges needed to execute the component. As we do not change the extension's declared content and permissions, there will be no new warnings if the extension is updated. Especially Chrome disables an extension if the warnings shown on installation change with an update and the user has to explicitly accept the changes and subsequently re-enable the extension. 
+	We designed our implementation as a set of components with different functionalities and privileges. This allows us to integrate some of our components into an existing, benign extension if the extension has declared the privileges needed to execute the component. As we do not change the extension's declared content and permissions, there will be no new warnings if the extension is updated. Especially Chrome disables an extension if the warnings shown on installation change with an update and the user has to explicitly accept the changes and subsequently re-enable the extension. 
 	
 	\autoref{fig:designOverview} shows a graphical overview of our design. The \textit{identification} and \textit{communication components} represent the core of our design and have to be included in the benign extension. Their duty is to collect as many pieces of information about the extension's current user as possible and send them to a remote server. If the server has successfully identified the user, we load the source code of our \textit{attack components} from the remote server and execute them. The implementation of the server and the identification is not in the scope of our work. 
 	
@@ -17,7 +17,7 @@
 		\label{fig:designOverview}
 	\end{figure}
 	
-	This design brings several advantages. As the bulk of our malicious implementations, namely the attack components, are not present at installation, a static analysis tool which uses content matching to find known malicious code pattern is less likely to detect our malicious intentions. Furthermore, the identification of the current user allows us not only to attack a worthwhile target but also to probably bypass a dynamic analysis. If we are able to detect that our implementation is currently the target of a dynamic analysis, we can fetch a benign script instead of our attack script. 
+	This design brings several advantages. As the bulk of our malicious implementations, namely the attack components, are not present at installation, a static analysis tool that uses content matching to find known malicious code pattern is less likely to detect our malicious intentions. Furthermore, the identification of the current user allows us not only to attack a worthwhile target but also to probably bypass a dynamic analysis. If we are able to detect that our implementation is currently the target of a dynamic analysis, we can fetch a benign script instead of our attack script. 
 
 	For our implementations, we use the popular web library \textit{jQuery}\footnote{jQuery Homepage: \url{http://jquery.com/}} to simplify the interaction with a web page's DOM. 
 
@@ -25,13 +25,15 @@
 \section{Identification}
 \label{sec:identification} 
 
-	Identifying the current user of our extension allows us to target our attack only at specific users. Beforehand, we can evaluate whether or not an attack is worthwhile if we collect as much as possible pieces of information about the user such his financial status or his position in a company we want to target. Furthermore, we are able to detect if our extension is target of an dynamic analysis such as \textit{Hulk} or \textit{WebEval} and evade detection \cite{184485,190984}.
+	Identifying the current user of our extension allows us to target our attack only at specific users. Beforehand, we can evaluate whether or not an attack is worthwhile if we collect as much as possible pieces of information about the user such his financial status or his position in a company we want to target. Furthermore, we are able to detect if our extension is target of an dynamic analysis such as \textit{Hulk} or \textit{WebEval} and evade detection by fetching a benign script instead of an attack component \cite{184485,190984}.
 	
-	In order to find approaches which we can use for our implementation, we first analyzed existing techniques for user tracking and fingerprinting. We present our results and our own implementations to support these techniques in the following two sections. Furthermore, we present selected parts of our implementations to collect the user's personal information in the third section.
+	In order to find approaches which we can use for our implementation, we first analyzed common methods to identify the current user of a web page and present them in this section. Then, we present our implemented components that collect information about the extension's current to later on identify him. We transfer collected information to our remote server which handles the identification. As the communication between the extension and a remote server is not part of this section, we refer to our implementations that we show in \autoref{sec:communication} as \textit{send method}.
 	
-	We transfer collected information to our remote server which handles the identification. As the communication between the extension and a remote server is not part of this section, we refer to our implementations that we show in \autoref{sec:communication} as \textit{send method}.
+\subsection{Common Methods}
+
+	We have investigated common methods to identify the current user of a web page. In this section we present the techniques of user tracking and fingerprinting. The first technique stores an identifier on the user's machine and tracks the user by retrieving the identifier on a later occasion. The second technique collects technical information from a currently displayed web page and compares the collected set to stored sets.
 	
-\subsection{User Tracking}
+\subsubsection{User Tracking}
 \label{sec:userTracking}
 
 	User tracking refers to the linking of multiple web pages that were visited by the same user. Applying this technique to web pages that belong to the same domain allows to follow the user's path through the domain's pages and determine his entry and exit points. This is commonly used for web analytics to help the website's author to improve the usability of his layout. User tracking between different domains produces an overview about the user's movement through the Internet. It is often used by advertising companies who extract the user's personal needs and preferences from the websites he visits to provide personalized advertisements.
@@ -46,19 +48,9 @@
 		\item \textbf{Evercookie} This is a JavaScript framework implemented to produce persistent identifiers in a browser that are difficult to remove \cite{evercookie}. For that purpose, it uses multiple storage technologies such as HTTP and Flash cookies, HTML5 storages, web history and cache, and unusual techniques such as storing the identifier in RGB values of cached graphics. To hamper the removing from a browser, it recreates deleted identifiers as soon as the user visit a web site that uses the framework. The user has to delete every stored identifier to remove the evercookie completely. 
 	\end{itemize}
 	
-\subsubsection{Web Beacon}
-\label{sec:webBeacon}
-	
-	If a user loads a web page that includes a resource from a tracking third-party, any cookie that originates from the third-party's domain is send along the request that fetches the resource. This allows the third-party to track the user on every web page that includes their content. These kind of third-party content whose only purpose is user tracking are called \texttt{Web Beacon}s. A small image, commonly one pixel in size and transparent, is often used for that purpose. Because of its size it requires less traffic and its transparency hides it from the user. It is also used in HTML emails and acts as a read confirmation by notifying the sender that the email's content was loaded. Other nowadays more commonly used web beacons originate from social media such as Facebook's "like" button. 
-	
-	To allow user tracking between different websites, the developers have to explicit include the Web Beacon into their web pages. For our design, we take use of the fact that we are able to access any web the user visits and can add new elements to its DOM. We implemented a component that uses only a content script in every web page. The script embeds an image in the web page which it fetches from our remote server. If our server sends a tracking cookie along the corresponding response, we are able to remotely track the user because our server gets notified every time the user loads a new web page.  
+	If a user loads a web page that includes a resource from a tracking third-party, any cookie that originates from the third-party's domain is send along the request that fetches the resource. This allows the third-party to track the user on every web page that includes their content. This kind of third-party content whose only purpose is user tracking is called a \texttt{Web Beacon}. A small image, commonly one pixel in size and transparent, is often used for that purpose. Because of its size it requires less traffic and its transparency hides it from the user. It is also used in HTML emails and acts as a read confirmation by notifying the sender that the email's content was loaded. Other nowadays more commonly used web beacons originate from social media such as Facebook's "like" button. 
 
-\subsubsection{Store Identifier In Extension}
-\label{sec:storeIdentifier}
-
-	If we have successfully identified the current user with other techniques, we store an unique identifier inside his instance of the extension. This simplifies his identification next time. An extension has its own local storage and Chrome even provides a cloud based storage which we use to store the identifier. In contrast to the web page's storage technologies such as cookies or the HTML5 local storage, the browsers Chrome, Opera, and Firefox do not provide a user interface to clear the extension storage. The user has to manually delete associated files on his hard drive. 
-
-\subsection{Fingerprinting}
+\subsubsection{Fingerprinting}
 \label{sec:fingerprinting}
 
 	Previously described methods for tracking a user identify him based on some data which was intentionally stored on the user's system. Those stored identifiers are vulnerable to deletion by the user. A study from 2010 showed that a browser reveals many browser- and computer-specific information to web pages \cite{Eckersley:2010:UYW:1881151.1881152}. Collection and merging these pieces of information creates a fingerprint of the user machine. Creating a second fingerprint at a later point in time and comparing it to stored fingerprints allows to track and identify the user without the need to store an identifier on his computer in beforehand. As the same kind of information taken from different users will probably equal, it is necessary to collect as much information as possible to create a truly unique fingerprint. 
@@ -68,20 +60,24 @@
 	There exists numerous scientific papers about fingerprinting from which we present a small subset of techniques with brief descriptions \cite{paulstone_historysniffing, MBYS11, Nikiforakis:2013:CME:2497621.2498133, Eckersley:2010:UYW:1881151.1881152, MS12, olejnik:hal-00747841}. 
 	
 	\begin{itemize}
-		\item \textbf{Browser Fingerprinting} The browser provides a variety of technical information to a web page that can be used to generate a fingerprint of the currently used browser and machine. The following list shows examples of these properties and how to access them using JavaScript. 
+		\item \textbf{Browser Fingerprinting} The browser provides a variety of technical information to a web page that can be used to generate a fingerprint of the currently used browser and machine. \autoref{tab:generalFingerprintingIncormation} shows examples of these properties and how to access them using JavaScript. 
 		
-		\begin{tabular}{|l|l|p{0.47\textwidth}|} \hline
-			\textbf{Property} & \textbf{JavaScript API} & \textbf{Example Output} \\ \hline
-			System & \texttt{navigator.platform} & "Win32" \\ \hline
-			Browser Name & \texttt{navigator.userAgent} & "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0" \\ \hline
-			Browser Engine & \texttt{navigator.appName} & "Netscape" \\ \hline
-			Screen Resolution & \texttt{screen.width} & 1366 (pixels) \\
-			& \texttt{screen.height} & 768 (pixels) \\
-			& \texttt{screen.pixelDepth} & 24 (byte per pixel) \\ \hline
-			Timezone & \texttt{Date.getTimezoneOffset()} & -60 (equals UTC+1) \\ \hline
-			Browser Language & \texttt{navigator.language} & "de" \\ \hline
-			System Languages & \texttt{navigator.languages} & ["de", "en-US", "en"] \\ \hline
-		\end{tabular}
+		\begin{table}
+			\begin{tabular}{|l|l|p{0.47\textwidth}|} \hline
+				\textbf{Property} & \textbf{JavaScript API} & \textbf{Example Output} \\ \hline
+				System & \texttt{navigator.platform} & "Win32" \\ \hline
+				Browser Name & \texttt{navigator.userAgent} & "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0" \\ \hline
+				Browser Engine & \texttt{navigator.appName} & "Netscape" \\ \hline
+				Screen Resolution & \texttt{screen.width} & 1366 (pixels) \\
+				& \texttt{screen.height} & 768 (pixels) \\
+				& \texttt{screen.pixelDepth} & 24 (byte per pixel) \\ \hline
+				Timezone & \texttt{Date.getTimezoneOffset()} & -60 (equals UTC+1) \\ \hline
+				Browser Language & \texttt{navigator.language} & "de" \\ \hline
+				System Languages & \texttt{navigator.languages} & ["de", "en-US", "en"] \\ \hline
+			\end{tabular}
+			\caption{General fingerprinting information accessible through JavaScript and provided by the browser.}
+			\label{tab:generalFingerprintingIncormation}
+		\end{table}
 		
 		\item \textbf{Fonts} The fonts installed on the user's machine can serve as part of a user identification. The browser plugin \textit{Flash} provides an API that returns a list of fonts installed on the current system (\texttt{Font.enumerateFonts(true)})\cite{flashPlayerGetFonts}. If the Flash plugin is not available in a browser, JavaScript can be used to test whether particular fonts are available to the current web page or not. This approach needs a predefined list and may not cover unpopular fonts. It is implemented by writing a string with each font on the web page. If a font is not installed, the browser uses a fall-back font to draw the text. Comparing the width and height of the drawn font to those of the fall-back font gives an evidence whether or not the font is installed.
 		
@@ -92,10 +88,36 @@
 		\item \textbf{JavaScript Benchmark Testing} The execution speed of a JavaScript engine depends on the implementation but also on the systems processor architecture and clock speed. Mowery et al. implemented a set of benchmark test suits to fingerprint different execution speeds \cite{MBYS11}. Using these information, they could distinguish between major browser versions, operating systems and micro architectures. 
 	\end{itemize}	
  
+\subsection{Implemented Components}
+ 
+	We used the knowledge that we gained from investigation previously described methods to implement our components to collect user information. We implemented some components that execute and support user tracking or fingerprinting and present them in this section. These component collect technical information that can be used to identify the user's currently used device. Furthermore, we discovered that the currently displayed web page holds many pieces of personal user information that may help us to identify the person using the extension. For that purpose, we implemented several components that collect personal user information from particular websites and present them in this section, too. \autoref{tab:summaryUserIdentification} provides an overview of implemented components and their needed privileges.
+  	
+  	\begin{table}[h]
+  		\centering
+  		\begin{tabular}{|l|l|} \hline 
+  			\textbf{User Identification Components} & \textbf{Needed Privileges} \\ \hline
+  			Store identifier & \texttt{storage} \\ 	\hline
+  			Web Beacon & content script \\ \hline
+  			History Sniffing & \texttt{history} \\
+  			& Content script \\	\hline
+  			Bookmark Sniffing & \texttt{bookmarks} \\ \hline
+  			Collect fingerprinting data & Content script \\ \hline
+  			Additional fingerprinting data & \texttt{system.cpu} \\
+  			& \texttt{system.memory} \\
+  			& \texttt{gcm} \\
+  			& \texttt{management} \\ \hline
+  			Read emails & Content script \\ 
+  			Read facebook data & Content script \\
+  			Read online banking data & Content script \\ \hline
+  		\end{tabular}
+  		\caption{Summary of implemented components to collect user information with needed privileges.}
+  		\label{tab:summaryUserIdentification}
+  	\end{table}
+  
 \subsubsection{Additional Fingerprinting Data} 
 \label{sec:additionalFingerprintingData}
 
-	The before presented techniques for fingerprinting all work from within a web page. Therefore, we can also execute them using a content script in an arbitrary web page. We implemented a component that collects fingerprinting values that the browser provides to a web page. Additionally, we can support this method by collecting technical information that the browser provides to an extension but not to a web page. These pieces of information help us to generate a more accurate fingerprint of the user's browser and system. In order to access the desired information, we need further permissions. \autoref{tab:fingerprintExtension} shows these pieces of information and the permissions needed to access them. 
+	The previously described techniques for fingerprinting can be executed from within a web page. Therefore, we can also execute them using a content script in an arbitrary web page. We implemented a component that collects fingerprinting values that the browser provides to a web page. Additionally, we can support this method by collecting technical information that the browser provides to an extension but not to a web page. These pieces of information help us to generate a more accurate fingerprint of the user's browser and system. In order to access the desired information, we need further permissions. \autoref{tab:fingerprintExtension} shows these pieces of information and the permissions needed to access them. 
 	
 	\begin{table}[h]
 		\begin{tabular}{|l|l|l|} \hline
@@ -110,6 +132,16 @@
 		\caption{Additional fingerprint information available to an extension.}
 		\label{tab:fingerprintExtension}
 	\end{table} 
+	
+\subsubsection{Web Beacon}
+\label{sec:webBeacon}
+
+	To allow user tracking between different websites, the website's developers have to explicit include the Web Beacon into their web pages. For our design, we take use of the fact that we are able to access any web the user visits and can add new elements to its DOM. We implemented a component that uses only a content script in every web page. The script embeds an image in the web page which it fetches from our remote server. If our server sends a tracking cookie along the corresponding response, we are able to remotely track the user because our server gets notified every time the user loads a new web page.  
+
+\subsubsection{Store Identifier In Extension}
+\label{sec:storeIdentifier}
+
+	If we have successfully identified the current user with other techniques, we store an unique identifier inside his instance of the extension. This simplifies his identification next time. An extension has its own local storage and Chrome even provides a cloud based storage which we use to store the identifier. In contrast to the web page's storage technologies such as cookies or the HTML5 local storage, the browsers Chrome, Opera, and Firefox do not provide a user interface to clear the extension storage. The user has to manually delete associated files on his hard drive. 
 	
 \subsubsection{History Sniffing}
 \label{sec:historySniffing}
@@ -127,7 +159,7 @@
 
 	Similar to history sniffing, we retrieve the user's bookmarks as additional information for a fingerprint but also to get information about his preferred web pages. This allows us to explicit target web pages with our attacks that the user is high likely to visit. Our implemented component needs the \textit{bookmarks} permission to access the corresponding module. The browser stores the bookmarks in a tree structure. Our component uses a recursive function to traverse the tree and extract the bookmarks title and URL. In every recursion step we check if the current node contains a title and an URL. If this is not the case, the current node is not a bookmark but a folder.
 
-\subsection{Personal User Information}
+\subsubsection{Personal User Information}
 \label{sec:personalUserInformation}
 	
 	Besides the before described techniques of user tracking and fingerprinting, an extension has more efficient ways to identify a user. The extension has full access to any web page that the user visits and is able to read out any information that is stored inside these pages. It allows us to even identify the person behind the web user by collection personal information such as his full name, address, or phone number. 
@@ -155,9 +187,37 @@
 \section{Communication}
 \label{sec:communication}
 
-	In the previous section, we have shown our implementations to collect information about the current user to identify him. We need to transfer these data to a remote server which is in charge of the identification. Furthermore, if the identification was successful, we want to attack the user by loading the source code for some malicious behavior from the server. In this section, we present different approaches to transfer information between the extension and a remote server and to fetch the source code for our explicit attacks.
+	In the previous section, we have shown our implementations to collect information about the current user to identify him. We need to transfer these data to a remote server which is in charge of the identification. Furthermore, if the identification was successful, we want to attack the user by loading the source code for some malicious behavior from the server. In this section, we present different approaches to transfer information between the extension and a remote server and to fetch the source code for our explicit attacks. \autoref{tab:summaryRemoteCommunication} and \autoref{tab:summaryFetchScript} provide an overview of implemented components for remote communication and remote script fetching with needed privileges.
 	
-\subsection{Remote Communication}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|l|} \hline
+			\textbf{Remote Communication Components} & \textbf{Needed Privileges} \\ \hline
+			XMLHttpRequest & \texttt{http://*/*, https://*/*}  \\
+			Iframe & Content script \\
+			Automatic extension update & \\ 
+			\hline
+		\end{tabular}
+		\caption{Summary of implemented communication components with needed privileges.}
+		\label{tab:summaryRemoteCommunication}
+	\end{table}
+	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|l|} \hline
+			\textbf{Remote Script Fetching Components} & \textbf{Needed Privileges} \\ \hline
+			Script element in background & Modified CSP with remote server URL \\
+			Script element in content script & Content script \\
+			XMLHttpRequest, execute in background & \texttt{http://*/*, https://*/*}, modified CSP with \texttt{unsafe\_eval} \\
+			XMLHttpRequest, execute in content script & \texttt{http://*/*, https://*/*}  \\
+			Mutual extension communication & Content script, second extension \\ 
+			\hline
+		\end{tabular}
+		\caption{Summary of implemented components to load and execute a remote script with needed privileges.}
+		\label{tab:summaryFetchScript}
+	\end{table}
+	
+\subsection{Remote Communication Components}
 \label{sec:remoteCommunication}
 
 	We often come to a point where we have to transfer information from the active extension to our remote server or vice versa. For example, if we want to transfer collected information for identification or stolen personal user data or we want to give the extension the command to execute an attack. We implemented several, partly interchangeable components for that purpose and present them in this section.
@@ -179,7 +239,7 @@
 
 	In previous research Liu et al. implemented extensions for major browsers that can be remote controlled to execute web based attacks such as \textit{Denial of Service} or spamming. \cite{liu2011botnet, Liu12chromeextensions:}. To control the extensions and send needed information such as the target for a DoS attack or a spamming text, the attacker has to communicate with his extensions. Liu et al. use the automatic update of extensions for that purpose. The browser checks for any extension update on startup and periodically on runtime. The attacker can distribute an attack by pushing a new update and the extension can read commands from a file in it's bundle. This communication channel is on one hand more difficult to detect than previous approaches because no web request is executed between the extension and the attacker but on the other hand a new extension version is distributed which may trigger a security analysis. 
 
-\subsection{Remote Script Fetching}
+\subsection{Remote Script Fetching Components}
 	
 	As our implementation relies on fetching the source code for a particular attack from our remote server we present our implemented components in this section. Fetching a script remotely from a server is also some kind of communication. Therefore, some components that we present in this section use similar to same approaches like before presented components for communication in \autoref{sec:remoteCommunication}. 
 	
@@ -218,11 +278,37 @@
 \section{Execution}
 \label{sec:execution}
 
-	We have already shown how we collect information to identify the current user, transfer it to our remote server which is in charge to evaluate the data, and how we fetch the source code of an attack in the case that the identification was successful. In this section we finally present our concrete attack implementations. For that purpose, we first present known attack scenarios that make use of an extension's capabilities followed by a presentation of our implemented attack components.
+	We have already shown how we collect information to identify the current user, transfer it to our remote server which is in charge to evaluate the data, and how we fetch the source code of an attack in the case that the identification was successful. In this section we finally present our concrete attack implementations. For that purpose, we present known attack scenarios that make use of an extension's capabilities followed by a presentation of our implemented attack components. \autoref{tab:summaryAttacks} provides an overview of implemented attack components and their needed privileges.
+	
+	\begin{table}[h]
+		\begin{tabular}{|l|l|} \hline 
+			\textbf{Attack Component} & \textbf{Needed Privileges} \\ \hline
+			Steal sensitive user data & Content script \\ \hline
+			Steal form data & Content script \\ \hline
+			Steal credentials & Content script \\ \hline
+			Manipulate form values & Content script \\ \hline
+			Manipulate form target URL & Content script \\ \hline
+			Manipulate link target URL & Content script \\ \hline
+			Redirect request & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\ \hline
+			Execute concealed attack in iframe & Content script \\ \hline
+			Execute concealed attack in inactive tab & \texttt{http://*/*, https://*/*, tabs} \\ \hline
+			Execute concealed attack in background window & \texttt{http://*/*, https://*/*} \\ \hline
+			Denial of Service & Content script \\ \hline
+			Download and open file & \texttt{downloads, downloads.open, downloads.shelf} \\ \hline
+			Exchange a downloaded file & \texttt{downloads} \\ \hline
+			Exchange a currently downloading file & \texttt{downloads} \\ \hline
+			Steal cookies from current web page & Content script \\ \hline
+			Steal all cookies & \texttt{http://*/*, https://*/*, cookies} \\ \hline
+			Disable another extension & \texttt{management} \\ \hline
+			Remove request response header & \texttt{http://*/*, https://*/*, webRequest, webRequestBlocking} \\ \hline
+		\end{tabular}
+		\caption{Summary of implemented attack components with needed privileges.}
+		\label{tab:summaryAttacks}
+	\end{table}
 	
 \subsection{Attack Scenarios}
 
-	In this section, we present two attack scenarios that an extension facilitates. The \textit{Man-in-the-browser} attack manipulates web requests and targets the user's online banking account and a \textit{botnet} of browser extension allows to execute wide scaled web attacks.
+	In this section we present two attack scenarios that an extension facilitates. The \textit{Man-in-the-browser} attack manipulates web requests and often targets the user's online banking account. This allows an attacker to manipulate a transaction's target or amount. Contrary, a \textit{botnet} of browser extensions allows to execute wide scaled web attacks such as spamming or DDoS attacks. The extension's current user is often not the target of an attack but his device is misused to execute attacks against others.
 
 \subsubsection{Man in the Browser}
 	
@@ -238,11 +324,11 @@
 	
 	Browser extensions in a botnet were previously researched by Liu et al. \cite{liu2011botnet}. As a proof-of-concept, they developed two extension that act as bots, one for Chrome and one for Internet Explorer. Their extension's can execute DDoS attacks, email spamming, and steal the user's credentials. To send an email, the extension uses the user's email account. If the user logs into his account, the extension executes a web request to send an email with the spamming content. The email server will actually execute the request because the user's credentials are send along. 
 	
-	A botnet needs a communication channel that allows the attacker to control the bots. For their extensions, the researchers use the automatic update and modify the content of a configuration file. The extension reads the file and acts accordingly. After the attacker publishes a new update, which will start a new attack, the update will be installed as soon as the browser is active. Because the installation of the update is distributed in time, so is the attack which hampers the detection of the botnet.
+	A botnet needs a communication channel that allows the attacker to control the bots. For their extensions, the researchers use the automatic update and modify the content of a configuration file. The extension reads the file and acts accordingly. After the attacker publishes a new update, which will start a new attack, the update will be installed as soon as the browser is active. As the installation of the update is distributed in time, the attack is, too. This hampers the detection of the botnet because not all attacks are executed simultaneously.
 	
-\subsection{Implementations}
+\subsection{Implemented Components}
 	
-	In this section we present our attack components that the extension fetches from a remote server after a successful identification of the current user. Depending on how we have fetched the attack's source code, we need different permissions to execute the attack. In the case that the attack is executed in the scope of a web page, we need either an already active content script that executes the attack or host permissions to inject the attack as independent content script into the web page.
+	We investigated known attack scenarios that are executable using an extension and use the gained knowledge to implement several attack components. In this section we present these components which our communication components will fetch from a remote server after a successful identification of the current user. Depending on how we have fetched the attack's source code, we need different permissions to execute the attack. In the case that the attack is executed in the scope of a web page, we need either an already active content script that executes the attack or host permissions to inject the attack as independent content script into the web page.
 
 	In \autoref{sec:identification}, we have already shown that we are able to obtain personal user information by extraction them from the web pages that the user visits. Previously, we collected these information to generate a fingerprint of the current user and identify him based on this fingerprint. Of course, if we have already obtained sensitive information, we are able to misuse them and harm the user. Therefore, we also use the components presented in \autoref{sec:identification} as attack components to steal sensitive user data.
 

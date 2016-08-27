@@ -1,5 +1,5 @@
 \contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}
-\contentsline {section}{\numberline {1.1}Contribution}{4}{section.1.1}
+\contentsline {section}{\numberline {1.1}Goals}{5}{section.1.1}
 \contentsline {section}{\numberline {1.2}Outline}{5}{section.1.2}
 \contentsline {chapter}{\numberline {2}Related Works}{6}{chapter.2}
 \contentsline {section}{\numberline {2.1}Extension Architecture}{6}{section.2.1}
@@ -46,43 +46,45 @@
 \contentsline {paragraph}{webRequest}{20}{paragraph*.39}
 \contentsline {chapter}{\numberline {5}Design}{21}{chapter.5}
 \contentsline {section}{\numberline {5.1}Identification}{22}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}User Tracking}{22}{subsection.5.1.1}
-\contentsline {subsubsection}{Web Beacon}{22}{subsubsection*.41}
-\contentsline {subsubsection}{Store Identifier In Extension}{23}{subsubsection*.42}
-\contentsline {subsection}{\numberline {5.1.2}Fingerprinting}{23}{subsection.5.1.2}
-\contentsline {subsubsection}{Additional Fingerprinting Data}{24}{subsubsection*.43}
-\contentsline {subsubsection}{History Sniffing}{24}{subsubsection*.45}
-\contentsline {subsubsection}{Bookmark Sniffing}{25}{subsubsection*.46}
-\contentsline {subsection}{\numberline {5.1.3}Personal User Information}{25}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.1}Common Methods}{22}{subsection.5.1.1}
+\contentsline {subsubsection}{User Tracking}{22}{subsubsection*.41}
+\contentsline {subsubsection}{Fingerprinting}{23}{subsubsection*.42}
+\contentsline {subsection}{\numberline {5.1.2}Implemented Components}{24}{subsection.5.1.2}
+\contentsline {subsubsection}{Additional Fingerprinting Data}{24}{subsubsection*.45}
+\contentsline {subsubsection}{Web Beacon}{24}{subsubsection*.47}
+\contentsline {subsubsection}{Store Identifier In Extension}{25}{subsubsection*.48}
+\contentsline {subsubsection}{History Sniffing}{25}{subsubsection*.49}
+\contentsline {subsubsection}{Bookmark Sniffing}{26}{subsubsection*.50}
+\contentsline {subsubsection}{Personal User Information}{26}{subsubsection*.51}
 \contentsline {section}{\numberline {5.2}Communication}{27}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Remote Communication}{27}{subsection.5.2.1}
-\contentsline {subsubsection}{XMLHttpRequest}{27}{subsubsection*.47}
-\contentsline {subsubsection}{Iframe}{27}{subsubsection*.48}
-\contentsline {subsubsection}{Automatic Extension Update}{27}{subsubsection*.49}
-\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching}{28}{subsection.5.2.2}
-\contentsline {subsubsection}{Script Element In Background}{28}{subsubsection*.50}
-\contentsline {subsubsection}{Script Element In Content Script}{28}{subsubsection*.51}
-\contentsline {subsubsection}{XMLHttpRequest}{28}{subsubsection*.52}
-\contentsline {subsubsection}{Mutual Extension Communication}{28}{subsubsection*.53}
+\contentsline {subsection}{\numberline {5.2.1}Remote Communication Components}{27}{subsection.5.2.1}
+\contentsline {subsubsection}{XMLHttpRequest}{27}{subsubsection*.54}
+\contentsline {subsubsection}{Iframe}{27}{subsubsection*.55}
+\contentsline {subsubsection}{Automatic Extension Update}{28}{subsubsection*.56}
+\contentsline {subsection}{\numberline {5.2.2}Remote Script Fetching Components}{28}{subsection.5.2.2}
+\contentsline {subsubsection}{Script Element In Background}{28}{subsubsection*.57}
+\contentsline {subsubsection}{Script Element In Content Script}{28}{subsubsection*.58}
+\contentsline {subsubsection}{XMLHttpRequest}{28}{subsubsection*.59}
+\contentsline {subsubsection}{Mutual Extension Communication}{29}{subsubsection*.60}
 \contentsline {section}{\numberline {5.3}Execution}{30}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Attack Scenarios}{30}{subsection.5.3.1}
-\contentsline {subsubsection}{Man in the Browser}{30}{subsubsection*.54}
-\contentsline {subsubsection}{Botnet}{30}{subsubsection*.55}
-\contentsline {subsection}{\numberline {5.3.2}Implementations}{31}{subsection.5.3.2}
-\contentsline {subsubsection}{Steal Form Data}{31}{subsubsection*.56}
-\contentsline {subsubsection}{Manipulate Web Requests}{31}{subsubsection*.57}
-\contentsline {subsubsection}{Execute Attack In Background}{32}{subsubsection*.58}
-\contentsline {subsubsection}{Denial Of Service}{33}{subsubsection*.59}
-\contentsline {subsubsection}{Download Harmful Files}{33}{subsubsection*.60}
-\contentsline {subsubsection}{Steal Cookies}{33}{subsubsection*.61}
-\contentsline {subsubsection}{Disable Other Extension}{34}{subsubsection*.62}
-\contentsline {subsubsection}{Remove Security Headers}{34}{subsubsection*.63}
-\contentsline {chapter}{\numberline {6}Extension Analysis}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}Preparations}{35}{section.6.1}
-\contentsline {section}{\numberline {6.2}Results}{37}{section.6.2}
-\contentsline {chapter}{\numberline {7}Countermeasures}{39}{chapter.7}
-\contentsline {section}{\numberline {7.1}Detect Malicious Behavior}{39}{section.7.1}
-\contentsline {section}{\numberline {7.2}Improved Permissions}{39}{section.7.2}
-\contentsline {chapter}{\numberline {8}Further Work}{41}{chapter.8}
-\contentsline {chapter}{\numberline {9}Conclusion}{42}{chapter.9}
+\contentsline {subsubsection}{Man in the Browser}{30}{subsubsection*.62}
+\contentsline {subsubsection}{Botnet}{31}{subsubsection*.63}
+\contentsline {subsection}{\numberline {5.3.2}Implemented Components}{31}{subsection.5.3.2}
+\contentsline {subsubsection}{Steal Form Data}{31}{subsubsection*.64}
+\contentsline {subsubsection}{Manipulate Web Requests}{32}{subsubsection*.65}
+\contentsline {subsubsection}{Execute Attack In Background}{32}{subsubsection*.66}
+\contentsline {subsubsection}{Denial Of Service}{33}{subsubsection*.67}
+\contentsline {subsubsection}{Download Harmful Files}{33}{subsubsection*.68}
+\contentsline {subsubsection}{Steal Cookies}{34}{subsubsection*.69}
+\contentsline {subsubsection}{Disable Other Extension}{34}{subsubsection*.70}
+\contentsline {subsubsection}{Remove Security Headers}{34}{subsubsection*.71}
+\contentsline {chapter}{\numberline {6}Extension Analysis}{36}{chapter.6}
+\contentsline {section}{\numberline {6.1}Preparations}{36}{section.6.1}
+\contentsline {section}{\numberline {6.2}Results}{38}{section.6.2}
+\contentsline {chapter}{\numberline {7}Countermeasures}{40}{chapter.7}
+\contentsline {section}{\numberline {7.1}Detect Malicious Behavior}{40}{section.7.1}
+\contentsline {section}{\numberline {7.2}Improved Permissions}{40}{section.7.2}
+\contentsline {chapter}{\numberline {8}Further Work}{42}{chapter.8}
+\contentsline {chapter}{\numberline {9}Conclusion}{43}{chapter.9}
 \contentsfinish 
