@@ -8,12 +8,12 @@
 \section{Content Scripts}
 \label{sec:threatAnalysis:contentScripts}
 
-	A great threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. There exists no further restriction such as additional permissions to access password fields or other container of sensitive data. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
+	A great threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. No further restriction such as additional permissions to access password fields or other container of sensitive data exists. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
 	
 	\begin{itemize}
 		\item \textbf{Steal User Data From Forms} Any information the user transmits over a form in a web page is accessible for an extension. To steal this information, the extension adds an event listener which is dispatched when the user submits the form. At this point in time, the extension can read out all information that the user has entered in the form. This approach gives the attacker access to the user's personal information such as his address, email, phone number, or credit card number but also to identification data such as social security number, identity number, or credentials. Especially username and password for a website's login are typically transmitted with a form.
 		
-		\item \textbf{Steal Displayed User Data} Any information about the user that a web page contains is accessible for an extension. To steal this information, the attacker has to explicit know where it is stored in the web page. This is mostly a trivial task, because most web pages are public and the attacker is therefore able to analyze the targeted web page's structure. With this attack, an attacker is able to obtain a broad range of different information such as the user's financial status from his banking portal, his emails and contacts, his friends and messages from social media, or bought items and shopping preferences.
+		\item \textbf{Steal Displayed User Data} Any information about the user that a web page contains is accessible for an extension. To steal this information, the attacker has to explicitly know where it is stored in the web page. This is mostly a trivial task, because most web pages are public and the attacker is therefore able to analyze the targeted web page's structure. With this attack, an attacker is able to obtain a broad range of different information such as the user's financial status from his banking portal, his emails and contacts, his friends and messages from social media, or bought items and shopping preferences.
 		
 		\item \textbf{Modify Forms} An extension can add new input elements to a form. This tricks the user into filling out additional information that are not necessary for the website but targeted by the attacker. For that purpose, the extension adds the additional input fields to the form when the web page loads, steals the information when the user submits the form, and removes the additional fields afterwards. The last step is necessary because the web application would return an error the form's structure was modified. This attack will succeed if the user does not know the form's structure beforehand. To decrease the probability that the user knows the form already, the extension can determinate whether or not the user has visited the web page to an earlier date before executing the attack. 
 		
@@ -25,9 +25,9 @@
 \section{Browser API}
 \label{sec:threatAnalysis:api}
 	
-	In this section, we present found threats that arise from API modules and are unlocked by a declared permission. Most of the permissions give access to an API module whose features may be misused in some form. 
+	In this section, we present discovered threats that arise from API modules and are unlocked by a declared permission. Most of the permissions give access to an API module whose features may be misused in some form. 
 	
-	A developer may declare permissions as optional if they are not necessary for his extension's basic functionality. At runtime, the user is prompted to grant the extension the access to a requested permission. However, the user can not deny a once granted permission by himself. Therefore, a optional permission is as dangerous as standard permission in terms of potential threats because once it was accepted by the user it stays active and the extension may misuse the provided functionality. Furthermore, empirical studies showed that users tend to ignore security warnings which refers also to security relevant prompts \cite{180371, sunshine2009crying}.
+	A developer may declare permissions as optional if they are not necessary for his extension's basic functionality. At runtime, the user is prompted to grant the extension the access to a requested permission. However, the user can not deny a once granted permission by himself. Therefore, an optional permission is as dangerous as standard permission in terms of potential threats because once it was accepted by the user it stays active and the extension may misuse the provided functionality. Furthermore, empirical studies showed that users tend to ignore security warnings which refers also to security relevant prompts \cite{180371, sunshine2009crying}.
 		
 	The following paragraphs show the threats which we found associated with a permission. Each paragraph has the permissions's name as heading which is equal to a probably associated module. Additionally, if the permission results in a warning on the extension's installation, we added it to the paragraph.
 	
@@ -71,9 +71,9 @@
 	\end{permissionwarning}
 	
 \paragraph{cookies} 
-	This module give an extension read and write access to all currently stored cookies, even to \textit{httpOnly} cookies that are normally not accessible by client-side JavaScript.
+	This module gives an extension read and write access to all currently stored cookies, even to \textit{httpOnly} cookies that are normally not accessible by client-side JavaScript.
 	
-	An attacker may use an extension to steal session and authentication data which are commonly stored in cookies. This allows him to act with the user's privileges on affected websites. Furthermore, an malicious extension may restore deleted tracking cookies and thereby support user tracking attempts from websites.
+	An attacker may use an extension to steal session and authentication data which are commonly stored in cookies. This allows him to act with the user's privileges on affected websites. Furthermore, an malicious extension may restore deleted tracking cookies and thereby supports user tracking attempts from websites.
 	
 \paragraph{downloads} 
 	This module allows an extension to initiate and monitor downloads. Some of the module's functions are further restricted by additional permissions. To open a downloaded file, the extension needs the \texttt{downloads.open} permission and to enabled or disable the browser's download shelf, the extension needs the permission \texttt{downloads.shelf}.  
@@ -81,7 +81,7 @@
 	With the additional permission \texttt{downloads.open}, a malicious extension can download a harmful file and execute it. Another malicious approach is to exchange a benign downloaded file with a harmful one without the user noticing. 
 	
 \paragraph{geolocation}
-	The HTML5 geolocation API provides information about the user's geographical location to JavaScript. With the default browser settings, the user is prompted to confirm if a web page want's to access his location. If an extension uses the geolocation permission, it can use the API without prompting the user to confirm.
+	The HTML5 geolocation API provides information on the user's geographical location to JavaScript. With the default browser settings, the user is prompted to confirm if a web page want's to access his location. If an extension uses the geolocation permission, it can use the API without prompting the user to confirm.
 	
 	On installation, an extension with this permission shows the user the following warning:
 	\begin{permissionwarning}
@@ -106,7 +106,7 @@
 	
 	This feature may be used by an attacker to send all web requests over a malicious server. For example, a server that logs all requests and therefore steal any use information that is transmitted unsecured.
 	
-	On installation, a extension with this permission shows the user the following warning:
+	On installation, an extension with this permission shows the user the following warning:
 	\begin{permissionwarning}
 		Read and modify all your data on all websites you visit 
 	\end{permissionwarning}
@@ -132,7 +132,7 @@
 	
 	A malicious extension can use this module to remove security relevant headers such as a CSP , intercept outgoing requests, or redirect requests from benign to malicious web pages.
 	
-	This permission itself does not result in a warning when an extension that requires it is installed. But, to get access to the data of a web request the extension needs proper host permissions and these result in a warning. The often used host permissions \texttt{http://*/*}, \texttt{https://*/*}, and \texttt{<all\_urls>} result in the following warning:
+	This permission itself does not result in a warning when an extension that requires it is installed. However, to get access to the data of a web request the extension needs proper host permissions and these result in a warning. The often used host permissions \texttt{http://*/*}, \texttt{https://*/*}, and \texttt{<all\_urls>} result in the following warning:
 	\begin{permissionwarning}
 		Read and modify your data on all websites you visit 
 	\end{permissionwarning}
