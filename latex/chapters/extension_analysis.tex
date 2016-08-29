@@ -1,6 +1,6 @@
 % !TeX spellcheck = en_US
 
-\chapter{Extension Analysis}
+\chapter{Evaluation}
 \label{chp:extensionAnalysis}
 	
 	We want to show that our implementation is indeed applicable to real world extensions without the need to modify the extension's privileges. Therefore, we evaluated the privileges of popular extensions and analyzed which of our implemented components we can integrate into them. For that purpose, we compared the extension's declared permissions and content with the permissions and content needed for our components. 
@@ -96,6 +96,8 @@
 	Only one of the analyzed extensions has declared the \texttt{management} permission. Thereby, we are able to integrate our attack component that disables another extension into it (\autoref{sec:disableOtherExtension}). The extension uses the permission to disable another extension that is known to be malicious. As it declares the management permission as optional, the user has to explicitly allow the extension to disable other extensions. As soon as the user has granted the permission, our component can also use it to disable other extensions. % (Adblock even removes the permission if it has finished deactivating other extensions)
 
 	Our analysis revealed, that we can integrate our component that collects cookies from the web pages that the user visits in 86\% of the analyzed extensions (\autoref{sec:stealCookies}). It uses only a simple content script and is limited to active web pages and cookies without the \texttt{httpOnly} flag enabled. In order to collect all cookies that the browser currently stores, we implemented another component that uses the cookies module. Our analysis revealed that 9 of 15 (60\%) of the analyzed extensions request the \texttt{cookies} permission and thereby allow us to integrate our component into them. 
+	
+	In conclusion, we consider the presented system as applicable to most popular extensions.
 	
 	\begin{table}[h]
 		\centering

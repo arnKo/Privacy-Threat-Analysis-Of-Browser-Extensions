@@ -18,13 +18,13 @@ Market share reports.
 \bibitem{mozillaDevReviewPolicy}
 {MDN} {A}dd-ons - {R}eview {P}olicies.
 \newblock \url{https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Reviews}.
-\newblock [acessed 2016-01-18].
+\newblock [acessed 2016-03-18].
 
 \bibitem{mozillaDangerousEval}
 {MDN JavaScript Reference - Don't use eval needlessly!}
 \newblock
   \url{https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/eval#dont-use-it}.
-\newblock [accessed 2015-12-29].
+\newblock [accessed 2016-03-29].
 
 \bibitem{edgeBrowserApiStatus}
 {M}icrosoft {E}dge extension {API} roadmap.
@@ -35,13 +35,13 @@ Market share reports.
 \bibitem{mozillaWebExtensionStatus}
 {Mozilla Wiki - WebExtensions}.
 \newblock \url{https://wiki.mozilla.org/WebExtensions}.
-\newblock [accessed 2015-12-30].
+\newblock [accessed 2016-03-30].
 
 \bibitem{safariContentBlockingRules}
 {Safari Developer Library - Safari Content-Blocking Rules Reference}.
 \newblock
   \url{https://developer.apple.com/library/safari/documentation/Extensions/Conceptual/ContentBlockingRules/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016265}.
-\newblock [accessed 2016-01-07].
+\newblock [accessed 2016-03-07].
 
 \bibitem{statcounter}
 Statcounter global stats.
@@ -112,7 +112,7 @@ A.~Bovens.
 \newblock {Dev.Opera - Major Changes in Opera's Extensions Infrastructure}.
 \newblock
   \url{https://dev.opera.com/articles/major-changes-in-operas-extensions-infrastructure/}.
-\newblock [accessed 2015-12-11].
+\newblock [accessed 2016-03-11].
 
 \bibitem{8chanHola}
 F.~Brennman.
@@ -178,7 +178,7 @@ N.~Jagpal, E.~Dingle, J.-P. Gravel, P.~Mavrommatis, N.~Provos, M.~A. Rajab, and
 S.~Kamkar.
 \newblock evercookie -- never forget.
 \newblock \url{http://samy.pl/evercookie/}.
-\newblock [accessed 2016-02-26].
+\newblock [accessed 2016-04-26].
 
 \bibitem{184485}
 A.~Kapravelos, C.~Grier, N.~Chachra, C.~Kruegel, G.~Vigna, and V.~Paxson.

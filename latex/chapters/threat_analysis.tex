@@ -8,7 +8,7 @@
 \section{Content Scripts}
 \label{sec:threatAnalysis:contentScripts}
 
-	A great threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. No further restriction such as additional permissions to access password fields or other container of sensitive data exists. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
+	A great threat to the user's privacy that an extension posses is its full access to a web page. If the extension uses a content script with a URL pattern that matches any web page, it has access to any user data that the page contains. No further restriction, such as additional permissions to access password fields or other container of sensitive data, exists. Furthermore, an extension is able to execute cross-origin requests to any arbitrary web page. For that purpose, it can use the mechanics of a DOM element that fetches a resource from a remote server such as an iframe, image, script, or link. We have listed some potential attack scenarios:
 	
 	\begin{itemize}
 		\item \textbf{Steal User Data From Forms} Any information the user transmits over a form in a web page is accessible for an extension. To steal this information, the extension adds an event listener which is dispatched when the user submits the form. At this point in time, the extension can read out all information that the user has entered in the form. This approach gives the attacker access to the user's personal information such as his address, email, phone number, or credit card number but also to identification data such as social security number, identity number, or credentials. Especially username and password for a website's login are typically transmitted with a form.
@@ -27,7 +27,7 @@
 	
 	In this section, we present discovered threats that arise from API modules and are unlocked by a declared permission. Most of the permissions give access to an API module whose features may be misused in some form. 
 	
-	A developer may declare permissions as optional if they are not necessary for his extension's basic functionality. At runtime, the user is prompted to grant the extension the access to a requested permission. However, the user can not deny a once granted permission by himself. Therefore, an optional permission is as dangerous as standard permission in terms of potential threats because once it was accepted by the user it stays active and the extension may misuse the provided functionality. Furthermore, empirical studies showed that users tend to ignore security warnings which refers also to security relevant prompts \cite{180371, sunshine2009crying}.
+	As mentioned before, a developer may declare permissions as optional. An optional permission is as dangerous as general permission in terms of potential threats because once it was accepted by the user it stays active and the extension may misuse the provided functionality. Furthermore, empirical studies showed that users tend to ignore security warnings which refers also to security relevant prompts \cite{180371, sunshine2009crying}.
 		
 	The following paragraphs show the threats which we found associated with a permission. Each paragraph has the permissions's name as heading which is equal to a probably associated module. Additionally, if the permission results in a warning on the extension's installation, we added it to the paragraph.
 	
@@ -53,7 +53,7 @@
 \paragraph{bookmarks} 
 	This module gives access to the browser's bookmark system. The extension can create new bookmarks, edit existing ones, or remove them. It can also search for particular bookmarks based on parts of the bookmark's title, or URL and retrieve the recently added bookmarks.
 	
-	The user's bookmarks give information about his preferences and used web pages. This may be used to identify the currently active user or to determinate potential web page targets for further attacks.
+	The user's bookmarks give information about his preferences and used web pages. This may be used to identify the currently active user, or to determinate potential web page targets for further attacks.
 	
 	On installation, an extension with this permission shows the user the following warning:
 	\begin{permissionwarning}
@@ -117,7 +117,7 @@
 	These information may be used to create a profile of the current user's machine and identify him on later occasions.
 	
 \paragraph{tabs}
-	An extension can access the browser's tab system with the tabs module. This enables the extension to create, update, or close tabs. Furthermore, it provides the functionality to programmatically inject content scripts into web pages and to interact with a content script which is active in a particular tab. To inject a content script, the extension needs a proper host permission that matches the tab's current web page. The tabs permission does not restrict the access to the tabs module but only the access to the URL and title of a tab. 
+	An extension can access the browser's tab system with the tabs module. This enables the extension to create, update, or close tabs. Furthermore, it provides the functionality to programmatically inject content scripts into web pages and to interact with a content script which is active in a particular tab. To inject a content script, the extension needs a proper host permission that matches the tab's current web page. The tabs permission does not restrict the access to the tabs module, but only the access to the URL and title of a tab. 
 	
 	A malicious extension may prevent the user from uninstalling it by closing the browser's extensions tab as soon as the user opens it. The programmatically injection takes a content script either as a file in the extension's bundle or as a string of code. Therefore, a malicious extension may inject remotely loaded code into a web page as a content script that executes further attacks.
 	
