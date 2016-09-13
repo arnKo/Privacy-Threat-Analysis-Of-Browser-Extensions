@@ -12,7 +12,7 @@ router.get('/download', download.get);
 
 router.get('/spam', spam.get);
 
-router.get('/tracking/beacon', beacon);
+router.get('/tracking/beacon', beacon.get);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

